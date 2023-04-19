@@ -47,8 +47,7 @@ output:
     | 16  | Normalised attraction Index | (Numérica continua)  |
     | 17  | Normalised restaurant index | (Numérica continua)  |
 
-3.  **Planificación**
+3.  **Planificación : realizar un diagrama de gantt hasta la semana 15.**
 4.  TRATAAAAAAAAAAAAAAAA
 5.  Aeaaaaaaaaa
-6. xdxdxdxddxd
-
+6.  xdxdxdxddxd
