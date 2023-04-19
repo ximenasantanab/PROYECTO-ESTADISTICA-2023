@@ -1,0 +1,50 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+1.  **Pregunta General**
+
+    Análisis del servicio de alojamiento de Airbnb en nueve cuidades de Europa.
+
+2.  **Objetivos**
+
+-   Analizar las nueve principales ciudades con mejor ranking de experiencia deAirbnb en Europa.
+
+-   Identificar las necesidades de un usuario de Airbnb en Europa durante el 2020.
+
+-   Analizar la ubicación de un Airbnb e identificar la relación al momento de comprar el servicio de Airbnb en Europa.
+
+3.  **Instrumento de recolección**
+
+-   Acceso a data de fuente secundaria ( 41 mil observaciones)
+
+    <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>
+
+    <https://drive.google.com/file/d/1I1u893jIu2HbdGp-ljNbc6_ANqmrJ2Xq/view?usp=share_link>
+
+-   Clasificación de variables
+
+    | N°  |          Variable           |         Tipo         |
+    |:---:|:---------------------------:|:--------------------:|
+    |  1  |            City             | (Categórica nominal) |
+    |  2  |     Cuándo lo reservan      | (Categórica nominal) |
+    |  3  |          Room Type          | (Categórica nominal) |
+    |  4  |         Shared Room         | (Categórica nominal) |
+    |  5  |        Private Room         | (Categórica nominal) |
+    |  6  |          Superhost          | (Categórica nominal) |
+    |  7  |       Multiple Rooms        | (Categórica nominal) |
+    |  8  |     Cleanliness Rating      | (Categórica ordinal) |
+    |  9  |     Guest Satisfaction      | (Categórica ordinal) |
+    | 10  |     Business (ofertas)      | (Categórica nominal) |
+    | 11  |       Person Capacity       | (Numérica discreta)  |
+    | 12  |            Price            | (Numérica continua)  |
+    | 13  |          Bedrooms           | (Numérica discreta)  |
+    | 14  |      City Center (km)       | (Numérica continua)  |
+    | 15  |     Metro Distance (km)     | (Numérica continua)  |
+    | 16  | Normalised attraction Index | (Numérica continua)  |
+    | 17  | Normalised restaurant index | (Numérica continua)  |
+
+3.  **Planificación**
