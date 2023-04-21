@@ -15,7 +15,7 @@ output:
 
 3.  **Objetivos**
 
--   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023. (elaborar un ranking con variables)
+-   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
 -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa de 2023.
 
