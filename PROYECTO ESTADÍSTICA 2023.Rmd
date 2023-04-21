@@ -5,21 +5,25 @@ output:
     df_print: paged
 ---
 
-1.  **Pregunta General**
+1.  **Tema**
 
-    Análisis del servicio de alojamiento de Airbnb en nueve cuidades de Europa.
+    Análisis del servicio de alojamiento de Airbnb en nueve cuidades de Europa del 2023.
 
-2.  **Objetivos**
+2.  **Objetivo general**
 
--   Analizar las nueve principales ciudades con mejor ranking de experiencia deAirbnb en Europa.
+    Analizar del servicio de alojamiento de Airbnb en nueve cuidades de Europa del 2023.
 
--   Identificar las necesidades de un usuario de Airbnb en Europa durante el 2020.
+3.  **Objetivos**
 
--   Analizar la ubicación de un Airbnb e identificar la relación al momento de comprar el servicio de Airbnb en Europa.
+-   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023. (elaborar un ranking con variables)
+
+-   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa de 2023.
+
+-   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa de 2023.
 
 3.  **Instrumento de recolección**
 
--   Acceso a data de fuente secundaria ( 41 mil observaciones)
+-   Acceso a data de fuente secundaria ( 41 mil observaciones )
 
     <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>
 
@@ -47,7 +51,5 @@ output:
     | 16  | Normalised attraction Index | (Numérica continua)  |
     | 17  | Normalised restaurant index | (Numérica continua)  |
 
-3.  **Planificación : realizar un diagrama de gantt hasta la semana 15.**
-4.  TRATAAAAAAAAAAAAAAAA
-5.  Aeaaaaaaaaa
-6.  xdxdxdxddxd
+3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15.**
+4.  
