@@ -7,23 +7,23 @@ output:
 
 1.  **Tema**
 
-    Análisis del servicio de alojamiento de Airbnb en nueve cuidades de Europa del 2023.
+    Análisis del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023.
 
 2.  **Objetivo general**
 
-    Analizar del servicio de alojamiento de Airbnb en nueve cuidades de Europa del 2023.
+    Analizar del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023.
 
 3.  **Objetivos**
 
 -   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
--   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa de 2023.
+-   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
--   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa de 2023.
+-   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
 3.  **Instrumento de recolección**
 
--   Acceso a data de fuente secundaria ( 41 mil observaciones )
+-   Acceso a data de fuente secundaria ( 41 mil observaciones: Datos sobre los AIRBNB de 9 ciudades famosas de Europa, Amsterdam, Athens, Barcelona, Berlin, Budapest, Lisbon, Paris, Rome and Vienna. )
 
     <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>
 
@@ -52,4 +52,51 @@ output:
     | 17  | Normalised restaurant index | (Numérica continua)  |
 
 3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15.**
-4.  
+
+4.  **Lectura de base de datos**
+
+```{r}
+library(readr)
+library(dplyr)
+D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
+
+
+```
+
+-   Eliminamos la columna 18 y 16, ya que de esas variables usamos sólo sus valores normalizados.
+
+```{r}
+View(D) 
+
+D$`Attraction Index` <- NULL
+D$`Restraunt Index` <- NULL
+
+```
+
+-   Re asignación de nombres :
+
+```{r}
+names(D)
+```
+
+```{r}
+D %>% rename( Tipo = `Room Type` , Capacidad = `Person Capacity`, Oferta = Business, Habitaciones = Bedrooms, Ind.Atraccion = `Normalised Attraction Index`, Precio = Price, Share_Room = `Shared Room`, Limpieza = `Cleanliness Rating`, Ind.Restaurantes = `Normalised Restraunt Index`, Satisfaccion = `Guest Satisfaction`, Ciudad = City, Private_Room = `Private Room` ) -> D2
+```
+
+```{r}
+names(D2)
+```
+
+-   Búsqueda de NA's y comprobación de casos completos
+
+```{r}
+Total_de_NAs <- sum(is.na(D))
+print(paste("El total de NAs es :", Total_de_NAs)) 
+
+Observaciones_completas <- sum(complete.cases(D2))
+print(paste("Observaciones completas es : ",Observaciones_completas ))
+Observaciones_incompletas <- sum(!complete.cases(D2))
+print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
+```
+
+-   
