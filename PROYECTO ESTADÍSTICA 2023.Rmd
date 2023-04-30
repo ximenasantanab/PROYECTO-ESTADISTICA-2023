@@ -154,7 +154,7 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 -   
 
 ```{r}
-install.packages('funModeling')
+
 library(funModeling)
 
 
