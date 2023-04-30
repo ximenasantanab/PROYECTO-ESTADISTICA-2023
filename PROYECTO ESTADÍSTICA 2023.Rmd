@@ -100,3 +100,19 @@ print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
 ```
 
 -   
+
+```{r}
+install.packages('funModeling')
+library(funModeling)
+
+
+status(D2)
+
+```
+
+```{r}
+ A <- df_status(D2,print_results=F)
+
+
+
+```
