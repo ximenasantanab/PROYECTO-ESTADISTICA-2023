@@ -59,8 +59,6 @@ output:
 library(readr)
 library(dplyr)
 D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
-
-
 ```
 
 -   Eliminamos la columna 18 y 16, ya que de esas variables usamos sólo sus valores normalizados.
@@ -98,5 +96,57 @@ print(paste("Observaciones completas es : ",Observaciones_completas ))
 Observaciones_incompletas <- sum(!complete.cases(D2))
 print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
 ```
+### Limpieza de Datos
 
--   
+El primer paso para la limpieza de datos es hacer un resumen de los datos que se tienen.
+```{r}
+summary(D2)
+```
+En primer lugar, se observa que Multiple rooms tiene como valor mínimo 0 y como valor máximo 1; esto mismo ocurre en el caso de la variable Oferta. Procedemos a analizar qué valores se encuentran dentro de estas dos variables.
+```{r}
+par(mfrow=c(1,2))
+counts <- table(D2$`Multiple Rooms`)
+barplot(counts, main = "Multiple Rooms", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,35000))
+counts <- table(D2$Oferta)
+barplot(counts, main = "Oferta", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
+```
+Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas. Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
+```{r}
+vec <- factor(D2$Oferta, labels = c('No','Sí'))
+D2$Oferta <- vec
+vec <- factor(D2$`Multiple Rooms`, labels = c('No','Sí'))
+D2$`Multiple Rooms` <- vec
+vec <- factor(D2$Share_Room, labels = c('No','Sí'))
+D2$Share_Room <- vec
+vec <- factor(D2$Private_Room, labels = c('No','Sí'))
+D2$Private_Room <- vec
+vec <- factor(D2$Superhost, labels = c('No','Sí'))
+D2$Superhost <- vec
+```
+A continuación, se hace nuevamente un resumen para verificar los cambios realizados a las variables.
+```{r}
+summary(D2)
+```
+De este resumen, también se puede observar que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro del rango establecido (0-100). A continuación se verificará que la variable capacidad contenga solamente números enteros, ya que un airbnb no puede tener capacidad para un número no entero de personas.El mismo análisis se realizará para la variable Habitaciones, ya que sucede lo mismo con esta variable.
+```{r}
+par(mfrow=c(1,2))
+counts <- table(D2$Capacidad)
+barplot(counts, main = "Capacidad", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,20000))
+counts <- table(D2$Habitaciones)
+barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
+```
+Se observa que ambas variables cumplen con los criterios previamente mencionados. Por último se procederá a analizar la variable Ciudad, Día y Tipo; estas son catalogadas por R como variables de tipo char. Para el caso, de la variable Ciudad, deberían haber 9 valores distintos, que representen las 9 ciudades a las que pertenece la data.
+```{r}
+counts <- table(D2$Ciudad)
+barplot(counts, main = "Ciudad", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9)
+```
+Una vez comprobado que solamente existen 9 ciudades en el Dataframe, se procede a revisar el Día y Tipo de airbnb.
+```{r}
+par(mfrow=c(1,2))
+counts <- table(D2$Day)
+barplot(counts, main = "Día", ylab = "Número de Observaciones", las = 2, ylim = c(0,25000), cex.axis = 0.8, cex.lab = 0.7, cex.names = 0.6)
+counts <- table(D2$Tipo)
+barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim = c(0,30000), cex.axis = 0.8, cex.names = 0.6, cex.lab = 0.7)
+```
+Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
+
