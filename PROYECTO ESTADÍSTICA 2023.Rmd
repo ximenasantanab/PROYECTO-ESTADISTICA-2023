@@ -155,6 +155,9 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 
 ```{r}
 
+counts <- table(D2$Limpieza)
+barplot(counts)
+
 library(funModeling)
 
 
