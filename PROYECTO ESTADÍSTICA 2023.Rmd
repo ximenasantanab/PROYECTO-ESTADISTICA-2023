@@ -247,10 +247,6 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-Posteriormente analizaremos las variables restantes para verificar que los datos cumplan con los criterios necesarios.
-
-
-
 ## \<\<\<\<\<\<\< HEAD
 
 ```{r}
