@@ -1,9 +1,23 @@
 ---
 title: "R Notebook"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
+
+#                                 
+
+#                                 PROYECTO 
+
+CURSO : ESTADÍSTICA - "ANÁLISIS DESCRIPTIVO"
+
+**Integrantes Grupo 6 :**
+
+| Nombre y Apellido |  Código   | Participación |
+|:-----------------:|:---------:|:-------------:|
+|  Ximena Santana   | 202010024 |      0%       |
+|                   |           |               |
 
 1.  **Tema**
 
@@ -13,23 +27,27 @@ output:
 
     Analizar del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023.
 
-3.  **Objetivos**
+3.  **Objetivos específicos**
 
--   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
+    -   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
--   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
+    -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa. del 2023.
 
--   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
+    -   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
-3.  **Instrumento de recolección**
+4.  **Planificación : realizar un diagrama de Gantt hasta la semana 15. (FALTA)**
 
--   Acceso a data de fuente secundaria ( 41 mil observaciones: Datos sobre los AIRBNB de 9 ciudades famosas de Europa, Amsterdam, Athens, Barcelona, Berlin, Budapest, Lisbon, Paris, Rome and Vienna. )
+    Para validar la factibilidad del proyecto en el tiempo de 16 semanas, se realizó un diagrama de Gantt con las actividades a realizarse y sus tiempos límite.
+
+5.  **Instrumento de recolección**
+
+    Acceso a data de fuente secundaria ( 41 mil 714 observaciones: Datos sobre los AIRBNB de 9 ciudades famosas de Europa, Amsterdam, Athens, Barcelona, Berlin, Budapest, Lisbon, Paris, Rome and Vienna. ) *Población : \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ Muestra : \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ .*
 
     <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>
 
     <https://drive.google.com/file/d/1I1u893jIu2HbdGp-ljNbc6_ANqmrJ2Xq/view?usp=share_link>
 
--   Clasificación de variables
+6.  **Clasificación de variables**
 
     | N°  |          Variable           |         Tipo         |
     |:---:|:---------------------------:|:--------------------:|
@@ -51,53 +69,69 @@ output:
     | 16  | Normalised attraction Index | (Numérica continua)  |
     | 17  | Normalised restaurant index | (Numérica continua)  |
 
-3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15. (FALTA)**
+7.  **Lectura de base de datos**
 
-4.  **Lectura de base de datos**
+-   Carga de Librerías y funciones :
+
+    ```{r}
+    library(readr)
+    library(dplyr)
+    D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
+    ```
+
+-   Lectura de variables
+
+    ```{r}
+    summary(D)
+    View(D) 
+    ```
+
+-   Eliminamos la columna 18 y 16, ya que de las 2 variantes de las variables Attraction y Restaurant , sólo usamos sus valores normalizados.
 
 ```{r}
-library(readr)
-library(dplyr)
-D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
-```
-
--   Eliminamos la columna 18 y 16, ya que de esas variables usamos sólo sus valores normalizados.
-
-```{r}
-View(D) 
-
 D$`Attraction Index` <- NULL
 D$`Restraunt Index` <- NULL
 
 ```
 
--   Re asignación de nombres :
+-   Reasignación de nombres en "D2":
 
-```{r}
-names(D)
-```
+    ```{r}
+    names(D)
+    ```
 
 ```{r}
 D %>% rename( Tipo = `Room Type` , Capacidad = `Person Capacity`, Oferta = Business, Habitaciones = Bedrooms, Ind.Atraccion = `Normalised Attraction Index`, Precio = Price, Share_Room = `Shared Room`, Limpieza = `Cleanliness Rating`, Ind.Restaurantes = `Normalised Restraunt Index`, Satisfaccion = `Guest Satisfaction`, Ciudad = City, Private_Room = `Private Room` ) -> D2
+
 ```
 
 ```{r}
 names(D2)
 ```
 
+-   Número de Observaciones y Variables "D2"
+
+    ```{r}
+    'Total de observaciones'
+    nrow(D2)
+    'Total de variables'
+    ncol(D2)
+    ```
+
 -   Búsqueda de NA's y comprobación de casos completos
 
-```{r}
-Total_de_NAs <- sum(is.na(D))
-print(paste("El total de NAs es :", Total_de_NAs)) 
+    ```{r}
 
-Observaciones_completas <- sum(complete.cases(D2))
-print(paste("Observaciones completas es : ",Observaciones_completas ))
-Observaciones_incompletas <- sum(!complete.cases(D2))
-print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
-```
+    Total_de_NAs <- sum(is.na(D))
+    print(paste("El total de NAs es :", Total_de_NAs)) 
 
-### Limpieza de Datos
+    Observaciones_completas <- sum(complete.cases(D2))
+    print(paste("Observaciones completas es : ",Observaciones_completas ))
+    Observaciones_incompletas <- sum(!complete.cases(D2))
+    print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
+    ```
+
+## Limpieza de Datos
 
 El primer paso para la limpieza de datos es hacer un resumen de los datos que se tienen.
 
@@ -111,7 +145,9 @@ En primer lugar, se observa que Multiple rooms tiene como valor mínimo 0 y como
 par(mfrow=c(1,2))
 
 counts <- table(D2$`Multiple Rooms`)
+counts
 barplot(counts, main = "Multiple Rooms", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,35000))
+
 
 ```
 
@@ -120,7 +156,7 @@ counts <- table(D2$Oferta)
 barplot(counts, main = "Oferta", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 ```
 
-Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas. Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
+Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas (0 y 1). Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
 
 ```{r}
 vec <- factor(D2$Oferta, labels = c('No','Sí'))
@@ -141,34 +177,51 @@ A continuación, se hace nuevamente un resumen para verificar los cambios realiz
 summary(D2)
 ```
 
-#### Verificar valores enteros : 
+#### Verificar valores enteros :
 
-De este resumen, también se puede observar que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro del rango establecido (0-100).
+-    Valores Normalizados : De este resumen, también se puede observar que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro del rango establecido (0-100).
 
-A continuación se verificará que la variable capacidad contenga solamente números enteros, ya que un airbnb no puede tener capacidad para un número no entero de personas.El mismo análisis se realizará para la variable Habitaciones, ya que sucede lo mismo con esta variable.
+-   Variable Capacidad y Habitaciones : A continuación se verificará que la variable capacidad contenga solamente números enteros, ya que un airbnb no puede tener capacidad para un número no entero de personas. El mismo análisis se realizará para la variable Habitaciones, ya que sucede lo mismo con esta variable.
 
-```{r}
-par(mfrow=c(1,2))
-counts <- table(D2$Capacidad)
-barplot(counts, main = "Capacidad", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,20000))
+    ```{r}
+    par(mfrow=c(1,2))
+    counts <- table(D2$Capacidad)
+    barplot(counts, main = "Capacidad", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,20000))
 
 
-counts <- table(D2$Habitaciones)
-barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
-```
+    counts <- table(D2$Habitaciones)
+    barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 
-#### Verificando variable Ciudad, Día y Tipo
+    ```
 
-Se observa que ambas variables cumplen con los criterios previamente mencionados. Por último se procederá a analizar la variable Ciudad, Día y Tipo; estas son catalogadas por R como variables de tipo char. Para el caso, de la variable Ciudad, deberían haber 9 valores distintos, que representen las 9 ciudades a las que pertenece la data.
+    ```{r}
+    "Sólo valores enteros de habitaciones y Capacidad de personas"
+    unique(D2$Habitaciones)
+    unique(D2$Capacidad)
+    ```
 
-```{r}
-counts <- table(D2$Ciudad)
-barplot(counts, main = "Ciudad", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9)
-```
+Se observa que ambas variables cumplen con los criterios previamente mencionados.
+
+#### Verificando variable Ciudad, Día y Tipo :
+
+Por último se procederá a analizar la variable Ciudad, Día y Tipo; estas son catalogadas por R como variables de tipo "character".
+
+-   Ciudad : Para el caso, de la variable Ciudad, deberían haber 9 valores distintos, que representen las 9 ciudades a las que pertenece la data.
+
+    ```{r}
+    unique(D2$Ciudad)
+
+    # GRÁFICA DE CIUDADES Y NÚMERO DE OBSERVACIONES
+    counts <- table(D2$Ciudad)
+    barplot(counts, main = "Ciudad", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9)
+    ```
 
 Una vez comprobado que solamente existen 9 ciudades en el Dataframe, se procede a revisar el Día y Tipo de airbnb.
 
 ```{r}
+
+unique(D2$Day)
+unique(D2$Tipo)
 par(mfrow=c(1,2)) #QUE HACE mfrow ?
 counts <- table(D2$Day)
 barplot(counts, main = "Día", ylab = "Número de Observaciones", las = 2, ylim = c(0,25000), cex.axis = 0.8, cex.lab = 0.7, cex.names = 0.6)
@@ -178,22 +231,108 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## \<\<\<\<\<\<\< HEAD
+## Análisis Descriptivo 
+
+1.  Objetivo 1: Describir las características de los alojamientos más caros y más económicos.
+
+    Para elaborar nuestro rankine tomamos en cuentas los siguientes parámetros :
+
+2.  Variables numéricas de interés
+
+3.  **Objetivo 2: Describir las características de los alojamientos más caros y más económicos.**
+
+-   Seleccionar los Airbnb más caros de cada Ciudad :
+
+    ```{r}
+
+    ```
+
+-   Seleccionamos la lista de Airbnb de sólo una ciudad y de ellos ubicamos si el que tiene mayor costo se encuentra cerca a la ciudad, cuánta capacidad de personas tiene y si existe una relación con el índice de restaurantes y su cercanía al metro y centro de la cuidad.
+
+    ```{r}
+    unique(D2$Ciudad)
+    ```
+
+    ### La primera ciudad a analizar es Roma (DR): 
+
+    ```{r}
+    D2 %>% filter(Ciudad == "Rome") -> DR
+    DR
+    ```
 
 ```{r}
 
-library(funModeling)
+"Precio más caro en Roma" 
+max(DR$Precio)
 
-
-status(D2)
+a <- which.max(DR$Precio)
+a
 
 ```
 
 ```{r}
- A <- df_status(D2,print_results=F)
+DR[1758,1:17]
+```
 
+```{r}
+"Indice de Restaurantes del 0 al 100"
+round(DR$Ind.Restaurantes[a],digits = 2)
+"Indice de atracción del 0 al 100"
+round(DR$Ind.Atraccion[a],digits = 2)
+"Distancia al centro de la cuidad en km"
+round(DR$`City Center (km)`[a],digits = 2)
+"Distancia al metro en km"
+round(DR$`Metro Distance (km)`[a],digits = 2)
 
 
 ```
 
-======= \>\>\>\>\>\>\> 34956cedce1c136ea59c35bed128582071d0140d
+### La segunda ciudad es París
+
+```{r}
+D2 %>% filter(Ciudad == "Paris") -> DPARIS
+DPARIS
+```
+
+```{r}
+"Precio más caro en París" 
+max(DPARIS$Precio)
+
+a <- which.max(DPARIS$Precio)
+a
+```
+
+```{r}
+DPARIS[2349,1:17]
+```
+
+### La segunda ciudad es Amsterdam 
+
+```{r}
+D2 %>% filter(Ciudad == "Amsterdam") -> DAMS
+DAMS
+```
+
+```{r}
+
+"Precio más caro en Amsterdam" 
+max(DAMS$Precio)
+
+a <- which.max(DAMS$Precio)
+a
+
+```
+
+```{r}
+DAMS[1963,1:17]
+
+```
+
+```{r}
+regresion3 <- lm(Precio ~ `City Center (km)`, data = DR)
+#summary(regresion3)
+plot(DR$`City Center (km)`,DR$Precio, xlab='Distancia al centro de la ciudad', ylab='Precio (dólares)')
+abline(regresion3)
+```
+
+Aquí podemos obervar las características de Airbnb más costoso de cada cuidad, sin embargo esto cambia si este fue en un weekday o un weekend. Por ello se procede a separar los más caros en estos diferentes tipos de días :
