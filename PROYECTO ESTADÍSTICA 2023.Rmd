@@ -7,10 +7,10 @@ output:
 
 **PROYECTO ESTADÍSTICA GRUPO 6**
 
-| Nombre y Apellido | Código | Participación  |
-|:-----------------:|:------:|:--------------:|
-|  Ximena Santana   |        |       0%       |
-|                   |        |                |
+| Nombre y Apellido | Código | Participación |
+|:-----------------:|:------:|:-------------:|
+|  Ximena Santana   |        |      0%       |
+|                   |        |               |
 
 1.  **Tema**
 
@@ -28,7 +28,9 @@ output:
 
 -   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
-3.  **Instrumento de recolección**
+3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15. (FALTA)**
+
+4.  **Instrumento de recolección**
 
 -   Acceso a data de fuente secundaria ( 41,714 observaciones: Datos sobre los AIRBNB de 9 ciudades famosas de Europa, Amsterdam, Athens, Barcelona, Berlin, Budapest, Lisbon, Paris, Rome and Vienna. )
 
@@ -58,14 +60,26 @@ output:
     | 16  | Normalised attraction Index | (Numérica continua)  |
     | 17  | Normalised restaurant index | (Numérica continua)  |
 
-3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15. (FALTA)**
-
-4.  **Lectura de base de datos**
+3.  **Lectura de base de datos**
 
 ```{r}
 library(readr)
 library(dplyr)
 D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
+coef_var <- function(x, na.rm = FALSE) {sd(x, na.rm=na.rm) / mean(x, na.rm=na.rm)}
+#coef_var()
+
+roundF <- function(x){return(round(x,digits = 2))}
+
+#moda <- function(x) {return(as.character(names(which.max(table(DF$Barco)))))} 
+
+```
+
+Número de Observaciones y Variables
+
+```{r}
+nrow(D)
+ncol(D)
 ```
 
 -   Eliminamos la columna 18 y 16, ya que de esas variables usamos sólo sus valores normalizados.
@@ -104,7 +118,7 @@ Observaciones_incompletas <- sum(!complete.cases(D2))
 print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
 ```
 
-### Limpieza de Datos
+## Limpieza de Datos
 
 #### Verificar Variables booleanas
 
@@ -260,11 +274,14 @@ unique(filter(D2, Distance_Metro>8)[,'Ciudad'])
 
 Nuevamente, se observa que las ciudades son Berlín y Budapest, que son ciudades bastante grandes como se mencionó en el punto anterior. Por este motivo, se considerarán como datos válidos.
 
-#### Verificando variables de tipo char
+#### Verificando variables de tipo character
 
 Por último se procederá a analizar las variables Ciudad, Día y Tipo; estas son catalogadas por R como variables de tipo char. Para el caso, de la variable Ciudad, deberían haber 9 valores distintos, que representen las 9 ciudades a las que pertenece la data.
 
 ```{r}
+unique(D2$Ciudad)
+unique(D2$Tipo)
+unique(D2$Day)
 counts <- table(D2$Ciudad)
 barplot(counts, main = "Ciudad", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9)
 ```
@@ -281,4 +298,159 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## 
+## Análisis Descriptivo :
+
+Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
+
+Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
+
+```{r}
+unique(D2$Ciudad)
+```
+
+-   Promedio de precios en todas las ciudades : BOXPLOT ??
+
+    ```{r}
+    s <-round(mean(D2$Precio),digits = 2)
+
+    ```
+
+-   Cuánto es el % de Airbnb con precios mayores al promedio que se encuentran en cada una de las ciudades :
+
+    ```{r}
+    D2 %>% filter(Precio > s)%>% arrange(Precio) -> DD2
+    DD2
+    C <- table(DD2$Ciudad)
+    C 
+    barplot(C)
+    mosaicplot(C)
+
+    ```
+
+-   Cuál es la cuidad que tiene mayor puntaje de Satisfacción :
+
+    ```{r}
+    # La ciudad que más aparece aquí es  : 
+
+    DD2 %>% select(Ciudad,Satisfaccion)%>%group_by(Ciudad)%>%summarise(Satisfaccion=sum(Satisfaccion)) %>%arrange(desc(Satisfaccion))%>%tail(n=-1) -> X2
+
+    X2
+
+
+    ```
+
+    ```{r}
+    barplot(X2$Satisfaccion, ylim = c(0,200000))
+    ```
+
+-   Dónde se encuentra el Airbnb más caro y más económico, y qué características tienen :
+
+    ```{r}
+    max(D2$Precio)
+    a <- which.max(D2$Precio)
+    D2[a,1:17]
+
+    ```
+
+    ```{r}
+    round(min(D2$Precio),digits = 2)
+    a2 <- which.min(D2$Precio)
+    D2[a2,1:17]
+
+    ```
+
+-   Identificar al Airbnb más caro de cada país :
+
+    ### Amsterdam
+
+    ```{r}
+    D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
+    DAMS
+    #El más caro
+    r1 <- which.max(DAMS$Precio)
+    #El más económico
+    r2 <- which.min(DAMS$Precio)
+    DAMS[r1,1:17]
+    DAMS[r2,1:17]
+
+    ```
+
+    De los Airbnb que pertenecen a Amsterdam, separamos los rangos de precios e identificamos dónde es que se encuentra la mayoría : (Histograma)
+
+    Identificar la relación Precio vs Ubicación #Modificar su escala
+
+    ```{r}
+    regresion1 <- lm(Distance_Metro ~ Precio , data = DAMS)
+    s1 <- summary(regresion1)
+
+
+    plot(DAMS$Precio,DAMS$Distance_Metro, xlab='Precio', ylab='Distancia al Metro (km)')
+    abline(regresion1)
+
+    max(DAMS$Precio)
+    min(DAMS$Distance_Metro)
+    max(DAMS$Distance_Metro)
+
+
+
+    ```
+
+    ```{r}
+
+    regresion2 <- lm(Distance_Center ~ Precio , data = DAMS)
+    summary(regresion2)
+    plot(DAMS$Precio,DAMS$Distance_Center, xlab='Precio', ylab='Distancia al Centro(km)')
+    abline(regresion2)
+    ```
+
+```{r}
+regresion3 <- lm(Ind.Restaurantes ~ Precio , data = DAMS)
+summary(regresion3)
+plot(DAMS$Precio,DAMS$Ind.Restaurantes, xlab='Precio', ylab='Ind.Restaurantes')
+abline(regresion3)
+```
+
+```{r}
+regresion4 <- lm( Satisfaccion~Precio , data = DAMS)
+summary(regresion4)
+plot(DAMS$Precio,DAMS$Satisfaccion, xlab='Precio', ylab='Satisfacción')
+abline(regresion4)
+
+```
+
+### Barcelona 
+
+```{r}
+D2 %>% filter(Ciudad =='Barcelona') -> DBAR
+DBAR
+```
+
+### Budapest
+
+### Athenas
+
+### Roma 
+
+### 
+
+### Filtramos a todos los más caros de su país
+
+-   
+
+    ```{r}
+    D2 %>% group_by(Ciudad) %>% filter(Precio == max(Precio))%>% arrange(Precio)    -> D4
+    D4
+
+    ```
+
+```{r}
+barplot(table(D4$Tipo))
+
+hist(D4$Precio)
+```
+
+Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
+
+-   Filtrar aquellas ciudades y su valor de máxima atracción
+
+-   Identificar su relación entre atracción e indice de restaurantes
