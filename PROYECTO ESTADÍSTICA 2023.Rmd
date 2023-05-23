@@ -168,6 +168,7 @@ A continuación, se verificará que los valores de Habitaciones se hayan reempla
 counts <- table(D2$Habitaciones)
 barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 ```
+
 Se observa que ya no existen filas con airbnb's de 0 habitaciones.
 
 El siguiente paso es verificar las variables Limpieza y Satisfacción. Estas variables corresponden a las puntuaciones dejadas por los usuarios de los airbnb's. Normalmente estas puntuaciones son números enteros, para verificar que esto se cumpla, se analizarán estas variables.
