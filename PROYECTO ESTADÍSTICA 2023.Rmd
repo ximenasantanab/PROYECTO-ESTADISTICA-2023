@@ -418,7 +418,7 @@ abline(regresion4)
 
 ```
 
-### Barcelona 
+### Barcelona
 
 ```{r}
 D2 %>% filter(Ciudad =='Barcelona') -> DBAR
@@ -429,7 +429,7 @@ DBAR
 
 ### Athenas
 
-### Roma 
+### Roma
 
 ### 
 
