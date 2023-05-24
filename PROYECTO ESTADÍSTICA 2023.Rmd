@@ -308,7 +308,7 @@ Objetivo 2 : Describir las características de los alojamientos más caros y má
 unique(D2$Ciudad)
 ```
 
--   Promedio de precios en todas las ciudades : BOXPLOT ??
+-   Promedio de precios en todas las ciudades : AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
 
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
