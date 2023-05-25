@@ -310,12 +310,22 @@ COMPLETAR (GONZALO Y EDUARDO)
 ### Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
 1.  Conocer el total de las ciudades que pertenecen a la base de datos
+
 2.  Conocer el precio promedio de los alojamientos en las 9 ciudades
+
 3.  Identificar cuántas observaciones se encuentran por debajo de la mediana
+
 4.  De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+
 5.  Conocer el precio más económico y sus características
+
 6.  Conocer el precio más caro e identificar sus características
-7.  Analizar por país las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
+
+7.  Analizar por país las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atracción.
+
+8.  Encontrar la relación entre cercanía al centro de la cuidad y costo de alojamiento.
+
+9.  Conocer el precio de cuartos múltiples y privados en relación a la cercanía al centro.
 
 ```{r}
 unique(D2$Ciudad)
