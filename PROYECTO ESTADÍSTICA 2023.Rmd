@@ -18,7 +18,7 @@ output:
 
 2.  **Objetivo general**
 
-    Analizar del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023.
+    Analizar del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023. holaaa
 
 3.  **Objetivos**
 
