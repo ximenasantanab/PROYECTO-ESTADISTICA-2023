@@ -9,7 +9,7 @@ output:
 
 | Nombre y Apellido | Código | Participación |
 |:-----------------:|:------:|:-------------:|
-|  Ximena Santana   |        |      0%       |
+|  Ximena Santana   |        |               |
 |                   |        |               |
 
 1.  **Tema**
@@ -70,6 +70,7 @@ coef_var <- function(x, na.rm = FALSE) {sd(x, na.rm=na.rm) / mean(x, na.rm=na.rm
 #coef_var()
 
 roundF <- function(x){return(round(x,digits = 2))}
+
 
 #moda <- function(x) {return(as.character(names(which.max(table(DF$Barco)))))} 
 
@@ -300,12 +301,16 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 
 ## Análisis Descriptivo :
 
-Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
+### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
-Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
+COMPLETAR
+
+### Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
 ```{r}
 unique(D2$Ciudad)
+
+table(D2$Ciudad)
 ```
 
 -   Promedio de precios en todas las ciudades : AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
@@ -320,14 +325,16 @@ unique(D2$Ciudad)
     ```{r}
     D2 %>% filter(Precio > s)%>% arrange(Precio) -> DD2
     DD2
-    C <- table(DD2$Ciudad)
+    C <- table(DD2$Ciudad) # En amsterdam está la mayoría de Airbnbs que su precio es mayor al promedio
     C 
+    # OPCIÓN 1 
     barplot(C)
+    # OPCIÓN 2
     mosaicplot(C)
 
     ```
 
--   Cuál es la cuidad que tiene mayor puntaje de Satisfacción :
+-   Cuál es la cuidad que tiene mayor puntaje de Satisfaccion :
 
     ```{r}
     # La ciudad que más aparece aquí es  : 
@@ -359,49 +366,69 @@ unique(D2$Ciudad)
 
     ```
 
--   Identificar al Airbnb más caro de cada país :
+Identificar al Airbnb más caro de cada país :
 
-    ### Amsterdam
+### Amsterdam
 
-    ```{r}
-    D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
-    DAMS
-    #El más caro
-    r1 <- which.max(DAMS$Precio)
-    #El más económico
-    r2 <- which.min(DAMS$Precio)
-    DAMS[r1,1:17]
-    DAMS[r2,1:17]
+```{r}
+D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
+DAMS
+#El más caro
+r1 <- which.max(DAMS$Precio)
+#El más económico
+r2 <- which.min(DAMS$Precio)
+DAMS[r1,1:17]
+DAMS[r2,1:17]
 
-    ```
+```
 
-    De los Airbnb que pertenecen a Amsterdam, separamos los rangos de precios e identificamos dónde es que se encuentra la mayoría : (Histograma)
+De los Airbnb que pertenecen a Amsterdam, separamos los rangos de precios e identificamos dónde es que se encuentra la mayoría : (Histograma)
 
-    Identificar la relación Precio vs Ubicación #Modificar su escala
+Identificar la relación Precio vs Ubicación #Modificar su escala
 
-    ```{r}
-    regresion1 <- lm(Distance_Metro ~ Precio , data = DAMS)
-    s1 <- summary(regresion1)
-
-
-    plot(DAMS$Precio,DAMS$Distance_Metro, xlab='Precio', ylab='Distancia al Metro (km)')
-    abline(regresion1)
-
-    max(DAMS$Precio)
-    min(DAMS$Distance_Metro)
-    max(DAMS$Distance_Metro)
+```{r}
+regresion1 <- lm(Distance_Metro ~ Precio , data = DAMS)
+s1 <- summary(regresion1)
 
 
+plot(DAMS$Precio,DAMS$Distance_Metro, xlab='Precio', ylab='Distancia al Metro (km)')
+abline(regresion1)
 
-    ```
+max(DAMS$Precio)
+min(DAMS$Distance_Metro)
+max(DAMS$Distance_Metro)
 
-    ```{r}
+#PARA VER SI ESTOS DOS TIENEN RELACIÓN SE CALCULA COR Y SU COVARIANZA
 
-    regresion2 <- lm(Distance_Center ~ Precio , data = DAMS)
-    summary(regresion2)
-    plot(DAMS$Precio,DAMS$Distance_Center, xlab='Precio', ylab='Distancia al Centro(km)')
-    abline(regresion2)
-    ```
+
+```
+
+Cálculo de correlación
+
+```{r}
+
+# Hallamos la correlación entre precio y distancia al metro. la correlación está entre -1.....0....   1 . Mientras más cerca al cero es que la correlación es baja.
+
+cor(DAMS$Precio,DAMS$Distance_Metro)
+
+```
+
+Diagrama de dispersión :
+
+```{r}
+plot(DAMS$Precio ~ DAMS$Distance_Metro)
+recta <- lm(Distance_Metro ~ Precio , data = DAMS)
+abline(recta)
+summary(recta)
+```
+
+```{r}
+
+regresion2 <- lm(Distance_Center ~ Precio , data = DAMS)
+summary(regresion2)
+plot(DAMS$Precio,DAMS$Distance_Center, xlab='Precio', ylab='Distancia al Centro(km)')
+abline(regresion2)
+```
 
 ```{r}
 regresion3 <- lm(Ind.Restaurantes ~ Precio , data = DAMS)
