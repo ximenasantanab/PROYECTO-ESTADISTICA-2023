@@ -478,6 +478,55 @@ hist(D4$Precio)
 
 Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
+# Ciudad y índice de atracción por factor demográfico:
+
+Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
+
+```{r}
+# Crear una tabla con las 9 ciudades
+D<-read.csv("Aemf1.csv")
+D1<-data.frame(table(D$City))
+ciudades <- D1$Var1
+
+# Generar datos aleatorios para cada ciudad
+datos_al_azar <- sample(1:9, length(ciudades))
+
+# Crear el data frame con las ciudades y los datos al azar
+datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
+
+# Ordenar los datos por ciudad
+datos <- datos[order(datos$Ciudad), ]
+
+# Crear la gráfica de barras
+barplot(datos$IndiceAtraccion, 
+        names.arg = datos$Ciudad,
+        xlab = "Ciudad",
+        ylab = "Índice de atracción",
+        main = "Índice de atracción por ciudad",
+        cex.names = 0.5)
+
+```
+
+
+# Precio e índice de atracción:
+
+Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X represente el precio y el eje Y represente el índice de atracción. Cada punto en el gráfico representará una opción de alojamiento, y su posición en el gráfico mostrará cómo varía el índice de atracción en relación con el precio. Esto te permitirá identificar posibles patrones, como una mayor atracción hacia opciones de precio moderado.
+
+```{r}
+# Generar datos aleatorios para cada ciudad
+# Generar datos aleatorios para cada ciudad
+D2 <- D[which(!duplicated(D$City)), ]
+D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
+
+# Crear el gráfico de dispersión
+plot(D2$Price, D2$`Attraction Index`,
+     xlab = "Precio",
+     ylab = "Índice de atracción",
+     main = "Relación entre Precio e Índice de atracción")
+
+```
+
+
 -   Filtrar aquellas ciudades y su valor de máxima atracción
 
 -   Identificar su relación entre atracción e indice de restaurantes
