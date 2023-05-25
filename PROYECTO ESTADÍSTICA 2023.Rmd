@@ -299,6 +299,17 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
+## Análisis Univariado : 
+
+Analizamos las variables por separado de nuestra variables más relevantes
+
+1.  Ciudad (saber las frecuencias de cada ciudad en el estudio "hacer su gráfica" se coloca en %)
+2.  Precio (ubicar la media, la mediana "boxplot" mediana, valores atípicos, todo lo que pueda describir de un ) MIN MAX RANGO
+3.  Satisfacción
+4.  Tipos de cuartos
+
+## Análisis Bivariado : 
+
 ## Análisis Descriptivo :
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
@@ -311,11 +322,16 @@ COMPLETAR (GONZALO Y EDUARDO)
 
 1.  Conocer el total de las ciudades que pertenecen a la base de datos
 2.  Conocer el precio promedio de los alojamientos en las 9 ciudades
-3.  Identificar cuántas observaciones se encuentran por debajo de la mediana
-4.  De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
-5.  Conocer el precio más económico y sus características
-6.  Conocer el precio más caro e identificar sus características
-7.  Analizar por país las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
+3.  Conocer la mediana del precio de los alojamientos
+4.  Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"
+5.  Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
+6.  De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+7.  Conocer el precio más económico y sus características
+8.  Identificar el tipo de cuarto de las habitaciones más económicas
+9.  Conocer el precio más caro e identificar sus características
+10. Identificar el tipo de cuarto de las habitaciones más caras
+11. Conocer el precio más caro e identificar sus características
+12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
 
 ```{r}
 unique(D2$Ciudad)
