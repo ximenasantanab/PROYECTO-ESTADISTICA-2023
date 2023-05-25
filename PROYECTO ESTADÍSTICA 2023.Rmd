@@ -303,9 +303,19 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
-COMPLETAR
+COMPLETAR (GONZALO Y EDUARDO)
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ### Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
+
+1.  Conocer el total de las ciudades que pertenecen a la base de datos
+2.  Conocer el precio promedio de los alojamientos en las 9 ciudades
+3.  Identificar cuántas observaciones se encuentran por debajo de la mediana
+4.  De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+5.  Conocer el precio más económico y sus características
+6.  Conocer el precio más caro e identificar sus características
+7.  Analizar por país las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
 
 ```{r}
 unique(D2$Ciudad)
@@ -313,7 +323,7 @@ unique(D2$Ciudad)
 table(D2$Ciudad)
 ```
 
--   Promedio de precios en todas las ciudades : AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
+-   El precio promedio en todas las ciudades de Europa: AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
 
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
@@ -329,9 +339,6 @@ table(D2$Ciudad)
     C 
     # OPCIÓN 1 
     barplot(C)
-    # OPCIÓN 2
-    mosaicplot(C)
-
     ```
 
 -   Cuál es la cuidad que tiene mayor puntaje de Satisfaccion :
@@ -351,6 +358,8 @@ table(D2$Ciudad)
     ```
 
 -   Dónde se encuentra el Airbnb más caro y más económico, y qué características tienen :
+
+    El alineamiento más caro se encuentra en Athenas con un precio de 18,545.45 mil dólares, lo que implica una "Casa entera", así mismo este tiene altas calificaciones tanto en limpeza y satisfacción. Además la cercanía a las ciudades es buena (es cercano a ellas)
 
     ```{r}
     max(D2$Precio)
@@ -507,7 +516,6 @@ barplot(datos$IndiceAtraccion,
 
 ```
 
-
 # Precio e índice de atracción:
 
 Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X represente el precio y el eje Y represente el índice de atracción. Cada punto en el gráfico representará una opción de alojamiento, y su posición en el gráfico mostrará cómo varía el índice de atracción en relación con el precio. Esto te permitirá identificar posibles patrones, como una mayor atracción hacia opciones de precio moderado.
@@ -525,7 +533,6 @@ plot(D2$Price, D2$`Attraction Index`,
      main = "Relación entre Precio e Índice de atracción")
 
 ```
-
 
 -   Filtrar aquellas ciudades y su valor de máxima atracción
 
