@@ -394,6 +394,7 @@ min(c1)
 which.min(c1)
 
 ```
+
 ```{r}
 #Analizamos el lado de  los 100 alojamientos más caros : 
 
@@ -425,6 +426,7 @@ tipo_capacidad <- table(CAROS100$Tipo,CAROS100$Capacidad)
 
 mosaicplot(tipo_capacidad)
 ```
+
 ```{r}
 "La cantidad promedio de habitaciones en este tipo de alojamientos es:"
 roundF(mean(CAROS100$Habitaciones, na.rm = T))
@@ -433,11 +435,6 @@ day <- table(CAROS100$Day) # Y se suelen tomar los fines de semana
 mosaicplot(day)
 ```
 
-
-
-
-
-
 *Analizando los a los 100 más económicos*
 
 ```{r}
@@ -445,7 +442,6 @@ D2 %>% filter(Precio < mediana_precio) %>% arrange(Precio)-> ECO
 ECO
 nrow(ECO) #Es el total de Airbnb con precios menores a los 203.8193 (mediana) son ...20,856
 ```
-
 
 ```{r}
 #Analizamos el lado de  los 100 alojamientos más Económicos : 
@@ -469,16 +465,12 @@ mean(ECO100$Satisfaccion)
 min(ECO100$Satisfaccion)
 ```
 
-
-
-
 ```{r}
 ## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Habitación privada con baño.
 tipo_capacidadECO <- table(ECO100$Tipo,ECO100$Capacidad)
 
 mosaicplot(tipo_capacidadECO)
 ```
-
 
 ```{r}
 "La cantidad promedio de habitaciones en este tipo de alojamientos es:1 ,el espacio es reducido"
@@ -487,11 +479,6 @@ roundF(mean(ECO100$Habitaciones, na.rm = T))
 dayeco <- table(ECO100$Day) # Y se suelen tomar tanto en día de semana cómo para fines.
 mosaicplot(dayeco)
 ```
-
-
-
-
-
 
 *Del grupo de los más caros Athenas es la ciudad que tiene menos apariciones, por lo que se concluye que en esta ciudad sus precios de sus alojamientos son aún menores que 203.*
 
@@ -581,19 +568,23 @@ ECO %>% filter(ECO$Superhost == 'Sí' )
 
     ```
 
-Identificar al Airbnb más caro de cada país :
+## Relación entre variables por países :
+
+```{r}
+unique(D2$Ciudad)
+```
 
 ### Amsterdam
 
 ```{r}
-D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
-DAMS
+D2 %>% filter(Ciudad =='Amsterdam') -> DAMSTERDAM
+DAMSTERDAM
 #El más caro
-r1 <- which.max(DAMS$Precio)
+r1 <- which.max(DAMSTERDAM$Precio)
 #El más económico
-r2 <- which.min(DAMS$Precio)
-DAMS[r1,1:17]
-DAMS[r2,1:17]
+r2 <- which.min(DAMSTERDAM$Precio)
+DAMSTERDAM[r1,1:17]
+DAMSTERDAM[r2,1:17]
 
 ```
 
@@ -660,20 +651,28 @@ abline(regresion4)
 
 ```
 
-### Barcelona
+### Athenas
 
 ```{r}
-D2 %>% filter(Ciudad =='Barcelona') -> DBAR
+D2 %>% filter(Ciudad =='Athenas') -> DBAR
 DBAR
 ```
 
-### Budapest
+### Barcelona
 
-### Athenas
+### Berlín
 
 ### Roma
 
-### 
+### Budapest
+
+### Lisbon
+
+### París
+
+### Rome
+
+### Vienna
 
 ### Filtramos a todos los más caros de su país
 
@@ -693,15 +692,31 @@ hist(D4$Precio)
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
-#### Ciudad y índice de atracción por factor demográfico:
+-   Analizar las ciudades con mayor indice de atracción (gráficas)
 
-Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
+-   Analizar las ciudades con menor indice de atracción (gráficas)
+
+-   Analizar si el indice de atracción se relaciona a un alto indice de resaturantes cercano al alojamiento o no.
+
+-   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atrracción para cada ciudad (ver si en una de ella hay correlación)
+
+-   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atrracción para cada ciudad (ver si en una de ella hay correlación)
+
+-   Ciudad y índice de atracción por factor demográfico (ciudad):
 
 ```{r}
+
+
+
+#Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
 # Crear una tabla con las 9 ciudades
-#D<-read.csv("Aemf1.csv")
+
 #D1<-data.frame(table(D$City))
 #ciudades <- D1$Var1
+
+TABLA_CIUDADES<-data.frame(table(D2$Ciudad))
+ciudades <- TABLA_CIUDADES$Var1
+ciudades
 
 # Generar datos aleatorios para cada ciudad
 #datos_al_azar <- sample(1:9, length(ciudades))
