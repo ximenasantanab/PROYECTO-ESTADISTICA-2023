@@ -23,7 +23,7 @@ output:
 
 3.  **Objetivos**
 
--   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
+-   Analizar las ciudades con mejor ranking (ELABORAMOS NUESTRO PROPIO RANKING)de experiencia de Airbnb en Europa del 2023.
 
 -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
@@ -103,6 +103,8 @@ names(D)
 
 ```{r}
 D %>% rename( Tipo = `Room Type` , Capacidad = `Person Capacity`, Oferta = Business, Habitaciones = Bedrooms, Ind.Atraccion = `Normalised Attraction Index`, Precio = Price, Share_Room = `Shared Room`, Limpieza = `Cleanliness Rating`, Ind.Restaurantes = `Normalised Restraunt Index`, Satisfaccion = `Guest Satisfaction`, Ciudad = City, Private_Room = `Private Room`, Distance_Center = `City Center (km)`, Distance_Metro = `Metro Distance (km)`) -> D2
+
+View(D2)
 ```
 
 ```{r}
@@ -301,7 +303,7 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## Análisis Univariado : 
+## 1. Análisis Univariado :
 
 ```{r}
 
@@ -392,9 +394,11 @@ Analizamos las variables por separado de nuestra variables más relevantes
 3.  Satisfacción
 4.  Tipos de cuartos
 
-## Análisis Bivariado : 
+### 2. Análisis Bivariado :
 
-## Análisis Descriptivo :
+### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
@@ -412,7 +416,6 @@ arrange(D_Ciudades)
 
 ```
 ```{r}
-par(mfrow=c(3,3))
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
 D2 %>% filter(Ciudad =='Barcelona') -> DBAR
 D2 %>% filter(Ciudad =='Athens') -> DATH
@@ -423,11 +426,62 @@ D2 %>% filter(Ciudad =='Paris') -> DPAR
 D2 %>% filter(Ciudad =='Rome') -> DROM
 D2 %>% filter(Ciudad =='Vienna') -> DVIE
 
-hist(D2$Ind.Atraccion, main = "Atracción", xlab = "Índice de Atracción", ylab = "Frecuencia")
+
+par(mfrow=c(3,3))
+
+hist(DAMS$Precio, main = "Precio en Amsterdam", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
-abline(v = mean_atraccion, col = "red", lwd = 2)
+abline(v = mean(DAMS$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
-abline(v = median_atraccion, col = "blue", lwd = 2)
+abline(v = median(DAMS$Precio), col = "blue", lwd = 2)
+
+hist(DBAR$Precio, main = "Precio en Barcelona", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DBAR$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DBAR$Precio), col = "blue", lwd = 2)
+
+hist(DATH$Precio, main = "Precio en Atenas", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DATH$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DATH$Precio), col = "blue", lwd = 2)
+
+hist(DBER$Precio, main = "Precio en Berlin", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DBER$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DBER$Precio), col = "blue", lwd = 2)
+
+hist(DBUD$Precio, main = "Precio en Budapest", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DBUD$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DBUD$Precio), col = "blue", lwd = 2)
+
+hist(DLIS$Precio, main = "Precio en Lisboa", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DLIS$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DLIS$Precio), col = "blue", lwd = 2)
+
+hist(DPAR$Precio, main = "Precio en Paris", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DPAR$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DPAR$Precio), col = "blue", lwd = 2)
+
+hist(DROM$Precio, main = "Precio en Roma", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DROM$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DROM$Precio), col = "blue", lwd = 2)
+
+hist(DVIE$Precio, main = "Precio en Vienna", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean(DVIE$Precio), col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median(DVIE$Precio), col = "blue", lwd = 2)
 ```
 
 
@@ -492,20 +546,193 @@ mosaicplot(table(D2$Ciudad, D2$Day), main = "Cuándo se reserva - Ciudad", xlab 
 9.  Conocer el precio más caro e identificar sus características
 10. Identificar el tipo de cuarto de las habitaciones más caras
 11. Conocer el precio más caro e identificar sus características
-12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
+12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atracción.
+
+### Desarrollo :
+
+-   Conocer el total de las ciudades que pertenecen a la base de datos
 
 ```{r}
 unique(D2$Ciudad)
+c <- table(D2$Ciudad)
+sum(c)
+barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
 
-table(D2$Ciudad)
+
 ```
+
+*La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
 
 -   El precio promedio en todas las ciudades de Europa: AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
 
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
 
+
     ```
+
+*El precio de los alojamientos se encuentran alrededor de los 260 dólares.*
+
+-   Conocer la mediana del precio de los alojamientos
+
+    ```{r}
+    mediana_precio <- median(D2$Precio)
+    mediana_precio
+    ```
+
+*Se concluye que la mitad de los alojamientos de todas las ciudades son mayores a este valor, por lo tanto se les considera cómo la mitad con precios más caros. La parte inferior se consideran cómo económicos.*
+
+*Al analizar estos 2 descriptores para la variable precio, se observa que la media es mayor a la mediana (se puede incluir un histograma y ver su sesgo)*
+
+-   Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
+
+Filtramos la mitad superior a la mediana
+
+```{r}
+D2 %>% filter(Precio > mediana_precio) %>% arrange(desc(Precio)) -> CAROS
+CAROS
+nrow(CAROS) #Es el total de Airbnb con precios mayores a los 203.8193 (mediana)
+
+
+```
+
+Encontramos las cuidad
+
+```{r}
+c1 <- table(CAROS$Ciudad) #Del grupos de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795). El de más apariciones es París (5,724)
+c1
+min(c1)
+which.min(c1)
+
+```
+
+```{r}
+#Analizamos el lado de  los 100 alojamientos más caros : 
+
+CAROS[1:100, ] -> CAROS100 
+CAROS100
+
+#Qué ciudad aparece más aquí en alojamientos caros : 
+ciudades_100 <- table(CAROS100$Ciudad)
+barplot(ciudades_100)
+
+superhost100 <- table(CAROS100$Superhost)
+barplot(superhost100)
+
+#Los valores de Limpieza y Satisfacción son muy altos
+"La calificación que le asignan a este tipo de alojaminetos es 9.5 en promedio en LIMPIEZA"
+mean(CAROS100$Limpieza) 
+"La Satisfacción del servicio es una notación alta, ya que tiene un 95.19 en promedio"
+mean(CAROS100$Satisfaccion)
+"Y lo mínimo en satisfacción es 60, lo que igual es alto"
+min(CAROS100$Satisfaccion)
+
+
+```
+
+```{r}
+
+## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Casa Entera
+tipo_capacidad <- table(CAROS100$Tipo,CAROS100$Capacidad)
+
+mosaicplot(tipo_capacidad)
+```
+
+```{r}
+"La cantidad promedio de habitaciones en este tipo de alojamientos es:"
+roundF(mean(CAROS100$Habitaciones, na.rm = T))
+
+day <- table(CAROS100$Day) # Y se suelen tomar los fines de semana
+mosaicplot(day)
+```
+
+*Analizando los a los 100 más económicos*
+
+```{r}
+D2 %>% filter(Precio < mediana_precio) %>% arrange(Precio)-> ECO
+ECO
+nrow(ECO) #Es el total de Airbnb con precios menores a los 203.8193 (mediana) son ...20,856
+```
+
+```{r}
+#Analizamos el lado de  los 100 alojamientos más Económicos : 
+
+ECO[1:100, ] -> ECO100 
+ECO100
+
+#Qué ciudad aparece más aquí en alojamientos caros : 
+ciudadeseco_100 <- table(ECO100$Ciudad)
+barplot(ciudadeseco_100)
+
+Esuperhost100 <- table(ECO100$Superhost)
+barplot(Esuperhost100)
+
+#Los valores de Limpieza y Satisfacción son muy altos
+"La calificación que le asignan a este tipo de alojaminetos es 8.9  en promedio en LIMPIEZA DEL 0-10"
+mean(ECO100$Limpieza) 
+"La Satisfacción del servicio es una notación alta, ya que tiene un 95.19 en promedio"
+mean(ECO100$Satisfaccion)
+"Y lo mínimo en satisfacción es 20, lo que igual es BAJO"
+min(ECO100$Satisfaccion)
+```
+
+```{r}
+## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Habitación privada con baño.
+tipo_capacidadECO <- table(ECO100$Tipo,ECO100$Capacidad)
+
+mosaicplot(tipo_capacidadECO)
+```
+
+```{r}
+"La cantidad promedio de habitaciones en este tipo de alojamientos es:1 ,el espacio es reducido"
+roundF(mean(ECO100$Habitaciones, na.rm = T))
+
+dayeco <- table(ECO100$Day) # Y se suelen tomar tanto en día de semana cómo para fines.
+mosaicplot(dayeco)
+```
+
+*Del grupo de los más caros Athenas es la ciudad que tiene menos apariciones, por lo que se concluye que en esta ciudad sus precios de sus alojamientos son aún menores que 203.*
+
+-   Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"
+
+    ```{r}
+
+    D2 %>% filter(Precio < s2)%>% arrange(Precio) -> ECO
+    ECO
+    nrow(ECO)
+
+
+
+    ```
+
+    ```{r}
+    ECO %>% filter(ECO$Superhost == 'Sí')
+    ```
+
+``` {iudad)}
+e1
+min(e1)
+which.max(e1)
+
+barplot(e1, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
+```
+
+*Aqui se comprueba que Athenas es uns de las cuidades con precios más económicos en el estudio. Asimismo, tambien podemos encontrar a Roma con esta característca de precios económicos. Sin embargo tambien tenía considerables observaciones en dentro de los más caros, por lo tanto esta ciudad ofrece una amplia oferta con respecto a los precios.*
+
+```{r}
+ECO %>% filter(ECO$Superhost == 'Sí' )
+```
+
+-   De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+
+    ```{r}
+    S <- table(CAROS$Superhost)
+    S
+    barplot(S,col=c("orange","blue"),
+            legend.text=c("Sí","No"),main="SUPERHOST")
+    ```
+
+-   Identificar los 5 más caros y analizar sus similaridades.
 
 -   Cuánto es el % de Airbnb con precios mayores al promedio que se encuentran en cada una de las ciudades :
 
@@ -552,18 +779,27 @@ table(D2$Ciudad)
 
     ```
 
-Identificar al Airbnb más caro de cada país :
+## Relación entre variables por países :
+
+```{r}
+unique(D2$Ciudad)
+```
 
 ### Amsterdam
 
 ```{r}
+<<<<<<< HEAD
 DAMS
+=======
+D2 %>% filter(Ciudad =='Amsterdam') -> DAMSTERDAM
+DAMSTERDAM
+>>>>>>> e3cd97ddf73e113dc9111ec7276129634d1e8cae
 #El más caro
-r1 <- which.max(DAMS$Precio)
+r1 <- which.max(DAMSTERDAM$Precio)
 #El más económico
-r2 <- which.min(DAMS$Precio)
-DAMS[r1,1:17]
-DAMS[r2,1:17]
+r2 <- which.min(DAMSTERDAM$Precio)
+DAMSTERDAM[r1,1:17]
+DAMSTERDAM[r2,1:17]
 
 ```
 
@@ -630,19 +866,27 @@ abline(regresion4)
 
 ```
 
-### Barcelona
+### Athenas
 
 ```{r}
-DBAR
+
 ```
 
-### Budapest
+### Barcelona
 
-### Athenas
+### Berlín
 
 ### Roma
 
-### 
+### Budapest
+
+### Lisbon
+
+### París
+
+### Rome
+
+### Vienna
 
 ### Filtramos a todos los más caros de su país
 
@@ -660,38 +904,54 @@ barplot(table(D4$Tipo))
 hist(D4$Precio)
 ```
 
-Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
+### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
-# Ciudad y índice de atracción por factor demográfico:
+-   Analizar las ciudades con mayor indice de atracción (gráficas)
 
-Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
+-   Analizar las ciudades con menor indice de atracción (gráficas)
+
+-   Analizar si el indice de atracción se relaciona a un alto indice de resaturantes cercano al alojamiento o no.
+
+-   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atrracción para cada ciudad (ver si en una de ella hay correlación)
+
+-   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atrracción para cada ciudad (ver si en una de ella hay correlación)
+
+-   Ciudad y índice de atracción por factor demográfico (ciudad):
 
 ```{r}
+
+
+
+#Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
 # Crear una tabla con las 9 ciudades
-D<-read.csv("Aemf1.csv")
-D1<-data.frame(table(D$City))
-ciudades <- D1$Var1
+
+#D1<-data.frame(table(D$City))
+#ciudades <- D1$Var1
+
+TABLA_CIUDADES<-data.frame(table(D2$Ciudad))
+ciudades <- TABLA_CIUDADES$Var1
+ciudades
 
 # Generar datos aleatorios para cada ciudad
-datos_al_azar <- sample(1:9, length(ciudades))
+#datos_al_azar <- sample(1:9, length(ciudades))
 
 # Crear el data frame con las ciudades y los datos al azar
-datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
+#datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
 
 # Ordenar los datos por ciudad
-datos <- datos[order(datos$Ciudad), ]
+#datos <- datos[order(datos$Ciudad), ]
 
 # Crear la gráfica de barras
-barplot(datos$IndiceAtraccion, 
-        names.arg = datos$Ciudad,
-        xlab = "Ciudad",
-        ylab = "Índice de atracción",
-        main = "Índice de atracción por ciudad",
-        cex.names = 0.5)
+#barplot(datos$IndiceAtraccion, 
+ #       names.arg = datos$Ciudad,
+  #      xlab = "Ciudad",
+   #     ylab = "Índice de atracción",
+    #    main = "Índice de atracción por ciudad",
+     #   cex.names = 0.5)
 
 ```
 
-# Precio e índice de atracción:
+#### Precio e índice de atracción:
 
 Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X represente el precio y el eje Y represente el índice de atracción. Cada punto en el gráfico representará una opción de alojamiento, y su posición en el gráfico mostrará cómo varía el índice de atracción en relación con el precio. Esto te permitirá identificar posibles patrones, como una mayor atracción hacia opciones de precio moderado.
 
@@ -703,9 +963,13 @@ Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X r
 
 # Crear el gráfico de dispersión
 #plot(D2$Price, D2$`Attraction Index`,
+
 #     xlab = "Precio",
 #     ylab = "Índice de atracción",
 #     main = "Relación entre Precio e Índice de atracción")
+    # xlab = "Precio",
+     #ylab = "Índice de atracción",
+     #main = "Relación entre Precio e Índice de atracción")
 
 ```
 
