@@ -683,10 +683,10 @@ Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X r
 #D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
 
 # Crear el gráfico de dispersión
-plot(D2$Price, D2$`Attraction Index`,
-     xlab = "Precio",
-     ylab = "Índice de atracción",
-     main = "Relación entre Precio e Índice de atracción")
+#plot(D2$Price, D2$`Attraction Index`,
+#     xlab = "Precio",
+#     ylab = "Índice de atracción",
+#     main = "Relación entre Precio e Índice de atracción")
 
 ```
 
