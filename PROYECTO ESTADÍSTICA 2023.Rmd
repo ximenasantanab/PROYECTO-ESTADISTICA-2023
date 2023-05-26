@@ -1076,6 +1076,7 @@ text(paste("Correlación:", round(cor( D2$Ind.Restaurantes, D2$Ind.Atraccion), 3
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
+
 -   Ciudad y índice de atracción por factor demográfico (ciudad):
 
 ```{r}
