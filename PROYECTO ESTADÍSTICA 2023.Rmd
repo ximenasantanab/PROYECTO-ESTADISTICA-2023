@@ -11,7 +11,8 @@ output:
 | Nombre y Apellido | Código | Participación |
 |:-----------------:|:------:|:-------------:|
 |  Ximena Santana   |        |               |
-|                   |        |               |
+|  Gonzalo Rivera   | 201920092 |               |
+|  Eduardo Carpio   | 202120134 |               |
 
 1.  **Tema**
 
@@ -380,26 +381,6 @@ quantile(D2$Ind.Atraccion)
 ```
 El índice de atracción se encuentra normalizado, por lo que los valores que puede tomar son del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.
 
-
-
-
-
-
-
-
-Analizamos las variables por separado de nuestra variables más relevantes
-=======
-D2 %>% select(Ciudad, Precio) -> ciudad_precio_boxplot
-ciudad_precio_boxplot
-#seleccionamos por ciudades : 
-# 1. AMS
-ciudad_precio_boxplot %>% filter(ciudad_precio_boxplot$Ciudad == 'Amsterdam') -> boxAMS
->>>>>>> ee82b149503d65b882e0bb7ba342686c864289cf
-
-boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
-
-```
-
 ### 2. Análisis Bivariado :
 
 ### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
@@ -409,6 +390,7 @@ boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
 1. Promedio de satisfacción, promedio de precio, número de superhost, número de airbnbs, promedio de puntaje de limpieza, promedio de índice de atracción por ciudad.
+
 ```{r}
 D2 %>% 
   group_by(Ciudad) %>% 
@@ -421,6 +403,7 @@ D2 %>%
 arrange(D_Ciudades)
 
 ```
+
 ```{r}
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
 D2 %>% filter(Ciudad =='Barcelona') -> DBAR
@@ -432,58 +415,58 @@ D2 %>% filter(Ciudad =='Paris') -> DPAR
 D2 %>% filter(Ciudad =='Rome') -> DROM
 D2 %>% filter(Ciudad =='Vienna') -> DVIE
 
+#par(mfrow=c(3,3), fin=c(5,4))
 
-par(mfrow=c(3,3))
 
-hist(DAMS$Precio, main = "Precio en Amsterdam", xlab = "Precio", ylab = "Frecuencia")
+hist(DAMS$Precio, main = "Precios en Amsterdam", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DAMS$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DAMS$Precio), col = "blue", lwd = 2)
 
-hist(DBAR$Precio, main = "Precio en Barcelona", xlab = "Precio", ylab = "Frecuencia")
+hist(DBAR$Precio, main = "Precios en Barcelona", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DBAR$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DBAR$Precio), col = "blue", lwd = 2)
 
-hist(DATH$Precio, main = "Precio en Atenas", xlab = "Precio", ylab = "Frecuencia")
+hist(DATH$Precio, main = "Precios en Atenas", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DATH$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DATH$Precio), col = "blue", lwd = 2)
 
-hist(DBER$Precio, main = "Precio en Berlin", xlab = "Precio", ylab = "Frecuencia")
+hist(DBER$Precio, main = "Precios en Berlin", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DBER$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DBER$Precio), col = "blue", lwd = 2)
 
-hist(DBUD$Precio, main = "Precio en Budapest", xlab = "Precio", ylab = "Frecuencia")
+hist(DBUD$Precio, main = "Precios en Budapest", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DBUD$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DBUD$Precio), col = "blue", lwd = 2)
 
-hist(DLIS$Precio, main = "Precio en Lisboa", xlab = "Precio", ylab = "Frecuencia")
+hist(DLIS$Precio, main = "Precios en Lisboa", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DLIS$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DLIS$Precio), col = "blue", lwd = 2)
 
-hist(DPAR$Precio, main = "Precio en Paris", xlab = "Precio", ylab = "Frecuencia")
+hist(DPAR$Precio, main = "Precios en Paris", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DPAR$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DPAR$Precio), col = "blue", lwd = 2)
 
-hist(DROM$Precio, main = "Precio en Roma", xlab = "Precio", ylab = "Frecuencia")
+hist(DROM$Precio, main = "Precios en Roma", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DROM$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DROM$Precio), col = "blue", lwd = 2)
 
-hist(DVIE$Precio, main = "Precio en Vienna", xlab = "Precio", ylab = "Frecuencia")
+hist(DVIE$Precio, main = "Precios en Vienna", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DVIE$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
@@ -816,7 +799,7 @@ text(paste("Correlación:", round(cor(DAMSTERDAM$Distance_Center, DAMSTERDAM$Pre
 
 
 #Relación precio vs indice de restaurantes
-plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes', colors())
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
 abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DAMSTERDAM$Ind.Restaurantes, DAMSTERDAM$Precio), 2)), x = 80, y = 7000)
 ```
