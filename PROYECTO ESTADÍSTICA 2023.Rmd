@@ -101,6 +101,8 @@ names(D)
 
 ```{r}
 D %>% rename( Tipo = `Room Type` , Capacidad = `Person Capacity`, Oferta = Business, Habitaciones = Bedrooms, Ind.Atraccion = `Normalised Attraction Index`, Precio = Price, Share_Room = `Shared Room`, Limpieza = `Cleanliness Rating`, Ind.Restaurantes = `Normalised Restraunt Index`, Satisfaccion = `Guest Satisfaction`, Ciudad = City, Private_Room = `Private Room`, Distance_Center = `City Center (km)`, Distance_Metro = `Metro Distance (km)`) -> D2
+
+View(D2)
 ```
 
 ```{r}
@@ -299,7 +301,18 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## Análisis Descriptivo :
+## 1. Análisis Univariado :
+
+Analizamos las variables por separado de nuestra variables más relevantes
+
+1.  Ciudad (saber las frecuencias de cada ciudad en el estudio "hacer su gráfica" se coloca en %)
+2.  Precio (ubicar la media, la mediana "boxplot" mediana, valores atípicos, todo lo que pueda describir de un ) MIN MAX RANGO
+3.  Satisfacción
+4.  Tipos de cuartos
+
+## 2. Análisis Bivariado :
+
+## 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
@@ -312,6 +325,7 @@ COMPLETAR (GONZALO Y EDUARDO)
 1.  Conocer el total de las ciudades que pertenecen a la base de datos
 
 2.  Conocer el precio promedio de los alojamientos en las 9 ciudades
+<<<<<<< HEAD
 
 3.  Identificar cuántas observaciones se encuentran por debajo de la mediana
 
@@ -326,19 +340,101 @@ COMPLETAR (GONZALO Y EDUARDO)
 8.  Encontrar la relación entre cercanía al centro de la cuidad y costo de alojamiento.
 
 9.  Conocer el precio de cuartos múltiples y privados en relación a la cercanía al centro.
+=======
+3.  Conocer la mediana del precio de los alojamientos
+4.  Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"
+5.  Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
+6.  De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+7.  Conocer el precio más económico y sus características
+8.  Identificar el tipo de cuarto de las habitaciones más económicas
+9.  Conocer el precio más caro e identificar sus características
+10. Identificar el tipo de cuarto de las habitaciones más caras
+11. Conocer el precio más caro e identificar sus características
+12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
+
+### Desarrollo : 
+
+-   Conocer el total de las ciudades que pertenecen a la base de datos
+>>>>>>> a67516a38b27bfd4db9680ae8d0c174fa7e6a239
 
 ```{r}
 unique(D2$Ciudad)
+c <- table(D2$Ciudad)
+sum(c)
+barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
 
-table(D2$Ciudad)
+
 ```
+
+*La mayor cantidad de alojamientos en todo el estudio se encuentran en Rome.*
 
 -   El precio promedio en todas las ciudades de Europa: AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
 
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
 
+
     ```
+
+*El precio de los alojamientos se encuentran alrededor de los 260 dólares.*
+
+-   Conocer la mediana del precio de los alojamientos
+
+    ```{r}
+    s2 <- median(D2$Precio)
+    s2
+    ```
+
+*Se concluye que la mitad de los alojamientos de todas las ciudades son mayores a este valor, por lo tanto se les considera cómo la mitad con precios más caros. La parte inferior se consideran cómo económicos.*
+
+*Al analizar estos 2 descriptores para la variable precio, se observa que la media es mayor a la mediana (se puede incluir un histograma y ver su sesgo)*
+
+-   Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
+
+```{r}
+D2 %>% filter(Precio > s2)%>% arrange(Precio) -> CAROS
+CAROS
+```
+
+```{r}
+c1 <- table(CAROS$Ciudad)
+c1
+min(c1)
+which.min(c1)
+```
+
+*Del grupo de los más caros Athenas es la ciudad que tiene menos apariciones, por lo que se concluye que en esta ciudad sus precios de sus alojamientos son aún menores que 203.*
+
+-   Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"
+
+    ```{r}
+
+    D2 %>% filter(Precio < s2)%>% arrange(Precio) -> ECO
+    ECO
+    ```
+
+```{r}
+e1 <- table(ECO$Ciudad)
+e1
+min(e1)
+which.max(e1)
+
+barplot(e1, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
+
+```
+
+*Aqui se comprueba que Athenas es uns de las cuidades con precios más económicos en el estudio. Asimismo, tambien podemos encontrar a Roma con esta característca de precios económicos. Sin embargo tambien tenía considerables observaciones en dentro de los más caros, por lo tanto esta ciudad ofrece una amplia oferta con respecto a los precios.*
+
+-   De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+
+    ```{r}
+    S <- table(CAROS$Superhost)
+    S
+    barplot(S, ,col=c("orange","blue"),
+            legend.text=c("Sí","No"),main="SUPERHOST")
+    ```
+
+-   Identificar los 5 más caros y analizar sus similaridades.
 
 -   Cuánto es el % de Airbnb con precios mayores al promedio que se encuentran en cada una de las ciudades :
 
