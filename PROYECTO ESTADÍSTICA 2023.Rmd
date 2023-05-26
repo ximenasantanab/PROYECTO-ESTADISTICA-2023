@@ -610,31 +610,21 @@ text(paste("Correlación:", round(cor(DAMSTERDAM$Ind.Restaurantes, DAMSTERDAM$Pr
 ```
 
 
+#-----------------------------------------------------------------------------------------------------------
+CONSULTAR URGENTE !
 De los Airbnb que pertenecen a Amsterdam, separamos los rangos de precios e identificamos dónde es que se encuentra la mayoría : (Histograma)
 
 ```{r}
-D2 %>% select(D2$Ciudad,D2$Precio)
+hist(table(DAMSTERDAM$Precio), breaks = 5)
+
+curve(dnorm, add=TRUE, col="red", lwd=2)
 ```
 
-Identificar la relación Precio vs Ubicación #Modificar su escala
 
-```{r}
-regresion1 <- lm(Distance_Metro ~ Precio , data = DAMS)
-s1 <- summary(regresion1)
+# ---------------------------------------------------------------------------------------------------------
 
-
-plot(DAMS$Precio,DAMS$Distance_Metro, xlab='Precio', ylab='Distancia al Metro (km)')
-abline(regresion1)
-
-max(DAMS$Precio)
-min(DAMS$Distance_Metro)
-max(DAMS$Distance_Metro)
 
 #PARA VER SI ESTOS DOS TIENEN RELACIÓN SE CALCULA COR Y SU COVARIANZA
-
-
-```
-
 Cálculo de correlación
 
 ```{r}
@@ -645,14 +635,8 @@ cor(DAMS$Precio,DAMS$Distance_Metro)
 
 ```
 
-Diagrama de dispersión :
 
-```{r}
-plot(DAMS$Precio ~ DAMS$Distance_Metro)
-recta <- lm(Distance_Metro ~ Precio , data = DAMS)
-abline(recta)
-summary(recta)
-```
+
 
 ```{r}
 
@@ -662,20 +646,44 @@ plot(DAMS$Precio,DAMS$Distance_Center, xlab='Precio', ylab='Distancia al Centro(
 abline(regresion2)
 ```
 
+## Realizamos este análisis para el conjunto total de ciudade en el estudio :
 ```{r}
-regresion3 <- lm(Ind.Restaurantes ~ Precio , data = DAMS)
-summary(regresion3)
-plot(DAMS$Precio,DAMS$Ind.Restaurantes, xlab='Precio', ylab='Ind.Restaurantes')
-abline(regresion3)
+
+
+#Relación precio vs metro(km)
+plot(D2$Precio ~ D2$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(D2$Precio ~ D2$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(D2$Distance_Metro, D2$Precio), 2)), x = 11, y = 15000)
+
+#Relación precio vs centro(km)
+plot(D2$Precio ~ D2$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(D2$Precio ~ D2$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(D2$Distance_Center, D2$Precio), 2)), x = 20, y = 15000)
+
+
+
 ```
 
-```{r}
-regresion4 <- lm( Satisfaccion~Precio , data = DAMS)
-summary(regresion4)
-plot(DAMS$Precio,DAMS$Satisfaccion, xlab='Precio', ylab='Satisfacción')
-abline(regresion4)
 
+
+```{r}
+#Relación precio vs indice de restaurantes
+plot(D2$Precio ~ D2$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(D2$Precio ~ D2$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(D2$Ind.Restaurantes, D2$Precio), 2)), x = 80, y = 7000)
 ```
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Athenas
 
