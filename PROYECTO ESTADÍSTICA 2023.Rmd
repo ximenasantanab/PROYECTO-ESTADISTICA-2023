@@ -574,9 +574,9 @@ barplot(table(D4$Tipo))
 hist(D4$Precio)
 ```
 
-Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
+### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
-# Ciudad y índice de atracción por factor demográfico:
+#### Ciudad y índice de atracción por factor demográfico:
 
 Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
 
@@ -605,15 +605,15 @@ barplot(datos$IndiceAtraccion,
 
 ```
 
-# Precio e índice de atracción:
+#### Precio e índice de atracción:
 
 Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X represente el precio y el eje Y represente el índice de atracción. Cada punto en el gráfico representará una opción de alojamiento, y su posición en el gráfico mostrará cómo varía el índice de atracción en relación con el precio. Esto te permitirá identificar posibles patrones, como una mayor atracción hacia opciones de precio moderado.
 
 ```{r}
 # Generar datos aleatorios para cada ciudad
 # Generar datos aleatorios para cada ciudad
-D2 <- D[which(!duplicated(D$City)), ]
-D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
+#D2 <- D[which(!duplicated(D$City)), ]
+#D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
 
 # Crear el gráfico de dispersión
 plot(D2$Price, D2$`Attraction Index`,
