@@ -303,6 +303,17 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 
 ## 1. Análisis Univariado :
 
+```{r}
+D2 %>% select(Ciudad, Precio) -> ciudad_precio_boxplot
+ciudad_precio_boxplot
+#seleccionamos por ciudades : 
+# 1. AMS
+ciudad_precio_boxplot %>% filter(ciudad_precio_boxplot$Ciudad == 'Amsterdam') -> boxAMS
+
+boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
+
+```
+
 Analizamos las variables por separado de nuestra variables más relevantes
 
 1.  Ciudad (saber las frecuencias de cada ciudad en el estudio "hacer su gráfica" se coloca en %)
@@ -352,11 +363,11 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 *La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
 
--   El precio promedio en todas las ciudades de Europa: AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
+-   El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.
 
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
-
+    s
 
     ```
 
@@ -486,7 +497,7 @@ mosaicplot(dayeco)
 
     ```{r}
 
-    D2 %>% filter(Precio < s2)%>% arrange(Precio) -> ECO
+    D2 %>% filter(Precio < mediana_precio)%>% arrange(Precio) -> ECO
     ECO
     nrow(ECO)
 
@@ -496,15 +507,8 @@ mosaicplot(dayeco)
 
     ```{r}
     ECO %>% filter(ECO$Superhost == 'Sí')
+
     ```
-
-``` {iudad)}
-e1
-min(e1)
-which.max(e1)
-
-barplot(e1, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
-```
 
 *Aqui se comprueba que Athenas es uns de las cuidades con precios más económicos en el estudio. Asimismo, tambien podemos encontrar a Roma con esta característca de precios económicos. Sin embargo tambien tenía considerables observaciones en dentro de los más caros, por lo tanto esta ciudad ofrece una amplia oferta con respecto a los precios.*
 
