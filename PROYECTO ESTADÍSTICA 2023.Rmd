@@ -1191,9 +1191,74 @@ hist(D4$Precio)
 
 -   Analizar las ciudades con mayor indice de atracción (gráficas)
 
+```{r}
+"Hallamos el máximo y mínimo valor de indice de atracción"
+
+max(D2$Ind.Atraccion)
+roundF(min(D2$Ind.Atraccion))
+"Características de esa observación"
+which.max(D2$Ind.Atraccion)
+D2[55,]
+
+
+"Hallamos el valor promedio  :"
+promedio_de_satisfaccion <- roundF(mean(D2$Ind.Atraccion))
+promedio_de_satisfaccion 
+
+```
+
+
+
+
+```{r}
+
+#ATRACCION MAYOR AL PROMEDIO
+D2 %>% filter(D2$Ind.Atraccion > promedio_de_satisfaccion )%>% arrange(desc(Ind.Atraccion)) -> D_ATRACCION
+
+
+
+# SELECIONAMOS A LOS 100 ALOJAMIENTOS CON MEJORES CALIFICACIONES DE SATISFACCIÓN : 
+D_ATRACCION[1:100,1:17]  -> ATRACCION_100
+ATRACCION_100
+
+
+# LAS TOP 100 CIUDADES CON MAYOR INDICE DE ATRACCION 
+t <- table(ATRACCION_100$Ciudad)
+barplot(t, col=c("pink"),main="Top 100 ciudades con mejor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
+```
+
+
 -   Analizar las ciudades con menor indice de atracción (gráficas)
 
+```{r}
+#ATRACCION MENOR AL PROMEDIO
+D2 %>% filter(D2$Ind.Atraccion < promedio_de_satisfaccion )%>% arrange(Ind.Atraccion) -> M_ATRACCION
+
+
+
+# SELECIONAMOS A LOS 100 ALOJAMIENTOS CON PEORES CALIFICACIONES DE SATISFACCIÓN : 
+M_ATRACCION[1:100,1:17]  -> MATRACCION_100
+MATRACCION_100
+
+
+# LAS TOP 100 CIUDADES CON MENOR INDICE DE ATRACCION :
+tM <- table(MATRACCION_100$Ciudad)
+barplot(tM, col=c("pink"),main="Top 100 ciudades con menor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
+```
+
+
 -   Analizar si el indice de atracción se relaciona a un alto indice de restaurantes cercano al alojamiento o no.
+
+```{r}
+cor(D2$Ind.Atraccion,D2$Ind.Restaurantes)
+
+#Relación  Ind.Atracción vs Ind.Restaurantes : 
+
+plot(D2$Ind.Atraccion ~ D2$Ind.Restaurantes, main = 'Variación del I.Atraccion vs la I.Restaurantes')
+abline(lm(D2$Ind.Atraccion ~  D2$Ind.Restaurantes), col = "orange", lwd = 3, lty = 5)
+text(paste("Correlación:", round(cor( D2$Ind.Restaurantes, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
+```
+
 
 -   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 ```{r}
