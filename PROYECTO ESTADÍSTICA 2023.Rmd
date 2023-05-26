@@ -304,7 +304,7 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## 1. Análisis Univariado : (Edwin)
+## 1. Análisis Univariado :
 
 ```{r}
 
