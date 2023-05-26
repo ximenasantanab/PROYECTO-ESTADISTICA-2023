@@ -335,7 +335,7 @@ COMPLETAR (GONZALO Y EDUARDO)
 11. Conocer el precio más caro e identificar sus características
 12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
 
-### Desarrollo : 
+### Desarrollo :
 
 -   Conocer el total de las ciudades que pertenecen a la base de datos
 
@@ -376,6 +376,7 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 ```{r}
 D2 %>% filter(Precio > s2)%>% arrange(Precio) -> CAROS
 CAROS
+
 ```
 
 ```{r}
