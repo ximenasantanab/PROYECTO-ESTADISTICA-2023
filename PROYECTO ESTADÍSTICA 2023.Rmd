@@ -788,12 +788,7 @@ unique(D2$Ciudad)
 ### Amsterdam
 
 ```{r}
-<<<<<<< HEAD
-DAMS
-=======
-D2 %>% filter(Ciudad =='Amsterdam') -> DAMSTERDAM
-DAMSTERDAM
->>>>>>> e3cd97ddf73e113dc9111ec7276129634d1e8cae
+
 #El más caro
 r1 <- which.max(DAMSTERDAM$Precio)
 #El más económico
