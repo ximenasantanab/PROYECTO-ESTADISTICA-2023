@@ -576,7 +576,10 @@ unique(D2$Ciudad)
 
 ### Amsterdam
 
+Aquí filtramos a todos los alojamientos ubicados en Amsterdam y analizamos si existe una relación de precio con respecto a su ubicación al metro, al centro de la ciudad y su índice de restaurantes:
+
 ```{r}
+#Filtramos nuestros alojamientos
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMSTERDAM
 DAMSTERDAM
 #El más caro
@@ -589,6 +592,10 @@ DAMSTERDAM[r2,1:17]
 ```
 
 De los Airbnb que pertenecen a Amsterdam, separamos los rangos de precios e identificamos dónde es que se encuentra la mayoría : (Histograma)
+
+```{r}
+D2 %>% select(D2$Ciudad,D2$Precio)
+```
 
 Identificar la relación Precio vs Ubicación #Modificar su escala
 
