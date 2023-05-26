@@ -301,7 +301,7 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## 1. Análisis Univariado :
+## 1. Análisis Univariado : (Edwin)
 
 ```{r}
 D2 %>% select(Ciudad, Precio) -> ciudad_precio_boxplot
@@ -313,13 +313,6 @@ ciudad_precio_boxplot %>% filter(ciudad_precio_boxplot$Ciudad == 'Amsterdam') ->
 boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
 
 ```
-
-Analizamos las variables por separado de nuestra variables más relevantes
-
-1.  Ciudad (saber las frecuencias de cada ciudad en el estudio "hacer su gráfica" se coloca en %)
-2.  Precio (ubicar la media, la mediana "boxplot" mediana, valores atípicos, todo lo que pueda describir de un ) MIN MAX RANGO
-3.  Satisfacción
-4.  Tipos de cuartos
 
 ### 2. Análisis Bivariado :
 
@@ -572,7 +565,8 @@ ECO %>% filter(ECO$Superhost == 'Sí' )
 
     ```
 
-## Relación entre variables por países :
+## Relación entre variables por ciudades :
+Aquí se analiza por ciudades por separado y se ve la relación precio vs (ubicación, restaurantes)
 
 ```{r}
 unique(D2$Ciudad)
@@ -583,17 +577,38 @@ unique(D2$Ciudad)
 Aquí filtramos a todos los alojamientos ubicados en Amsterdam y analizamos si existe una relación de precio con respecto a su ubicación al metro, al centro de la ciudad y su índice de restaurantes:
 
 ```{r}
-#Filtramos nuestros alojamientos
+#Filtramos
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMSTERDAM
 DAMSTERDAM
+
+
 #El más caro
 r1 <- which.max(DAMSTERDAM$Precio)
+DAMSTERDAM[r1,1:17]
+
+
 #El más económico
 r2 <- which.min(DAMSTERDAM$Precio)
-DAMSTERDAM[r1,1:17]
 DAMSTERDAM[r2,1:17]
 
+#Relación precio vs metro(km)
+
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DAMSTERDAM$Distance_Metro, DAMSTERDAM$Precio), 2)), x = 4, y = 7000)
+
+#Relación precio vs centro(km)
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DAMSTERDAM$Distance_Center, DAMSTERDAM$Precio), 2)), x = 10, y = 7000)
+
+
+#Relación precio vs indice de restaurantes
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes', colors())
+abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DAMSTERDAM$Ind.Restaurantes, DAMSTERDAM$Precio), 2)), x = 80, y = 7000)
 ```
+
 
 De los Airbnb que pertenecen a Amsterdam, separamos los rangos de precios e identificamos dónde es que se encuentra la mayoría : (Histograma)
 
@@ -707,11 +722,11 @@ hist(D4$Precio)
 
 -   Analizar las ciudades con menor indice de atracción (gráficas)
 
--   Analizar si el indice de atracción se relaciona a un alto indice de resaturantes cercano al alojamiento o no.
+-   Analizar si el indice de atracción se relaciona a un alto indice de restaurantes cercano al alojamiento o no.
 
--   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atrracción para cada ciudad (ver si en una de ella hay correlación)
+-   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
--   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atrracción para cada ciudad (ver si en una de ella hay correlación)
+-   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
 -   Ciudad y índice de atracción por factor demográfico (ciudad):
 
