@@ -986,10 +986,36 @@ hist(D4$Precio)
 -   Analizar si el indice de atracción se relaciona a un alto indice de restaurantes cercano al alojamiento o no.
 
 -   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
+```{r}
+plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al metro", ylim= c(0,100))
+```
+```{r}
+cor(D2$Ind.Atraccion, D2$Distance_Metro)
+```
+Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas.
+
+```{r}
+quantile(D2$Distance_Metro)
+```
+```{r}
+D2  %>% filter(Distance_Metro > 0.4) -> SKL
+SKL
+```
+
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
+
+
+
+
+
 -   Ciudad y índice de atracción por factor demográfico (ciudad):
+
+
+
+
+
 
 ```{r}
 
