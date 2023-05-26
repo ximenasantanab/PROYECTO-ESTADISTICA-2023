@@ -718,7 +718,7 @@ text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio
 
 
 
-### Barcelona
+### Barcelonaaa
 ```{r}
 #Filtramos
 D2 %>% filter(Ciudad =='Barcelona') -> DBARCELONA
