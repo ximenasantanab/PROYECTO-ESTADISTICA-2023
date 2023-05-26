@@ -411,6 +411,27 @@ D2 %>%
 arrange(D_Ciudades)
 
 ```
+```{r}
+par(mfrow=c(3,3))
+D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
+D2 %>% filter(Ciudad =='Barcelona') -> DBAR
+D2 %>% filter(Ciudad =='Athens') -> DATH
+D2 %>% filter(Ciudad =='Berlin') -> DBER
+D2 %>% filter(Ciudad =='Budapest') -> DBUD
+D2 %>% filter(Ciudad =='Lisbon') -> DLIS
+D2 %>% filter(Ciudad =='Paris') -> DPAR
+D2 %>% filter(Ciudad =='Rome') -> DROM
+D2 %>% filter(Ciudad =='Vienna') -> DVIE
+
+hist(D2$Ind.Atraccion, main = "Atracción", xlab = "Índice de Atracción", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_atraccion, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_atraccion, col = "blue", lwd = 2)
+```
+
+
+
 2. Índice de satisfacción VS Precio
 ```{r}
 plot(x = D2$Satisfaccion, y = D2$Precio, xlab = "Satisfacción" , ylab = "Precio", ylim= c(0,2500))
@@ -536,7 +557,6 @@ Identificar al Airbnb más caro de cada país :
 ### Amsterdam
 
 ```{r}
-D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
 DAMS
 #El más caro
 r1 <- which.max(DAMS$Precio)
@@ -613,7 +633,6 @@ abline(regresion4)
 ### Barcelona
 
 ```{r}
-D2 %>% filter(Ciudad =='Barcelona') -> DBAR
 DBAR
 ```
 
