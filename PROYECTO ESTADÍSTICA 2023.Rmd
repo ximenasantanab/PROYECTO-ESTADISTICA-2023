@@ -986,21 +986,45 @@ hist(D4$Precio)
 
 -   Analizar si el indice de atracción se relaciona a un alto indice de restaurantes cercano al alojamiento o no.
 
--   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
+-   Analizar la correlación entre la distancia al metro y su comportamiento con el índice de atracción para cada ciudad.
 ```{r}
 plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al metro", ylim= c(0,100))
 ```
 ```{r}
 cor(D2$Ind.Atraccion, D2$Distance_Metro)
 ```
-Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas.
-
+Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas. Ahora se pasará a analizar la correlación en cada una de las ciudades.
 ```{r}
-quantile(D2$Distance_Metro)
+cor(DAMS$Ind.Atraccion, DAMS$Distance_Metro)
 ```
 ```{r}
-D2  %>% filter(Distance_Metro > 0.4) -> SKL
-SKL
+cor(DATH$Ind.Atraccion, DATH$Distance_Metro)
+```
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Distance_Metro)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Distance_Metro)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Distance_Metro)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Distance_Metro)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Distance_Metro)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Distance_Metro)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Distance_Metro)
+```
+Se observa que la correlación mas alta es en Amsterdam; sin embargo, el valor de la correlación llega solamente a ser una correlación media entre variables. A continuación se graficará la interacción entre ambas variables en Amsterdam para apreciar esta correlación en la gráfica.
+
+```{r}
+plot(x = DAMS$Distance_Metro, y = DAMS$Ind.Atraccion, main = "Índice de Atracción - Distancia al metro en Amsterdam", ylab = "Índice de Atracción" , xlab = "Distancia al metro", ylim= c(0,100))
 ```
 
 
