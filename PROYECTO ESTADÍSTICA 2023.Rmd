@@ -329,6 +329,7 @@ abline(v = median_satisfaction, col = "blue", lwd = 2)
 mean_satisfaction
 median_satisfaction
 IQR(D2$Satisfaccion)
+
 quantile(D2$Satisfaccion) 
 ```
 En el caso de la variable Satisfacción, en las gráficas se observa que la media y la mediana son valores entre 90 y 100. En el caso del boxplot de la variable satisfacción, se observa de manera gráfica los rangos entre los cuáles se encuentra la variable Satisfacción y cuál es la distribución de estos. La media de esta variable es 93.10, mientras que la mediana es 95; además, el 75% de los valores de satisfacción son mayores a 90. Por estos motivos, se puede afirmar que la satisfacción de los consumidores de airbnb en estas 9 ciudades es bastante alta, en promedio.
