@@ -953,7 +953,7 @@ text(paste("Correlación:", round(cor(D2$Ind.Restaurantes, D2$Precio), 2)), x = 
 
 ```{r}
 
-<<<<<<< HEAD
+
 #Filtramos
 D2 %>% filter(Ciudad =='Athens') -> DATHENAS
 DATHENAS
@@ -998,29 +998,29 @@ DBARCELONA
 
 
 #El más caro
-r1 <- which.max(DATHENAS$Precio)
-DATHENAS[r1,1:17]
+r1 <- which.max(DBARCELONA$Precio)
+DBARCELONA[r1,1:17]
 
 
 #El más económico
-r2 <- which.min(DATHENAS$Precio)
-DATHENAS[r2,1:17]
+r2 <- which.min(DBARCELONA$Precio)
+DBARCELONA[r2,1:17]
 
 #Relación precio vs metro(km)
 
-plot(DATHENAS$Precio ~ DATHENAS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DATHENAS$Precio ~ DATHENAS$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DATHENAS$Distance_Metro, DATHENAS$Precio), 2)), x = 1.5, y = 15000)
+plot(DBARCELONA$Precio ~ DBARCELONA$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBARCELONA$Precio ~ DBARCELONA$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBARCELONA$Distance_Metro, DBARCELONA$Precio), 2)), x = 1.5, y = 15000)
 
 #Relación precio vs centro(km)
-plot(DATHENAS$Precio ~ DATHENAS$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DATHENAS$Precio ~ DATHENAS$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DATHENAS$Distance_Center, DATHENAS$Precio), 2)), x = 5, y = 15000)
+plot(DBARCELONA$Precio ~ DBARCELONA$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBARCELONA$Precio ~ DBARCELONA$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBARCELONA$Distance_Center, DBARCELONA$Precio), 2)), x = 5, y = 15000)
 
 #Relación precio vs indice de restaurantes
-plot(DATHENAS$Precio ~ DATHENAS$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DATHENAS$Precio ~ DATHENAS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio), 2)), x = 80, y = 7000)
+plot(DBARCELONA$Precio ~ DBARCELONA$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBARCELONA$Precio ~ DBARCELONA$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBARCELONA$Ind.Restaurantes, DBARCELONA$Precio), 2)), x = 80, y = 7000)
 
 
 
@@ -1029,7 +1029,76 @@ text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio
 
 ### Berlín
 
+```{r}
+#Filtramos
+D2 %>% filter(Ciudad =='Berlin') -> DBERLIN
+DBERLIN
+
+#El más caro
+r1 <- which.max(DBERLIN$Precio)
+DBERLIN[r1,1:17]
+
+
+#El más económico
+r2 <- which.min(DBERLIN$Precio)
+DBERLIN[r2,1:17]
+
+#Relación precio vs metro(km)
+
+plot(DBERLIN$Precio ~ DBERLIN$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBERLIN$Distance_Metro, DBERLIN$Precio), 2)), x = 12, y = 4000)
+
+#Relación precio vs centro(km)
+plot(DBERLIN$Precio ~ DBERLIN$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBERLIN$Distance_Center, DBERLIN$Precio), 2)), x = 20, y = 4000)
+
+
+#Relación precio vs indice de restaurantes
+plot(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio), 2)), x = 80, y = 4000)
+```
+
+
+```{r}
+unique(D2$Ciudad)
+```
+
+
 ### Roma
+```{r}
+#Filtramos
+D2 %>% filter(Ciudad =='Roma') -> DBERLIN
+DBERLIN
+
+#El más caro
+r1 <- which.max(DBERLIN$Precio)
+DBERLIN[r1,1:17]
+
+
+#El más económico
+r2 <- which.min(DBERLIN$Precio)
+DBERLIN[r2,1:17]
+
+#Relación precio vs metro(km)
+
+plot(DBERLIN$Precio ~ DBERLIN$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBERLIN$Distance_Metro, DBERLIN$Precio), 2)), x = 12, y = 4000)
+
+#Relación precio vs centro(km)
+plot(DBERLIN$Precio ~ DBERLIN$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBERLIN$Distance_Center, DBERLIN$Precio), 2)), x = 20, y = 4000)
+
+
+#Relación precio vs indice de restaurantes
+plot(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio), 2)), x = 80, y = 4000)
+```
 
 ### Budapest
 
