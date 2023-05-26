@@ -397,7 +397,7 @@ ggplot(data= D2, mapping=aes(x=Ciudad))+ geom_bar()+ theme_grey()+ labs(title="G
 
 ```{r}
 #DÍA DE LA SEMANA
-ggplot(data= D2, mapping=aes(x=Day))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de días de la semana",x="Días",y="Frecuencias")
+ggplot(data= D2, mapping=aes(x=Day))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de Días",x="Días",y="Frecuencias")
 
 ```
 
@@ -407,17 +407,35 @@ ggplot(data= D2, mapping=aes(x=Day))+ geom_bar()+ theme_grey()+ labs(title="Grá
 mean_capacidad <- mean(D2$Capacidad)
 median_capacidad <- median(D2$Capacidad)
 par(mfrow=c(1,2)) 
-boxplot(D2$Ind.Atraccion, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+boxplot(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
 # Add mean as a red point
-points(mean_atraccion, col = "red", pch = 16)
+points(mean_capacidad, col = "red", pch = 16)
 # Add median as a blue point
-points(median_atraccion, col = "blue", pch = 16)
+points(median_capacidad, col = "blue", pch = 16)
 hist(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean_capacidad, col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median_capacidad, col = "blue", lwd = 2)
 ```
+```{r}
+#
+## Habitaciones
+mean_habitaciones <- mean(D2$Habitaciones,na.rm = TRUE)
+median_habitaciones <- median(D2$Habitaciones,na.rm=TRUE)
+par(mfrow=c(1,2)) 
+boxplot(D2$Habitaciones, main = "Número de habitaciones", xlab = "Habitaciones", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_habitaciones, col = "red", pch = 16)
+# Add median as a blue point
+points(median_habitaciones, col = "blue", pch = 16)
+hist(D2$Habitaciones, main = "Número de habitaciones", xlab = "Habitaciones", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_habitaciones, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_habitaciones, col = "blue", lwd = 2)
+```
+
 ```{r}
 #
 ##Tipo
@@ -431,34 +449,88 @@ ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gr�
 #
 ggplot(data= D2, mapping=aes(x=Share_Room))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones compartidas",x="Share rooms",y="Frecuencias")
 ```
+```{r}
+#
+##Private room
+#
+ggplot(data= D2, mapping=aes(x=Private_Room))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones privadas",x="Private rooms",y="Frecuencias")
+```
 
 ```{r}
 #
-## Multiple rooms
+##OFERTA
 #
-
+ggplot(data= D2, mapping=aes(x=Oferta))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de Oferta",x="Ofertas",y="Frecuencias")
 ```
-
-
-
-Analizamos las variables por separado de nuestra variables más relevantes
-
-=======
 ```{r}
+##Distancia al centro
+
+mean_distC <- mean(D2$Distance_Center)
+median_distC <- median(D2$Distance_Center)
+par(mfrow=c(1,2)) 
+boxplot(D2$Distance_Center, main = "Distance center", xlab = "Distance Center", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_distC, col = "red", pch = 16)
+# Add median as a blue point
+points(median_distC, col = "blue", pch = 16)
+hist(D2$Distance_Center, main = "Distance Center", xlab = "Distance Center", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_distC, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_distC, col = "blue", lwd = 2)
 
 ```
+```{r}
+##Distancia al metro
 
-
-D2 %>% select(Ciudad, Precio) -> ciudad_precio_boxplot
-ciudad_precio_boxplot
-#seleccionamos por ciudades : 
-# 1. AMS
-ciudad_precio_boxplot %>% filter(ciudad_precio_boxplot$Ciudad == 'Amsterdam') -> boxAMS
->>>>>>> ee82b149503d65b882e0bb7ba342686c864289cf
-
-boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
-
+mean_distM <- mean(D2$Distance_Metro)
+median_distM <- median(D2$Distance_Metro)
+par(mfrow=c(1,2)) 
+boxplot(D2$Distance_Metro, main = "Distance Metro", xlab = "Distance Metro", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_distM, col = "red", pch = 16)
+# Add median as a blue point
+points(median_distM, col = "blue", pch = 16)
+hist(D2$Distance_Metro, main = "Distance Metro", xlab = "Distance Metro", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_distM, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_distM, col = "blue", lwd = 2)
 ```
+```{r}
+#
+##Índice de restaurantes
+mean_Ind.Restaurant <- mean(D2$Ind.Restaurantes)
+median_Ind.Restaurant <- median(D2$Ind.Restaurantes)
+par(mfrow=c(1,2)) 
+boxplot(D2$Ind.Restaurantes, main = "Índice de Restaurantes", xlab = "Índice de Restaurantes", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_Ind.Restaurant, col = "red", pch = 16)
+# Add median as a blue point
+points(median_Ind.Restaurant, col = "blue", pch = 16)
+hist(D2$Ind.Restaurantes, main = "Índice de Restaurantes", xlab = "Índice de Restaurantes", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_Ind.Restaurant, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_Ind.Restaurant, col = "blue", lwd = 2)
+```
+```{r}
+##Precio
+mean_precio <- mean(D2$Precio)
+median_precio <- median(D2$Precio)
+par(mfrow=c(1,2)) 
+boxplot(D2$Precio, main = "Precio", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_precio, col = "red", pch = 16)
+# Add median as a blue point
+points(median_precio, col = "blue", pch = 16)
+hist(D2$Precio, main = "Precio", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_precio, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_precio, col = "blue", lwd = 2)
+```
+
 
 ### 2. Análisis Bivariado :
 
