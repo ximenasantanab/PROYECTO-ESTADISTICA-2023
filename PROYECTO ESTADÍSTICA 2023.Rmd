@@ -395,12 +395,18 @@ which.min(c1)
 
 ```
 ```{r}
-#Analizamos la cantidad de Superhost SÍ de este lado de  los 100 alojamientos más caros : 
+#Analizamos el lado de  los 100 alojamientos más caros : 
 
 CAROS[1:100, ] -> CAROS100 
 CAROS100
 
-table(CAROS100$Superhost)
+#Qué ciudad aparece más aquí en alojamientos caros : 
+ciudades_100 <- table(CAROS100$Ciudad)
+barplot(ciudades_100)
+
+superhost100 <- table(CAROS100$Superhost)
+barplot(superhost100)
+
 #Los valores de Limpieza y Satisfacción son muy altos
 "La calificación que le asignan a este tipo de alojaminetos es 9.5 en promedio en LIMPIEZA"
 mean(CAROS100$Limpieza) 
@@ -432,19 +438,60 @@ mosaicplot(day)
 
 
 
+*Analizando los a los 100 más económicos*
+
+```{r}
+D2 %>% filter(Precio < mediana_precio) %>% arrange(Precio)-> ECO
+ECO
+nrow(ECO) #Es el total de Airbnb con precios menores a los 203.8193 (mediana) son ...20,856
+```
 
 
+```{r}
+#Analizamos el lado de  los 100 alojamientos más Económicos : 
 
+ECO[1:100, ] -> ECO100 
+ECO100
 
+#Qué ciudad aparece más aquí en alojamientos caros : 
+ciudadeseco_100 <- table(ECO100$Ciudad)
+barplot(ciudadeseco_100)
 
+Esuperhost100 <- table(ECO100$Superhost)
+barplot(Esuperhost100)
 
+#Los valores de Limpieza y Satisfacción son muy altos
+"La calificación que le asignan a este tipo de alojaminetos es 8.9  en promedio en LIMPIEZA DEL 0-10"
+mean(ECO100$Limpieza) 
+"La Satisfacción del servicio es una notación alta, ya que tiene un 95.19 en promedio"
+mean(ECO100$Satisfaccion)
+"Y lo mínimo en satisfacción es 20, lo que igual es BAJO"
+min(ECO100$Satisfaccion)
+```
 
 
 
 
 ```{r}
-table(CARO5S$Superhost == 'Sí')
+## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Habitación privada con baño.
+tipo_capacidadECO <- table(ECO100$Tipo,ECO100$Capacidad)
+
+mosaicplot(tipo_capacidadECO)
 ```
+
+
+```{r}
+"La cantidad promedio de habitaciones en este tipo de alojamientos es:1 ,el espacio es reducido"
+roundF(mean(ECO100$Habitaciones, na.rm = T))
+
+dayeco <- table(ECO100$Day) # Y se suelen tomar tanto en día de semana cómo para fines.
+mosaicplot(dayeco)
+```
+
+
+
+
+
 
 *Del grupo de los más caros Athenas es la ciudad que tiene menos apariciones, por lo que se concluye que en esta ciudad sus precios de sus alojamientos son aún menores que 203.*
 
