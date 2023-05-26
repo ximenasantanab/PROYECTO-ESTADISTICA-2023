@@ -893,8 +893,6 @@ text(paste("Correlación:", round(cor(D2$Ind.Restaurantes, D2$Precio), 2)), x = 
 ### Atenas
 
 ```{r}
-
-<<<<<<< HEAD
 #Filtramos
 D2 %>% filter(Ciudad =='Athens') -> DATHENAS
 DATHENAS
@@ -963,9 +961,6 @@ plot(DATHENAS$Precio ~ DATHENAS$Ind.Restaurantes, main = 'Variación del precio 
 abline(lm(DATHENAS$Precio ~ DATHENAS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio), 2)), x = 80, y = 7000)
 
-
-=======
->>>>>>> 16a5f065e974330ee96c535bc1a71b295f2461a0
 ```
 
 
