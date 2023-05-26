@@ -11,7 +11,8 @@ output:
 | Nombre y Apellido | Código | Participación |
 |:-----------------:|:------:|:-------------:|
 |  Ximena Santana   |        |               |
-|                   |        |               |
+|  Gonzalo Rivera   | 201920092 |               |
+|  Eduardo Carpio   | 202120134 |               |
 
 1.  **Tema**
 
@@ -303,7 +304,7 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## 1. Análisis Univariado : (Edwin)
+## 1. Análisis Univariado :
 
 ```{r}
 
@@ -328,6 +329,7 @@ abline(v = median_satisfaction, col = "blue", lwd = 2)
 mean_satisfaction
 median_satisfaction
 IQR(D2$Satisfaccion)
+
 quantile(D2$Satisfaccion) 
 ```
 En el caso de la variable Satisfacción, en las gráficas se observa que la media y la mediana son valores entre 90 y 100. En el caso del boxplot de la variable satisfacción, se observa de manera gráfica los rangos entre los cuáles se encuentra la variable Satisfacción y cuál es la distribución de estos. La media de esta variable es 93.10, mientras que la mediana es 95; además, el 75% de los valores de satisfacción son mayores a 90. Por estos motivos, se puede afirmar que la satisfacción de los consumidores de airbnb en estas 9 ciudades es bastante alta, en promedio.
@@ -380,86 +382,6 @@ quantile(D2$Ind.Atraccion)
 ```
 El índice de atracción se encuentra normalizado, por lo que los valores que puede tomar son del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.
 
-
-```{r}
-#SUPERHOST
-plot(x = D2$Superhost, main = "Gráfica de Superhost",
-     xlab = "Superhost", ylab = "Frecuencia")
-```
-
-```{r}
-#
-##CIUDADES
-#
-ggplot(data= D2, mapping=aes(x=Ciudad))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de ciudades",x="Ciudades",y="Frecuencias")
-```
-
-
-```{r}
-#DÍA DE LA SEMANA
-ggplot(data= D2, mapping=aes(x=Day))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de días de la semana",x="Días",y="Frecuencias")
-
-```
-
-```{r}
-#CAPACIDAD
-
-mean_capacidad <- mean(D2$Capacidad)
-median_capacidad <- median(D2$Capacidad)
-par(mfrow=c(1,2)) 
-boxplot(D2$Ind.Atraccion, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
-# Add mean as a red point
-points(mean_atraccion, col = "red", pch = 16)
-# Add median as a blue point
-points(median_atraccion, col = "blue", pch = 16)
-hist(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
-# Add mean as a red dashed line
-abline(v = mean_capacidad, col = "red", lwd = 2)
-# Add median as a blue dashed line
-abline(v = median_capacidad, col = "blue", lwd = 2)
-```
-```{r}
-#
-##Tipo
-#
-ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de tipos de habitaciones",x="Tipo",y="Frecuencias")
-
-```
-```{r}
-#
-##Share room
-#
-ggplot(data= D2, mapping=aes(x=Share_Room))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones compartidas",x="Share rooms",y="Frecuencias")
-```
-
-```{r}
-#
-## Multiple rooms
-#
-
-```
-
-
-
-Analizamos las variables por separado de nuestra variables más relevantes
-
-=======
-```{r}
-
-```
-
-
-D2 %>% select(Ciudad, Precio) -> ciudad_precio_boxplot
-ciudad_precio_boxplot
-#seleccionamos por ciudades : 
-# 1. AMS
-ciudad_precio_boxplot %>% filter(ciudad_precio_boxplot$Ciudad == 'Amsterdam') -> boxAMS
->>>>>>> ee82b149503d65b882e0bb7ba342686c864289cf
-
-boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
-
-```
-
 ### 2. Análisis Bivariado :
 
 ### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
@@ -469,6 +391,7 @@ boxplot(boxAMS$Precio, ylim = c (0,5000), main = ' Escalas modificadas ')
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
 1. Promedio de satisfacción, promedio de precio, número de superhost, número de airbnbs, promedio de puntaje de limpieza, promedio de índice de atracción por ciudad.
+
 ```{r}
 D2 %>% 
   group_by(Ciudad) %>% 
@@ -481,6 +404,7 @@ D2 %>%
 arrange(D_Ciudades)
 
 ```
+
 ```{r}
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
 D2 %>% filter(Ciudad =='Barcelona') -> DBAR
@@ -492,58 +416,58 @@ D2 %>% filter(Ciudad =='Paris') -> DPAR
 D2 %>% filter(Ciudad =='Rome') -> DROM
 D2 %>% filter(Ciudad =='Vienna') -> DVIE
 
+#par(mfrow=c(3,3), fin=c(5,4))
 
-par(mfrow=c(3,3))
 
-hist(DAMS$Precio, main = "Precio en Amsterdam", xlab = "Precio", ylab = "Frecuencia")
+hist(DAMS$Precio, main = "Precios en Amsterdam", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DAMS$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DAMS$Precio), col = "blue", lwd = 2)
 
-hist(DBAR$Precio, main = "Precio en Barcelona", xlab = "Precio", ylab = "Frecuencia")
+hist(DBAR$Precio, main = "Precios en Barcelona", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DBAR$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DBAR$Precio), col = "blue", lwd = 2)
 
-hist(DATH$Precio, main = "Precio en Atenas", xlab = "Precio", ylab = "Frecuencia")
+hist(DATH$Precio, main = "Precios en Atenas", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DATH$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DATH$Precio), col = "blue", lwd = 2)
 
-hist(DBER$Precio, main = "Precio en Berlin", xlab = "Precio", ylab = "Frecuencia")
+hist(DBER$Precio, main = "Precios en Berlin", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DBER$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DBER$Precio), col = "blue", lwd = 2)
 
-hist(DBUD$Precio, main = "Precio en Budapest", xlab = "Precio", ylab = "Frecuencia")
+hist(DBUD$Precio, main = "Precios en Budapest", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DBUD$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DBUD$Precio), col = "blue", lwd = 2)
 
-hist(DLIS$Precio, main = "Precio en Lisboa", xlab = "Precio", ylab = "Frecuencia")
+hist(DLIS$Precio, main = "Precios en Lisboa", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DLIS$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DLIS$Precio), col = "blue", lwd = 2)
 
-hist(DPAR$Precio, main = "Precio en Paris", xlab = "Precio", ylab = "Frecuencia")
+hist(DPAR$Precio, main = "Precios en Paris", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DPAR$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DPAR$Precio), col = "blue", lwd = 2)
 
-hist(DROM$Precio, main = "Precio en Roma", xlab = "Precio", ylab = "Frecuencia")
+hist(DROM$Precio, main = "Precios en Roma", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DROM$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median(DROM$Precio), col = "blue", lwd = 2)
 
-hist(DVIE$Precio, main = "Precio en Vienna", xlab = "Precio", ylab = "Frecuencia")
+hist(DVIE$Precio, main = "Precios en Vienna", xlab = "Precio", ylab = "Frecuencia")
 # Add mean as a red dashed line
 abline(v = mean(DVIE$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
@@ -787,7 +711,8 @@ ECO %>% filter(ECO$Superhost == 'Sí' )
     ```{r}
     S <- table(CAROS$Superhost)
     S
-    barplot(S,col=c("orange","blue"),legend.text=c("Sí","No"),main="SUPERHOST")
+    barplot(S,col=c("orange","blue"),
+            legend.text=c("Sí","No"),main="SUPERHOST")
     ```
 
 -   Identificar los 5 más caros y analizar sus similaridades.
@@ -875,7 +800,7 @@ text(paste("Correlación:", round(cor(DAMSTERDAM$Distance_Center, DAMSTERDAM$Pre
 
 
 #Relación precio vs indice de restaurantes
-plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes', colors())
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
 abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DAMSTERDAM$Ind.Restaurantes, DAMSTERDAM$Precio), 2)), x = 80, y = 7000)
 ```
@@ -952,8 +877,11 @@ text(paste("Correlación:", round(cor(D2$Ind.Restaurantes, D2$Precio), 2)), x = 
 ### Atenas
 
 ```{r}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 984159b284c44dd5c9416c57142d67a13985c883
 #Filtramos
 D2 %>% filter(Ciudad =='Athens') -> DATHENAS
 DATHENAS
@@ -1022,8 +950,6 @@ plot(DBARCELONA$Precio ~ DBARCELONA$Ind.Restaurantes, main = 'Variación del pre
 abline(lm(DBARCELONA$Precio ~ DBARCELONA$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DBARCELONA$Ind.Restaurantes, DBARCELONA$Precio), 2)), x = 80, y = 7000)
 
-
-
 ```
 
 
@@ -1062,47 +988,108 @@ text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio),
 ```
 
 
-```{r}
-unique(D2$Ciudad)
-```
+
 
 
 ### Roma
 ```{r}
 #Filtramos
-D2 %>% filter(Ciudad =='Roma') -> DBERLIN
-DBERLIN
+D2 %>% filter(Ciudad =='Rome') -> DROMA
+DROMA
 
 #El más caro
-r1 <- which.max(DBERLIN$Precio)
-DBERLIN[r1,1:17]
+r1 <- which.max(DROMA$Precio)
+DROMA[r1,1:17]
 
 
 #El más económico
-r2 <- which.min(DBERLIN$Precio)
-DBERLIN[r2,1:17]
+r2 <- which.min(DROMA$Precio)
+DROMA[r2,1:17]
 
 #Relación precio vs metro(km)
 
-plot(DBERLIN$Precio ~ DBERLIN$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBERLIN$Distance_Metro, DBERLIN$Precio), 2)), x = 12, y = 4000)
+plot(DROMA$Precio ~DROMA$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DROMA$Precio ~ DROMA$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DROMA$Distance_Metro, DROMA$Precio), 2)), x = 3, y = 2000)
 
 #Relación precio vs centro(km)
-plot(DBERLIN$Precio ~ DBERLIN$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBERLIN$Distance_Center, DBERLIN$Precio), 2)), x = 20, y = 4000)
+plot(DROMA$Precio ~ DROMA$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DROMA$Precio ~ DROMA$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DROMA$Distance_Center, DROMA$Precio), 2)), x = 8, y = 2000)
 
 
 #Relación precio vs indice de restaurantes
-plot(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio), 2)), x = 80, y = 4000)
+plot(DROMA$Precio ~ DROMA$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DROMA$Precio ~ DROMA$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DROMA$Ind.Restaurantes, DROMA$Precio), 2)), x = 80, y = 2000)
 ```
 
 ### Budapest
 
+```{r}
+#Filtramos
+D2 %>% filter(Ciudad =='Budapest') -> DBUDAPEST
+DBUDAPEST
+
+#El más caro
+r1 <- which.max(DBUDAPEST$Precio)
+DBUDAPEST[r1,1:17]
+
+
+#El más económico
+r2 <- which.min(DBUDAPEST$Precio)
+DBUDAPEST[r2,1:17]
+
+#Relación precio vs metro(km)
+
+plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Metro, DBUDAPEST$Precio), 2)), x = 3, y = 2000)
+
+#Relación precio vs centro(km)
+plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Center, DBUDAPEST$Precio), 2)), x = 8, y = 2000)
+
+
+#Relación precio vs indice de restaurantes
+plot(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Precio), 2)), x = 80, y = 2000)
+```
+
 ### Lisbon
+```{r}
+#Filtramos
+D2 %>% filter(Ciudad =='Lisbon') -> DLISBON
+DBUDAPEST
+
+#El más caro
+r1 <- which.max(DBUDAPEST$Precio)
+DBUDAPEST[r1,1:17]
+
+
+#El más económico
+r2 <- which.min(DBUDAPEST$Precio)
+DBUDAPEST[r2,1:17]
+
+#Relación precio vs metro(km)
+
+plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Metro, DBUDAPEST$Precio), 2)), x = 3, y = 2000)
+
+#Relación precio vs centro(km)
+plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Center, DBUDAPEST$Precio), 2)), x = 8, y = 2000)
+
+
+#Relación precio vs indice de restaurantes
+plot(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Precio), 2)), x = 80, y = 2000)
+```
 
 ### París
 
@@ -1111,6 +1098,9 @@ text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio),
 ### Vienna
 
 ### Filtramos a todos los más caros de su país
+```{r}
+unique(D2$Ciudad)
+```
 
 -   
 
@@ -1129,84 +1119,42 @@ hist(D4$Precio)
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
 -   Analizar las ciudades con mayor indice de atracción (gráficas)
-```{r}
-"Hallamos el máximo y mínimo valor de indice de atracción"
-
-max(D2$Ind.Atraccion)
-roundF(min(D2$Ind.Atraccion))
-"Características de esa observación"
-which.max(D2$Ind.Atraccion)
-D2[55,]
-
-
-"Hallamos el valor promedio  :"
-promedio_de_satisfaccion <- roundF(mean(D2$Ind.Atraccion))
-promedio_de_satisfaccion 
-
-```
-
-
-
-
-```{r}
-
-#ATRACCION MAYOR AL PROMEDIO
-D2 %>% filter(D2$Ind.Atraccion > promedio_de_satisfaccion )%>% arrange(desc(Ind.Atraccion)) -> D_ATRACCION
-
-
-
-# SELECIONAMOS A LOS 100 ALOJAMIENTOS CON MEJORES CALIFICACIONES DE SATISFACCIÓN : 
-D_ATRACCION[1:100,1:17]  -> ATRACCION_100
-ATRACCION_100
-
-
-# LAS TOP 100 CIUDADES CON MAYOR INDICE DE ATRACCION 
-t <- table(ATRACCION_100$Ciudad)
-barplot(t, col=c("pink"),main="Top 100 ciudades con mejor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
-```
-
-
 
 -   Analizar las ciudades con menor indice de atracción (gráficas)
 
-```{r}
-#ATRACCION MENOR AL PROMEDIO
-D2 %>% filter(D2$Ind.Atraccion < promedio_de_satisfaccion )%>% arrange(Ind.Atraccion) -> M_ATRACCION
-
-
-
-# SELECIONAMOS A LOS 100 ALOJAMIENTOS CON PEORES CALIFICACIONES DE SATISFACCIÓN : 
-M_ATRACCION[1:100,1:17]  -> MATRACCION_100
-MATRACCION_100
-
-
-# LAS TOP 100 CIUDADES CON MENOR INDICE DE ATRACCION :
-tM <- table(MATRACCION_100$Ciudad)
-barplot(tM, col=c("pink"),main="Top 100 ciudades con menor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
-
-```
-
-
 -   Analizar si el indice de atracción se relaciona a un alto indice de restaurantes cercano al alojamiento o no.
 
+-   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
+```{r}
+plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al metro", ylim= c(0,100))
+```
+```{r}
+cor(D2$Ind.Atraccion, D2$Distance_Metro)
+```
+Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas.
 
 ```{r}
-cor(D2$Ind.Atraccion,D2$Ind.Restaurantes)
-
-#Relación  Ind.Atracción vs Ind.Restaurantes : 
-
-plot(D2$Ind.Atraccion ~ D2$Ind.Restaurantes, main = 'Variación del I.Atraccion vs la I.Restaurantes')
-abline(lm(D2$Ind.Atraccion ~  D2$Ind.Restaurantes), col = "orange", lwd = 3, lty = 5)
-text(paste("Correlación:", round(cor( D2$Ind.Restaurantes, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
+quantile(D2$Distance_Metro)
+```
+```{r}
+D2  %>% filter(Distance_Metro > 0.4) -> SKL
+SKL
 ```
 
-
--   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
 
+
+
+
+
 -   Ciudad y índice de atracción por factor demográfico (ciudad):
+
+
+
+
+
 
 ```{r}
 
