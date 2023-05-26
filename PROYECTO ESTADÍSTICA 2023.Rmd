@@ -350,7 +350,7 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 ```
 
-*La mayor cantidamientos en todo el estudio se encuentran en Rome.*
+*La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
 
 -   El precio promedio en todas las ciudades de Europa: AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
 
@@ -365,8 +365,8 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 -   Conocer la mediana del precio de los alojamientos
 
     ```{r}
-    s2 <- median(D2$Precio)
-    s2
+    mediana_precio <- median(D2$Precio)
+    mediana_precio
     ```
 
 *Se concluye que la mitad de los alojamientos de todas las ciudades son mayores a este valor, por lo tanto se les considera cómo la mitad con precios más caros. La parte inferior se consideran cómo económicos.*
@@ -375,18 +375,75 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 -   Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
 
+Filtramos la mitad superior a la mediana
+
 ```{r}
-D2 %>% filter(Precio > s2)%>% arrange(Precio) -> CAROS
+D2 %>% filter(Precio > mediana_precio) %>% arrange(desc(Precio)) -> CAROS
 CAROS
-nrow(CAROS)
+nrow(CAROS) #Es el total de Airbnb con precios mayores a los 203.8193 (mediana)
+
+
+```
+
+Encontramos las cuidad
+
+```{r}
+c1 <- table(CAROS$Ciudad) #Del grupos de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795). El de más apariciones es París (5,724)
+c1
+min(c1)
+which.min(c1)
+
+```
+```{r}
+#Analizamos la cantidad de Superhost SÍ de este lado de  los 100 alojamientos más caros : 
+
+CAROS[1:100, ] -> CAROS100 
+CAROS100
+
+table(CAROS100$Superhost)
+#Los valores de Limpieza y Satisfacción son muy altos
+"La calificación que le asignan a este tipo de alojaminetos es 9.5 en promedio en LIMPIEZA"
+mean(CAROS100$Limpieza) 
+"La Satisfacción del servicio es una notación alta, ya que tiene un 95.19 en promedio"
+mean(CAROS100$Satisfaccion)
+"Y lo mínimo en satisfacción es 60, lo que igual es alto"
+min(CAROS100$Satisfaccion)
+
 
 ```
 
 ```{r}
-c1 <- table(CAROS$Ciudad)
-c1
-min(c1)
-which.min(c1)
+
+## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Casa Entera
+tipo_capacidad <- table(CAROS100$Tipo,CAROS100$Capacidad)
+
+mosaicplot(tipo_capacidad)
+```
+```{r}
+"La cantidad promedio de habitaciones en este tipo de alojamientos es:"
+roundF(mean(CAROS100$Habitaciones, na.rm = T))
+
+day <- table(CAROS100$Day) # Y se suelen tomar los fines de semana
+mosaicplot(day)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r}
+table(CARO5S$Superhost == 'Sí')
 ```
 
 *Del grupo de los más caros Athenas es la ciudad que tiene menos apariciones, por lo que se concluye que en esta ciudad sus precios de sus alojamientos son aún menores que 203.*
@@ -398,7 +455,9 @@ which.min(c1)
     D2 %>% filter(Precio < s2)%>% arrange(Precio) -> ECO
     ECO
     nrow(ECO)
-    View(D2)
+
+
+
     ```
 
     ```{r}
@@ -415,12 +474,16 @@ barplot(e1, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" ,
 
 *Aqui se comprueba que Athenas es uns de las cuidades con precios más económicos en el estudio. Asimismo, tambien podemos encontrar a Roma con esta característca de precios económicos. Sin embargo tambien tenía considerables observaciones en dentro de los más caros, por lo tanto esta ciudad ofrece una amplia oferta con respecto a los precios.*
 
+```{r}
+ECO %>% filter(ECO$Superhost == 'Sí' )
+```
+
 -   De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
 
     ```{r}
     S <- table(CAROS$Superhost)
     S
-    barplot(S, ,col=c("orange","blue"),
+    barplot(S,col=c("orange","blue"),
             legend.text=c("Sí","No"),main="SUPERHOST")
     ```
 
