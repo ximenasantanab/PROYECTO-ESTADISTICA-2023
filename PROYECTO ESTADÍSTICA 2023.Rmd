@@ -381,14 +381,74 @@ quantile(D2$Ind.Atraccion)
 El índice de atracción se encuentra normalizado, por lo que los valores que puede tomar son del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.
 
 
+```{r}
+#SUPERHOST
+plot(x = D2$Superhost, main = "Gráfica de Superhost",
+     xlab = "Superhost", ylab = "Frecuencia")
+```
+
+```{r}
+#
+##CIUDADES
+#
+ggplot(data= D2, mapping=aes(x=Ciudad))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de ciudades",x="Ciudades",y="Frecuencias")
+```
 
 
+```{r}
+#DÍA DE LA SEMANA
+ggplot(data= D2, mapping=aes(x=Day))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de días de la semana",x="Días",y="Frecuencias")
 
+```
+
+```{r}
+#CAPACIDAD
+
+mean_capacidad <- mean(D2$Capacidad)
+median_capacidad <- median(D2$Capacidad)
+par(mfrow=c(1,2)) 
+boxplot(D2$Ind.Atraccion, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_atraccion, col = "red", pch = 16)
+# Add median as a blue point
+points(median_atraccion, col = "blue", pch = 16)
+hist(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_capacidad, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_capacidad, col = "blue", lwd = 2)
+```
+```{r}
+#
+##Tipo
+#
+ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de tipos de habitaciones",x="Tipo",y="Frecuencias")
+
+```
+```{r}
+#
+##Share room
+#
+ggplot(data= D2, mapping=aes(x=Share_Room))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones compartidas",x="Share rooms",y="Frecuencias")
+```
+
+```{r}
+#
+## Multiple rooms
+#
+
+```
 
 
 
 Analizamos las variables por separado de nuestra variables más relevantes
+
 =======
+```{r}
+
+```
+
+
 D2 %>% select(Ciudad, Precio) -> ciudad_precio_boxplot
 ciudad_precio_boxplot
 #seleccionamos por ciudades : 
