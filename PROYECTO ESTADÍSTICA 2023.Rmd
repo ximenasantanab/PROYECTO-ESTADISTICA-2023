@@ -310,9 +310,11 @@ Analizamos las variables por separado de nuestra variables más relevantes
 3.  Satisfacción
 4.  Tipos de cuartos
 
-## 2. Análisis Bivariado :
+### 2. Análisis Bivariado :
 
-## 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
+### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
+
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
@@ -333,7 +335,7 @@ COMPLETAR (GONZALO Y EDUARDO)
 9.  Conocer el precio más caro e identificar sus características
 10. Identificar el tipo de cuarto de las habitaciones más caras
 11. Conocer el precio más caro e identificar sus características
-12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atraccion.
+12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atracción.
 
 ### Desarrollo :
 
@@ -348,7 +350,7 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 ```
 
-*La mayor cantidad de alojamientos en todo el estudio se encuentran en Rome.*
+*La mayor cantidamientos en todo el estudio se encuentran en Rome.*
 
 -   El precio promedio en todas las ciudades de Europa: AGRUPAMOS POR CIUDAD Y CADA UNO SE LE HACE SU BOXPLOT ??
 
@@ -376,6 +378,7 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 ```{r}
 D2 %>% filter(Precio > s2)%>% arrange(Precio) -> CAROS
 CAROS
+nrow(CAROS)
 
 ```
 
@@ -394,16 +397,20 @@ which.min(c1)
 
     D2 %>% filter(Precio < s2)%>% arrange(Precio) -> ECO
     ECO
+    nrow(ECO)
+    View(D2)
     ```
 
-```{r}
-e1 <- table(ECO$Ciudad)
+    ```{r}
+    ECO %>% filter(ECO$Superhost == 'Sí')
+    ```
+
+``` {iudad)}
 e1
 min(e1)
 which.max(e1)
 
 barplot(e1, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
-
 ```
 
 *Aqui se comprueba que Athenas es uns de las cuidades con precios más económicos en el estudio. Asimismo, tambien podemos encontrar a Roma con esta característca de precios económicos. Sin embargo tambien tenía considerables observaciones en dentro de los más caros, por lo tanto esta ciudad ofrece una amplia oferta con respecto a los precios.*
@@ -582,26 +589,26 @@ Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de
 
 ```{r}
 # Crear una tabla con las 9 ciudades
-D<-read.csv("Aemf1.csv")
-D1<-data.frame(table(D$City))
-ciudades <- D1$Var1
+#D<-read.csv("Aemf1.csv")
+#D1<-data.frame(table(D$City))
+#ciudades <- D1$Var1
 
 # Generar datos aleatorios para cada ciudad
-datos_al_azar <- sample(1:9, length(ciudades))
+#datos_al_azar <- sample(1:9, length(ciudades))
 
 # Crear el data frame con las ciudades y los datos al azar
-datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
+#datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
 
 # Ordenar los datos por ciudad
-datos <- datos[order(datos$Ciudad), ]
+#datos <- datos[order(datos$Ciudad), ]
 
 # Crear la gráfica de barras
-barplot(datos$IndiceAtraccion, 
-        names.arg = datos$Ciudad,
-        xlab = "Ciudad",
-        ylab = "Índice de atracción",
-        main = "Índice de atracción por ciudad",
-        cex.names = 0.5)
+#barplot(datos$IndiceAtraccion, 
+ #       names.arg = datos$Ciudad,
+  #      xlab = "Ciudad",
+   #     ylab = "Índice de atracción",
+    #    main = "Índice de atracción por ciudad",
+     #   cex.names = 0.5)
 
 ```
 
@@ -616,10 +623,10 @@ Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X r
 #D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
 
 # Crear el gráfico de dispersión
-plot(D2$Price, D2$`Attraction Index`,
-     xlab = "Precio",
-     ylab = "Índice de atracción",
-     main = "Relación entre Precio e Índice de atracción")
+#plot(D2$Price, D2$`Attraction Index`,
+    # xlab = "Precio",
+     #ylab = "Índice de atracción",
+     #main = "Relación entre Precio e Índice de atracción")
 
 ```
 
