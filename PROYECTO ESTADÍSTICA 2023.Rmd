@@ -408,11 +408,106 @@ ggplot(D2, aes(x=Day))+geom_bar()+labs(title="Días de Reservación", x="Días",
 ```
 ```{r}
 ##Tipo
-ggplot(D2, aes(x=Tipo))+geom_bar()+labs(title="Tipo de habitaciones", x="Tipo", y="Frecuencia") +theme_minimal()
+
+ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de tipos de habitaciones",x="Tipo",y="Frecuencias")
+
 
 ```
 ```{r}
-##Capacidad
+#CAPACIDAD
+
+mean_capacidad <- mean(D2$Capacidad)
+median_capacidad <- median(D2$Capacidad)
+par(mfrow=c(1,2)) 
+boxplot(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_capacidad, col = "red", pch = 16)
+# Add median as a blue point
+points(median_capacidad, col = "blue", pch = 16)
+hist(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_capacidad, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_capacidad, col = "blue", lwd = 2)
+```
+```{r}
+##SUPERHOST
+plot(x = D2$Superhost, main = "Gráfica de Superhost",
+     xlab = "Superhost", ylab = "Frecuencia")
+```
+```{r}
+##MULTIPLE ROOM
+
+ggplot(data= D2, mapping=aes(x=`Multiple Rooms`))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones múltiples",x="Tipo",y="Frecuencias")
+```
+```{r}
+##OFERTA
+ggplot(data= D2, mapping=aes(x=Oferta))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de Oferta",x="Ofertas",y="Frecuencias")
+```
+```{r}
+##Habitaciones 
+mean_habitaciones <- mean(D2$Habitaciones,na.rm = TRUE)
+median_habitaciones <- median(D2$Habitaciones,na.rm=TRUE)
+par(mfrow=c(1,2)) 
+boxplot(D2$Habitaciones, main = "Número de habitaciones", xlab = "Habitaciones", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_habitaciones, col = "red", pch = 16)
+# Add median as a blue point
+points(median_habitaciones, col = "blue", pch = 16)
+hist(D2$Habitaciones, main = "Número de habitaciones", xlab = "Habitaciones", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_habitaciones, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_habitaciones, col = "blue", lwd = 2)
+```
+```{r}
+##DISTANCE CENTER
+mean_distC <- mean(D2$Distance_Center)
+median_distC <- median(D2$Distance_Center)
+par(mfrow=c(1,2)) 
+boxplot(D2$Distance_Center, main = "Distance center", xlab = "Distance Center", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_distC, col = "red", pch = 16)
+# Add median as a blue point
+points(median_distC, col = "blue", pch = 16)
+hist(D2$Distance_Center, main = "Distance Center", xlab = "Distance Center", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_distC, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_distC, col = "blue", lwd = 2)
+```
+```{r}
+##DISTANCE METRO
+
+mean_distM <- mean(D2$Distance_Metro)
+median_distM <- median(D2$Distance_Metro)
+par(mfrow=c(1,2)) 
+boxplot(D2$Distance_Metro, main = "Distance Metro", xlab = "Distance Metro", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_distM, col = "red", pch = 16)
+# Add median as a blue point
+points(median_distM, col = "blue", pch = 16)
+hist(D2$Distance_Metro, main = "Distance Metro", xlab = "Distance Metro", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_distM, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_distM, col = "blue", lwd = 2)
+```
+```{r}
+##Índice de restaurantes
+mean_Ind.Restaurant <- mean(D2$Ind.Restaurantes)
+median_Ind.Restaurant <- median(D2$Ind.Restaurantes)
+par(mfrow=c(1,2)) 
+boxplot(D2$Ind.Restaurantes, main = "Índice de Restaurantes", xlab = "Índice de Restaurantes", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_Ind.Restaurant, col = "red", pch = 16)
+# Add median as a blue point
+points(median_Ind.Restaurant, col = "blue", pch = 16)
+hist(D2$Ind.Restaurantes, main = "Índice de Restaurantes", xlab = "Índice de Restaurantes", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_Ind.Restaurant, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_Ind.Restaurant, col = "blue", lwd = 2)
 ```
 
 
