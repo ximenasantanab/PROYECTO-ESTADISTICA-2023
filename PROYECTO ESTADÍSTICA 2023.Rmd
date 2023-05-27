@@ -1122,86 +1122,119 @@ plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion, ylab = "Índice de Atracción"
 ```{r}
 cor(D2$Ind.Atraccion, D2$Distance_Metro)
 ```
-Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas.
-
+Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
 ```{r}
-quantile(D2$Distance_Metro)
+cor(DAMS$Ind.Atraccion, DAMS$Distance_Metro)
 ```
 ```{r}
-D2  %>% filter(Distance_Metro > 0.4) -> SKL
-SKL
+cor(DATH$Ind.Atraccion, DATH$Distance_Metro)
 ```
-
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Distance_Metro)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Distance_Metro)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Distance_Metro)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Distance_Metro)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Distance_Metro)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Distance_Metro)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Distance_Metro)
+```
+Se observa que la correlación mas alta se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
+```{r}
+plot(x = DAMS$Distance_Metro, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al metro", ylim= c(0,100))
+```
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
-
-
-
-
-
-
--   Ciudad y índice de atracción por factor demográfico (ciudad):
-
-
-
-
-
+```{r}
+plot(x = D2$Distance_Center, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al centro", ylim= c(0,100))
+```
+```{r}
+cor(D2$Ind.Atraccion, D2$Distance_Center)
+```
+Se observa que la correlación entre ambas variables es de -0.32, lo que significa que estas dos variables tienen poca correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+```{r}
+cor(DAMS$Ind.Atraccion, DAMS$Distance_Center)
+```
+```{r}
+cor(DATH$Ind.Atraccion, DATH$Distance_Center)
+```
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Distance_Center)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Distance_Center)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Distance_Center)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Distance_Center)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Distance_Center)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Distance_Center)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Distance_Center)
+```
+Se observa que la correlación mas alta se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
 
 ```{r}
-
-
-
-#Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
-# Crear una tabla con las 9 ciudades
-
-#D1<-data.frame(table(D$City))
-#ciudades <- D1$Var1
-
-TABLA_CIUDADES<-data.frame(table(D2$Ciudad))
-ciudades <- TABLA_CIUDADES$Var1
-ciudades
-
-# Generar datos aleatorios para cada ciudad
-#datos_al_azar <- sample(1:9, length(ciudades))
-
-# Crear el data frame con las ciudades y los datos al azar
-#datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
-
-# Ordenar los datos por ciudad
-#datos <- datos[order(datos$Ciudad), ]
-
-# Crear la gráfica de barras
-#barplot(datos$IndiceAtraccion, 
- #       names.arg = datos$Ciudad,
-  #      xlab = "Ciudad",
-   #     ylab = "Índice de atracción",
-    #    main = "Índice de atracción por ciudad",
-     #   cex.names = 0.5)
-
+plot(x = DAMS$Distance_Center, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al Centro", ylim= c(0,100))
 ```
+Se observa que sí existe cierta correlación para estas variables, ya que el valor de la correlación es de -0.69.
 
-#### Precio e índice de atracción:
-
-Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X represente el precio y el eje Y represente el índice de atracción. Cada punto en el gráfico representará una opción de alojamiento, y su posición en el gráfico mostrará cómo varía el índice de atracción en relación con el precio. Esto te permitirá identificar posibles patrones, como una mayor atracción hacia opciones de precio moderado.
+-   Analizar la correlación entre índice de atracción e indice de restaurantes por ciudad
+```{r}
+plot(x = D2$Ind.Restaurantes, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Índice de Restaurantes", ylim= c(0,100))
+```
+```{r}
+cor(D2$Ind.Atraccion, D2$Ind.Restaurantes)
+```
+Se observa que la correlación entre ambas variables es de 0.70, lo que significa que estas dos variables tienen alta correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+```{r}
+cor(DAMS$Ind.Atraccion, DAMS$Ind.Restaurantes)
+```
+```{r}
+cor(DATH$Ind.Atraccion, DATH$Ind.Restaurantes)
+```
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Ind.Restaurantes)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Ind.Restaurantes)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Ind.Restaurantes)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Ind.Restaurantes)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Ind.Restaurantes)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Ind.Restaurantes)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Ind.Restaurantes)
+```
+Se observa que la correlación mas alta se encuentra en Vienna; a continuación se mostrará la gráfica de Índice de Atracción - Índice de Restaurantes para Vienna.
 
 ```{r}
-# Generar datos aleatorios para cada ciudad
-# Generar datos aleatorios para cada ciudad
-#D2 <- D[which(!duplicated(D$City)), ]
-#D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
-
-# Crear el gráfico de dispersión
-#plot(D2$Price, D2$`Attraction Index`,
-
-#     xlab = "Precio",
-#     ylab = "Índice de atracción",
-#     main = "Relación entre Precio e Índice de atracción")
-    # xlab = "Precio",
-     #ylab = "Índice de atracción",
-     #main = "Relación entre Precio e Índice de atracción")
-
+plot(x = DVIE$Distance_Center, y = DVIE$Ind.Atraccion, ylab = "Índice de Atracción en Vienna" , xlab = "Índice de Restaurantes en Vienna", ylim= c(0,100))
 ```
-
--   Filtrar aquellas ciudades y su valor de máxima atracción
-
--   Identificar su relación entre atracción e indice de restaurantes
+A través de este análisis es posible concluir que el índice de atracción está relacionado con el índice de restaurantes. No es posible determinar cuál de las dos variables es la que influye en la otra; sin embargo, este hallazgo se puede utilizar como punto de partida para una investigación futura.
