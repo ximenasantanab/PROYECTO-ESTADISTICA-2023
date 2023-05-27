@@ -1147,20 +1147,20 @@ text(paste("Correlación:", round(cor(DROMA$Ind.Restaurantes, DROMA$Precio), 2))
 ```{r}
 #Relación precio vs metro(km)
 
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Metro, DBUDAPEST$Precio), 2)), x = 3, y = 2000)
+plot(DBUD$Precio ~ DBUD$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBUD$Precio ~ DBUD$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUD$Distance_Metro, DBUD$Precio), 2)), x = 3, y = 2000)
 
 #Relación precio vs centro(km)
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Center, DBUDAPEST$Precio), 2)), x = 8, y = 2000)
+plot(DBUD$Precio ~ DBUD$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBUD$Precio ~ DBUD$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUD$Distance_Center, DBUD$Precio), 2)), x = 8, y = 2000)
 
 
 #Relación precio vs indice de restaurantes
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Precio), 2)), x = 80, y = 2000)
+plot(DBUD$Precio ~ DBUD$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBUD$Precio ~ DBUD$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUD$Ind.Restaurantes, DBUD$Precio), 2)), x = 80, y = 2000)
 ```
 
 ### Lisbon :
@@ -1168,19 +1168,20 @@ text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Prec
 ```{r}
 #Filtramos
 D2 %>% filter(Ciudad =='Lisbon') -> DLISBON
-DBUDAPEST
+D2 %>% filter(Ciudad =='Budapest') -> DBUDAPEST
+DBUD
 DLISBON
 
 #El más caro
-r1 <- which.max(DBUDAPEST$Precio)
-DBUDAPEST[r1,1:17]
+r1 <- which.max(DBUD$Precio)
+DBUD[r1,1:17]
 r1 <- which.max(DLISBON$Precio)
 DLISBON[r1,1:17]
 
 
 #El más económico
-r2 <- which.min(DBUDAPEST$Precio)
-DBUDAPEST[r2,1:17]
+r2 <- which.min(DBUD$Precio)
+DBUD[r2,1:17]
 r2 <- which.min(DLISBON$Precio)
 DLISBON[r2,1:17]
 
@@ -1280,9 +1281,9 @@ text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2
 ```
 
 ```{r}
-barplot(table(D4$Tipo))
+#barplot(table(D4$Tipo))
 
-hist(D4$Precio)
+#hist(D4$Precio)
 ```
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
