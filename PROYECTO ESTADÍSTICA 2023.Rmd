@@ -304,7 +304,7 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## 1. Análisis Univariado :
+## 1. Análisis Univariado : (Edwin)
 
 ```{r}
 
@@ -381,6 +381,135 @@ IQR(D2$Ind.Atraccion)
 quantile(D2$Ind.Atraccion) 
 ```
 El índice de atracción se encuentra normalizado, por lo que los valores que puede tomar son del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.
+```{r}
+##CIUDADES
+ggplot(D2, aes(x=Ciudad))+geom_bar()+labs(title="Ciudades con Airbnb", x="Ciudades", y="Frecuencia") +theme_minimal()
+```
+```{r}
+##Precio
+mean_precio<- mean(D2$Precio)
+median_precio <- median(D2$Precio)
+par(mfrow=c(1,2))
+boxplot(D2$Precio, main = "Precio de habitaciones en Airbnb", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_precio, col = "red", pch = 16)
+# Add median as a blue point
+points(median_precio, col = "blue", pch = 16)
+hist(D2$Precio, main = "Precio de habitaciones en Airbnb", xlab = "Precio", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_precio, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_precio, col = "blue", lwd = 2)
+```
+```{r}
+##Día
+ggplot(D2, aes(x=Day))+geom_bar()+labs(title="Días de Reservación", x="Días", y="Frecuencia") +theme_minimal()
+
+```
+```{r}
+##Tipo
+
+ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de tipos de habitaciones",x="Tipo",y="Frecuencias")
+
+
+```
+```{r}
+#CAPACIDAD
+
+mean_capacidad <- mean(D2$Capacidad)
+median_capacidad <- median(D2$Capacidad)
+par(mfrow=c(1,2)) 
+boxplot(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_capacidad, col = "red", pch = 16)
+# Add median as a blue point
+points(median_capacidad, col = "blue", pch = 16)
+hist(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_capacidad, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_capacidad, col = "blue", lwd = 2)
+```
+```{r}
+##SUPERHOST
+plot(x = D2$Superhost, main = "Gráfica de Superhost",
+     xlab = "Superhost", ylab = "Frecuencia")
+```
+```{r}
+##MULTIPLE ROOM
+
+ggplot(data= D2, mapping=aes(x=`Multiple Rooms`))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones múltiples",x="Tipo",y="Frecuencias")
+```
+```{r}
+##OFERTA
+ggplot(data= D2, mapping=aes(x=Oferta))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de Oferta",x="Ofertas",y="Frecuencias")
+```
+```{r}
+##Habitaciones 
+mean_habitaciones <- mean(D2$Habitaciones,na.rm = TRUE)
+median_habitaciones <- median(D2$Habitaciones,na.rm=TRUE)
+par(mfrow=c(1,2)) 
+boxplot(D2$Habitaciones, main = "Número de habitaciones", xlab = "Habitaciones", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_habitaciones, col = "red", pch = 16)
+# Add median as a blue point
+points(median_habitaciones, col = "blue", pch = 16)
+hist(D2$Habitaciones, main = "Número de habitaciones", xlab = "Habitaciones", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_habitaciones, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_habitaciones, col = "blue", lwd = 2)
+```
+```{r}
+##DISTANCE CENTER
+mean_distC <- mean(D2$Distance_Center)
+median_distC <- median(D2$Distance_Center)
+par(mfrow=c(1,2)) 
+boxplot(D2$Distance_Center, main = "Distance center", xlab = "Distance Center", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_distC, col = "red", pch = 16)
+# Add median as a blue point
+points(median_distC, col = "blue", pch = 16)
+hist(D2$Distance_Center, main = "Distance Center", xlab = "Distance Center", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_distC, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_distC, col = "blue", lwd = 2)
+```
+```{r}
+##DISTANCE METRO
+
+mean_distM <- mean(D2$Distance_Metro)
+median_distM <- median(D2$Distance_Metro)
+par(mfrow=c(1,2)) 
+boxplot(D2$Distance_Metro, main = "Distance Metro", xlab = "Distance Metro", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_distM, col = "red", pch = 16)
+# Add median as a blue point
+points(median_distM, col = "blue", pch = 16)
+hist(D2$Distance_Metro, main = "Distance Metro", xlab = "Distance Metro", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_distM, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_distM, col = "blue", lwd = 2)
+```
+```{r}
+##Índice de restaurantes
+mean_Ind.Restaurant <- mean(D2$Ind.Restaurantes)
+median_Ind.Restaurant <- median(D2$Ind.Restaurantes)
+par(mfrow=c(1,2)) 
+boxplot(D2$Ind.Restaurantes, main = "Índice de Restaurantes", xlab = "Índice de Restaurantes", ylab = "Frecuencia")
+# Add mean as a red point
+points(mean_Ind.Restaurant, col = "red", pch = 16)
+# Add median as a blue point
+points(median_Ind.Restaurant, col = "blue", pch = 16)
+hist(D2$Ind.Restaurantes, main = "Índice de Restaurantes", xlab = "Índice de Restaurantes", ylab = "Frecuencia")
+# Add mean as a red dashed line
+abline(v = mean_Ind.Restaurant, col = "red", lwd = 2)
+# Add median as a blue dashed line
+abline(v = median_Ind.Restaurant, col = "blue", lwd = 2)
+```
+
 
 ### 2. Análisis Bivariado :
 
@@ -877,11 +1006,6 @@ text(paste("Correlación:", round(cor(D2$Ind.Restaurantes, D2$Precio), 2)), x = 
 ### Atenas
 
 ```{r}
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 984159b284c44dd5c9416c57142d67a13985c883
 #Filtramos
 D2 %>% filter(Ciudad =='Athens') -> DATHENAS
 DATHENAS
@@ -926,252 +1050,48 @@ DBARCELONA
 
 
 #El más caro
-r1 <- which.max(DBARCELONA$Precio)
-DBARCELONA[r1,1:17]
+r1 <- which.max(DATHENAS$Precio)
+DATHENAS[r1,1:17]
 
 
 #El más económico
-r2 <- which.min(DBARCELONA$Precio)
-DBARCELONA[r2,1:17]
+r2 <- which.min(DATHENAS$Precio)
+DATHENAS[r2,1:17]
 
 #Relación precio vs metro(km)
 
-plot(DBARCELONA$Precio ~ DBARCELONA$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBARCELONA$Precio ~ DBARCELONA$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBARCELONA$Distance_Metro, DBARCELONA$Precio), 2)), x = 1.5, y = 15000)
+plot(DATHENAS$Precio ~ DATHENAS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DATHENAS$Precio ~ DATHENAS$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DATHENAS$Distance_Metro, DATHENAS$Precio), 2)), x = 1.5, y = 15000)
 
 #Relación precio vs centro(km)
-plot(DBARCELONA$Precio ~ DBARCELONA$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBARCELONA$Precio ~ DBARCELONA$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBARCELONA$Distance_Center, DBARCELONA$Precio), 2)), x = 5, y = 15000)
+plot(DATHENAS$Precio ~ DATHENAS$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DATHENAS$Precio ~ DATHENAS$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DATHENAS$Distance_Center, DATHENAS$Precio), 2)), x = 5, y = 15000)
 
 #Relación precio vs indice de restaurantes
-plot(DBARCELONA$Precio ~ DBARCELONA$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBARCELONA$Precio ~ DBARCELONA$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBARCELONA$Ind.Restaurantes, DBARCELONA$Precio), 2)), x = 80, y = 7000)
+plot(DATHENAS$Precio ~ DATHENAS$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DATHENAS$Precio ~ DATHENAS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio), 2)), x = 80, y = 7000)
 
 ```
 
 
 ### Berlín
 
-```{r}
-#Filtramos
-D2 %>% filter(Ciudad =='Berlin') -> DBERLIN
-DBERLIN
-
-#El más caro
-r1 <- which.max(DBERLIN$Precio)
-DBERLIN[r1,1:17]
-
-
-#El más económico
-r2 <- which.min(DBERLIN$Precio)
-DBERLIN[r2,1:17]
-
-#Relación precio vs metro(km)
-
-plot(DBERLIN$Precio ~ DBERLIN$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBERLIN$Distance_Metro, DBERLIN$Precio), 2)), x = 12, y = 4000)
-
-#Relación precio vs centro(km)
-plot(DBERLIN$Precio ~ DBERLIN$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBERLIN$Precio ~ DBERLIN$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBERLIN$Distance_Center, DBERLIN$Precio), 2)), x = 20, y = 4000)
-
-
-#Relación precio vs indice de restaurantes
-plot(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio), 2)), x = 80, y = 4000)
-```
-
-
-
-
-
 ### Roma
-```{r}
-#Filtramos
-D2 %>% filter(Ciudad =='Rome') -> DROMA
-DROMA
-
-#El más caro
-r1 <- which.max(DROMA$Precio)
-DROMA[r1,1:17]
-
-
-#El más económico
-r2 <- which.min(DROMA$Precio)
-DROMA[r2,1:17]
-
-#Relación precio vs metro(km)
-
-plot(DROMA$Precio ~DROMA$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DROMA$Precio ~ DROMA$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DROMA$Distance_Metro, DROMA$Precio), 2)), x = 3, y = 2000)
-
-#Relación precio vs centro(km)
-plot(DROMA$Precio ~ DROMA$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DROMA$Precio ~ DROMA$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DROMA$Distance_Center, DROMA$Precio), 2)), x = 8, y = 2000)
-
-
-#Relación precio vs indice de restaurantes
-plot(DROMA$Precio ~ DROMA$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DROMA$Precio ~ DROMA$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DROMA$Ind.Restaurantes, DROMA$Precio), 2)), x = 80, y = 2000)
-```
 
 ### Budapest
 
-```{r}
-#Filtramos
-D2 %>% filter(Ciudad =='Budapest') -> DBUDAPEST
-DBUDAPEST
-
-#El más caro
-r1 <- which.max(DBUDAPEST$Precio)
-DBUDAPEST[r1,1:17]
-
-
-#El más económico
-r2 <- which.min(DBUDAPEST$Precio)
-DBUDAPEST[r2,1:17]
-
-#Relación precio vs metro(km)
-
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Metro, DBUDAPEST$Precio), 2)), x = 3, y = 2000)
-
-#Relación precio vs centro(km)
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Center, DBUDAPEST$Precio), 2)), x = 8, y = 2000)
-
-
-#Relación precio vs indice de restaurantes
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Precio), 2)), x = 80, y = 2000)
-```
-
 ### Lisbon
-```{r}
-#Filtramos
-D2 %>% filter(Ciudad =='Lisbon') -> DLISBON
-DLISBON
-
-#El más caro
-r1 <- which.max(DLISBON$Precio)
-DLISBON[r1,1:17]
-
-
-#El más económico
-r2 <- which.min(DLISBON$Precio)
-DLISBON[r2,1:17]
-
-#Relación precio vs metro(km)
-
-plot(DLISBON$Precio ~ DLISBON$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DLISBON$Precio ~ DLISBON$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DLISBON$Distance_Metro, DLISBON$Precio), 2)), x = 3, y = 2000)
-
-#Relación precio vs centro(km)
-plot(DLISBON$Precio ~ DLISBON$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DLISBON$Precio ~ DLISBON$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DLISBON$Distance_Center, DLISBON$Precio), 2)), x = 8, y = 2000)
-
-
-#Relación precio vs indice de restaurantes
-plot(DLISBON$Precio ~ DLISBON$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DLISBON$Precio ~ DLISBON$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DLISBON$Ind.Restaurantes, DLISBON$Precio), 2)), x = 80, y = 2000)
-```
 
 ### París
-```{r}
 
-#Filtramos
-D2 %>% filter(Ciudad =='Paris') -> DPARIS
-DPARIS
-
-#El más caro
-r1 <- which.max(DPARIS$Precio)
-DPARIS[r1,1:17]
-
-
-#El más económico
-r2 <- which.min(DPARIS$Precio)
-DPARIS[r2,1:17]
-
-#Relación precio vs metro(km)
-
-plot(DPARIS$Precio ~ DPARIS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DPARIS$Precio ~ DPARIS$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Metro, DPARIS$Precio), 2)), x = 3, y = 2000)
-
-#Relación precio vs centro(km)
-plot(DPARIS$Precio ~ DPARIS$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DPARIS$Precio ~ DPARIS$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Center, DPARIS$Precio), 2)), x = 8, y = 2000)
-
-
-#Relación precio vs indice de restaurantes
-plot(DPARIS$Precio ~ DPARIS$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DPARIS$Precio ~ DPARIS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 2000)
-```
-
+### Rome
 
 ### Vienna
-```{r}
-
-#Filtramos
-D2 %>% filter(Ciudad =='Vienna') -> DVIENNA
-DVIENNA
-
-#El más caro
-r1 <- which.max(DVIENNA$Precio)
-DVIENNA[r1,1:17]
-
-
-#El más económico
-r2 <- which.min(DVIENNA$Precio)
-DVIENNA[r2,1:17]
-
-#Relación precio vs metro(km)
-
-plot(DPARIS$Precio ~ DPARIS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DPARIS$Precio ~ DPARIS$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Metro, DPARIS$Precio), 2)), x = 3, y = 2000)
-
-#Relación precio vs centro(km)
-plot(DPARIS$Precio ~ DPARIS$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DPARIS$Precio ~ DPARIS$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Center, DPARIS$Precio), 2)), x = 8, y = 2000)
-
-
-#Relación precio vs indice de restaurantes
-plot(DPARIS$Precio ~ DPARIS$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DPARIS$Precio ~ DPARIS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 2000)
-```
-
-
-
-
-
-
-
-
 
 ### Filtramos a todos los más caros de su país
-```{r}
-unique(D2$Ciudad)
-```
 
 -   
 
@@ -1267,86 +1187,119 @@ plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion, ylab = "Índice de Atracción"
 ```{r}
 cor(D2$Ind.Atraccion, D2$Distance_Metro)
 ```
-Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas.
-
+Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
 ```{r}
-quantile(D2$Distance_Metro)
+cor(DAMS$Ind.Atraccion, DAMS$Distance_Metro)
 ```
 ```{r}
-D2  %>% filter(Distance_Metro > 0.4) -> SKL
-SKL
+cor(DATH$Ind.Atraccion, DATH$Distance_Metro)
 ```
-
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Distance_Metro)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Distance_Metro)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Distance_Metro)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Distance_Metro)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Distance_Metro)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Distance_Metro)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Distance_Metro)
+```
+Se observa que la correlación mas alta se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
+```{r}
+plot(x = DAMS$Distance_Metro, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al metro", ylim= c(0,100))
+```
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
-
-
-
-
-
-
--   Ciudad y índice de atracción por factor demográfico (ciudad):
-
-
-
-
-
+```{r}
+plot(x = D2$Distance_Center, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al centro", ylim= c(0,100))
+```
+```{r}
+cor(D2$Ind.Atraccion, D2$Distance_Center)
+```
+Se observa que la correlación entre ambas variables es de -0.32, lo que significa que estas dos variables tienen poca correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+```{r}
+cor(DAMS$Ind.Atraccion, DAMS$Distance_Center)
+```
+```{r}
+cor(DATH$Ind.Atraccion, DATH$Distance_Center)
+```
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Distance_Center)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Distance_Center)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Distance_Center)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Distance_Center)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Distance_Center)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Distance_Center)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Distance_Center)
+```
+Se observa que la correlación mas alta se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
 
 ```{r}
-
-
-
-#Gráfico de barras apiladas: Cada barra representa una ciudad y los segmentos de cada barra representan los diferentes factores demográficos. La altura total de cada barra indicará el índice de atracción, y los segmentos dentro de cada barra mostrarán cómo se distribuye el índice de atracción entre los factores demográficos.
-# Crear una tabla con las 9 ciudades
-
-#D1<-data.frame(table(D$City))
-#ciudades <- D1$Var1
-
-TABLA_CIUDADES<-data.frame(table(D2$Ciudad))
-ciudades <- TABLA_CIUDADES$Var1
-ciudades
-
-# Generar datos aleatorios para cada ciudad
-#datos_al_azar <- sample(1:9, length(ciudades))
-
-# Crear el data frame con las ciudades y los datos al azar
-#datos <- data.frame(Ciudad = ciudades, IndiceAtraccion = datos_al_azar)
-
-# Ordenar los datos por ciudad
-#datos <- datos[order(datos$Ciudad), ]
-
-# Crear la gráfica de barras
-#barplot(datos$IndiceAtraccion, 
- #       names.arg = datos$Ciudad,
-  #      xlab = "Ciudad",
-   #     ylab = "Índice de atracción",
-    #    main = "Índice de atracción por ciudad",
-     #   cex.names = 0.5)
-
+plot(x = DAMS$Distance_Center, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al Centro", ylim= c(0,100))
 ```
+Se observa que sí existe cierta correlación para estas variables, ya que el valor de la correlación es de -0.69.
 
-#### Precio e índice de atracción:
-
-Gráfico de dispersión: Se utilizar un gráfico de dispersión donde el eje X represente el precio y el eje Y represente el índice de atracción. Cada punto en el gráfico representará una opción de alojamiento, y su posición en el gráfico mostrará cómo varía el índice de atracción en relación con el precio. Esto te permitirá identificar posibles patrones, como una mayor atracción hacia opciones de precio moderado.
+-   Analizar la correlación entre índice de atracción e indice de restaurantes por ciudad
+```{r}
+plot(x = D2$Ind.Restaurantes, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Índice de Restaurantes", ylim= c(0,100))
+```
+```{r}
+cor(D2$Ind.Atraccion, D2$Ind.Restaurantes)
+```
+Se observa que la correlación entre ambas variables es de 0.70, lo que significa que estas dos variables tienen alta correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+```{r}
+cor(DAMS$Ind.Atraccion, DAMS$Ind.Restaurantes)
+```
+```{r}
+cor(DATH$Ind.Atraccion, DATH$Ind.Restaurantes)
+```
+```{r}
+cor(DBAR$Ind.Atraccion, DBAR$Ind.Restaurantes)
+```
+```{r}
+cor(DBER$Ind.Atraccion, DBER$Ind.Restaurantes)
+```
+```{r}
+cor(DBUD$Ind.Atraccion, DBUD$Ind.Restaurantes)
+```
+```{r}
+cor(DLIS$Ind.Atraccion, DLIS$Ind.Restaurantes)
+```
+```{r}
+cor(DPAR$Ind.Atraccion, DPAR$Ind.Restaurantes)
+```
+```{r}
+cor(DROM$Ind.Atraccion, DROM$Ind.Restaurantes)
+```
+```{r}
+cor(DVIE$Ind.Atraccion, DVIE$Ind.Restaurantes)
+```
+Se observa que la correlación mas alta se encuentra en Vienna; a continuación se mostrará la gráfica de Índice de Atracción - Índice de Restaurantes para Vienna.
 
 ```{r}
-# Generar datos aleatorios para cada ciudad
-# Generar datos aleatorios para cada ciudad
-#D2 <- D[which(!duplicated(D$City)), ]
-#D2 <- D2[sample(nrow(D2), min(200, nrow(D2)), replace = FALSE), ]
-
-# Crear el gráfico de dispersión
-#plot(D2$Price, D2$`Attraction Index`,
-
-#     xlab = "Precio",
-#     ylab = "Índice de atracción",
-#     main = "Relación entre Precio e Índice de atracción")
-    # xlab = "Precio",
-     #ylab = "Índice de atracción",
-     #main = "Relación entre Precio e Índice de atracción")
-
+plot(x = DVIE$Distance_Center, y = DVIE$Ind.Atraccion, ylab = "Índice de Atracción en Vienna" , xlab = "Índice de Restaurantes en Vienna", ylim= c(0,100))
 ```
-
--   Filtrar aquellas ciudades y su valor de máxima atracción
-
--   Identificar su relación entre atracción e indice de restaurantes
+A través de este análisis es posible concluir que el índice de atracción está relacionado con el índice de restaurantes. No es posible determinar cuál de las dos variables es la que influye en la otra; sin embargo, este hallazgo se puede utilizar como punto de partida para una investigación futura.
