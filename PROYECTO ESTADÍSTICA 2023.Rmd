@@ -528,7 +528,57 @@ abline(v = median_Ind.Restaurant, col = "blue", lwd = 2)
 
 ### 2. Análisis Bivariado :
 
+```{r}
+## Ciudad vs Limpieza
+
+ggplot(D2) +
+  aes(x = Ciudad, y = Limpieza) +
+  geom_boxplot(fill = "#FF8C00") +
+  theme_minimal()
+```
+
+ANÁLISIS -> SE PUEDE DECIR QUE QUE LA CALIFICACIÓN DE LIMPIEZA EN BASE A CADA CIUDAD ES BUENA YA QUE EN GRAN PROPORCIÓN SE ENCUENTRAN LOS PUNTAJES EN UN INTERVALO DE 9-10 DE CALIFICACIÓN.
+
+```{r}
+##Ciudad VS Tipo
+
+D2$Ciudad[D2$Ciudad== "Amsterdam"] <- "AMS"
+D2$Ciudad[D2$Ciudad== "Athens"] <- "ATH"
+D2$Ciudad[D2$Ciudad== "Barcelona"] <- "BAR"
+D2$Ciudad[D2$Ciudad== "Berlin"] <- "BER"
+D2$Ciudad[D2$Ciudad== "Budapest"] <- "BUD"
+D2$Ciudad[D2$Ciudad== "Lisbon"] <- "LISB"
+D2$Ciudad[D2$Ciudad== "Paris"] <- "PAR"
+D2$Ciudad[D2$Ciudad== "Rome"] <- "ROM"
+D2$Ciudad[D2$Ciudad== "Vienna"] <- "VIEN"
+
+tipo_habitacionCiudad <- (table(D2$Tipo,D2$Ciudad))
+
+mosaicplot(tipo_habitacionCiudad)
+```
+ANÁLISIS -> DEMANDA MAYOR POR LAS CASAS COMPLETAS/APART EN LAS CIUDADESS ROMA, PARIS Y ATHENAS
+
+```{r}
+#CAPACIDAD VS SHARE ROOM
+
+tipo_CapacidadSHAREROOM <- (table(D2$Capacidad,D2$Share_Room))
+
+mosaicplot(tipo_CapacidadSHAREROOM)
+```
+ANÁLISIS -> PREFERENCIA POR NO COMPARTIR HABITACIÓN 
+
+```{r}
+# Ciudad VS Habitaciones 
+ggplot(D2) +
+  aes(x = Ciudad, y = Habitaciones) +
+  geom_boxplot(fill = "#ACC527") +
+  theme_minimal()
+
+```
+ANÁLISIS -> LA PREFERENCIA POR LA CANTIDAD DE HABITACIONES A RESERVAR ES MENOR A 2
+
 ### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
+
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
@@ -1289,6 +1339,15 @@ text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
 -   Analizar las ciudades con mayor indice de atracción (gráficas)
+
+#HISTOGRAMA DE PRECIO
+```{r}
+ggplot(D2) +
+  aes(x = Precio) +
+  geom_histogram(bins = 30L, fill = "#FF8C00") +
+  theme_minimal()
+```
+SI LIMITAN EL PRECIO QUE PUEDE LOGRAR COSTAR UN HOTEL SE VISUALIZA MEJOR.
 
 ```{r}
 "Hallamos el máximo y mínimo valor de indice de atracción"
