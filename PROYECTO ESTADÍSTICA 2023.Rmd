@@ -548,17 +548,6 @@ quantile(D2$Ind.Restaurantes)
 ### 2. Análisis Bivariado :
 
 ```{r}
-## Ciudad vs Limpieza
-
-ggplot(D2) +
-  aes(x = Ciudad, y = Limpieza) +
-  geom_boxplot(fill = "#FF8C00") +
-  theme_minimal()
-```
-
-ANÁLISIS -> SE PUEDE DECIR QUE QUE LA CALIFICACIÓN DE LIMPIEZA EN BASE A CADA CIUDAD ES BUENA YA QUE EN GRAN PROPORCIÓN SE ENCUENTRAN LOS PUNTAJES EN UN INTERVALO DE 9-10 DE CALIFICACIÓN.
-
-```{r}
 ##Ciudad VS Tipo
 
 D3 <- D2
@@ -603,7 +592,7 @@ ANÁLISIS -> LA PREFERENCIA POR LA CANTIDAD DE HABITACIONES A RESERVAR ES MENOR 
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
-1.  Promedio de satisfacción, promedio de precio, número de superhost, número de airbnbs, promedio de puntaje de limpieza, promedio de índice de atracción por ciudad.
+1.  Promedio de satisfacción, promedio de precio, número de superhost, número de airbnbs, promedio de índice de atracción por ciudad.
 
 ```{r}
 D2 %>% 
@@ -612,11 +601,14 @@ D2 %>%
             `Número de Airbnb's` = n(),
             `Satisfaccion Promedio` = mean(Satisfaccion), 
             `Superhosts %` = prop.table(table(Superhost))["Sí"],
-            `Puntaje de Limpieza Promedio` = mean(Limpieza),
             `Índice de Atracción Promedio` = mean(Ind.Atraccion)) -> D_Ciudades
 arrange(D_Ciudades)
 
 ```
+
+
+
+
 
 ```{r}
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
