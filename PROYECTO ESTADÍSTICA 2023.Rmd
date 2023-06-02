@@ -1,70 +1,78 @@
 ---
-title: "R Notebook"
+title: "Análisis del servicio de alojamiento de Airbnb en nueve ciudades de Europa del 2023"
 output:
   html_document:
+    toc: yes
     df_print: paged
-  pdf_document: default
+  html_notebook:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: no
+    theme: journal
+  pdf_document:
+    toc: yes
 ---
 
-**PROYECTO ESTADÍSTICA GRUPO 6**
-
-| Nombre y Apellido |  Código   | Participación |
-|:-----------------:|:---------:|:-------------:|
-|  Ximena Santana   | 202010024 |     100%      |
-|  Gonzalo Rivera   | 201920092 |     100%      |
-|  Eduardo Carpio   | 202120134 |     100%      |
-|   Edwin Huamaní   | 201710592 |     100%      |
-|    Kevin Bedón    | 202110506 |     100%      |
-
-1.  **Tema**
-
-    Análisis del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023.
-
-2.  **Objetivo general**
-
-    Analizar del servicio de alojamiento de Airbnb en nueve ciudades en Europa del 2023. holaaa
-
-3.  **Objetivos**
-
+# Introducción 
+## Relevancia
+La relevancia de nuestro proyecto radica que en la actualidad los servicios de Airbnb, representan una considerable oferta de alojamientos alrededor del mundo. Esta plataforma digital representa una gran acogida por muchos usuarios que desean alquilar un espacio a viajeros que buscan alojamiento, esto por la flexibilidad de precios en comparación con los hoteles.Es por ello que es importante realizar un análisis de en determinadas ciudades para conocer cómo funcionan los servicios de alojamiento en la actualidad.
+## Objetivos
 -   Analizar las ciudades con mejor ranking (ELABORAMOS NUESTRO PROPIO RANKING)de experiencia de Airbnb en Europa del 2023.
 
 -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
 -   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
-3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15**
+## Planificación 
 
-4.  **Instrumento de recolección**
+En esta sección el equipo se presenta la planificación de todas la entregas hasta la semana 16 ![C:-ESTADISTICA-2023](GANT.jpg)
+# Datos
+## Proceso de recolecci+on de datos
 
--   Acceso a data de fuente secundaria ( 41,714 observaciones: Datos sobre los AIRBNB de 9 ciudades famosas de Europa, Amsterdam, Athens, Barcelona, Berlin, Budapest, Lisbon, Paris, Rome and Vienna. )
+Para el proceso de recolección se realiza una búsqueda de base de datos de la siguiente página web <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>. La elegida, es una fuente secundaria que tiene un total de 41714 observaciones y un total de 19 variables.
 
-    <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>
 
-    <https://drive.google.com/file/d/1I1u893jIu2HbdGp-ljNbc6_ANqmrJ2Xq/view?usp=share_link>
+-   Población
 
--   Clasificación de variables
+    La población del estudio son todos airbnb's de nueve ciudades principales en Europa en el 2023.
 
-    | N°  |          Variable           |         Tipo         |
-    |:---:|:---------------------------:|:--------------------:|
-    |  1  |            City             | (Categórica nominal) |
-    |  2  |     Cuándo lo reservan      | (Categórica nominal) |
-    |  3  |          Room Type          | (Categórica nominal) |
-    |  4  |         Shared Room         | (Categórica nominal) |
-    |  5  |        Private Room         | (Categórica nominal) |
-    |  6  |          Superhost          | (Categórica nominal) |
-    |  7  |       Multiple Rooms        | (Categórica nominal) |
-    |  8  |     Cleanliness Rating      | (Categórica ordinal) |
-    |  9  |     Guest Satisfaction      | (Categórica ordinal) |
-    | 10  |     Business (ofertas)      | (Categórica nominal) |
-    | 11  |       Person Capacity       | (Numérica discreta)  |
-    | 12  |            Price            | (Numérica continua)  |
-    | 13  |          Bedrooms           | (Numérica discreta)  |
-    | 14  |      City Center (km)       | (Numérica continua)  |
-    | 15  |     Metro Distance (km)     | (Numérica continua)  |
-    | 16  | Normalised attraction Index | (Numérica continua)  |
-    | 17  | Normalised restaurant index | (Numérica continua)  |
+-   Unidad muestra
 
-3.  **Lectura de base de datos**
+    La unidad muestra es cada airbnb (alojamiento) que se encuentra en funcionamiento en esas nueve ciudades en Europa. \## Muestreo El método de muestreo utilizado fue muestreo aleatorio simple.
+
+-   Tamaño de la muestra
+
+    El tamaño de la muestra son 41714 alojamientos.
+
+
+## Variables
+
+| N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
+|:---------:|:---------:|:---------:|---------------------------------------|
+|  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
+|  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
+|  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
+|  4  |         Shared Room         | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  5  |        Private Room         | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  6  |          Superhost          | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  7  |       Multiple Rooms        | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  8  |     Cleanliness Rating      | (Categórica ordinal) | Debe ser un número entero no negativo entre 0 y 10.                                                               |
+|  9  |     Guest Satisfaction      | (Categórica ordinal) | Debe ser un número entero no negativo entre 0 y 100.                                                              |
+| 10  |     Business (ofertas)      | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+| 11  |       Person Capacity       | (Numérica discreta)  | Debe ser un número entero no negativo.                                                                            |
+| 12  |            Price            | (Numérica continua)  | Debe ser un número decimal no negativo en dólares.                                                                |
+| 13  |          Bedrooms           | (Numérica discreta)  | Debe ser un número entero no negativo.                                                                            |
+| 14  |      City Center (km)       | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
+| 15  |     Metro Distance (km)     | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
+| 16  | Normalised attraction Index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
+| 17  | Normalised restaurant index | (Numérica continua)  | Debe ser un número decimal no negativo.
+
+
+## Limpieza de datos
+
+### Lectura de base de datos
 
 ```{r}
 library(readr)
@@ -126,7 +134,7 @@ Observaciones_incompletas <- sum(!complete.cases(D2))
 print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
 ```
 
-## Limpieza de Datos
+- Para la limpieza de datos se tiene encuenta lo siguiente: 
 
 #### Verificar Variables booleanas
 
