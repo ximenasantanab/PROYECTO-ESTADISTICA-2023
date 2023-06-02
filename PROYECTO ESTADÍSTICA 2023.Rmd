@@ -605,7 +605,7 @@ D2 %>%
 arrange(D_Ciudades)
 
 ```
-
+# HACER COMENTARIOS DE LA TABLA AQUI
 
 
 
@@ -693,19 +693,7 @@ cor(D2$Satisfaccion, D2$Precio)
 
 Del gráfico se puede observar que la correlación entre ambas variables es muy baja. Después de hallar el valor de la correlación, se comprueba esta observación, ya que su valor es de 0.016.
 
-3.  Gráfica de Limpieza VS Precio
-
-```{r}
-plot(x = D2$Limpieza, y = D2$Precio, xlab = "Puntaje de Limpieza" , ylab = "Precio", ylim = c(0,5000))
-```
-
-```{r}
-cor(D2$Limpieza, D2$Precio)
-```
-
-En este otro caso, también se puede observar que la correlación entre ambas variables es baja. Después de hallar el valor de la correlación, se comprueba esta observación, ya que su valor es de 0.004.
-
-4.  Gráfica de Atracción normalizada VS Precio
+3.  Gráfica de Atracción normalizada VS Precio
 
 ```{r}
 plot(x = D2$Ind.Atraccion, y = D2$Precio, xlab = "Índice de Atracción" , ylab = "Precio", ylim= c(0,2500))
@@ -717,19 +705,7 @@ cor(D2$Ind.Atraccion, D2$Precio)
 
 Del gráfico se puede observar que la correlación entre ambas variables es baja. Después de hallar el valor de la correlación, se comprueba esta observación, ya que su valor es de 0.271.
 
-5.  Gráfica de Limpieza vs Satisfacción
-
-```{r}
-plot(x = D2$Limpieza, y = D2$Satisfaccion, xlab = "Satisfacción" , ylab = "Puntaje de Limpieza", ylim= c(0,100))
-```
-
-```{r}
-cor(D2$Satisfaccion, D2$Limpieza)
-```
-
-De la gráfica se obnserva que puede existir cierta correlación entre ambas variables y, al calcular esta correlación, se encuentra que el valor es de 0.69, por lo que se puede afirmar que existe una correlación media entre ambas variables.
-
-6.  Gráfica de Ciudad VS Cuándo se reserva
+4.  Gráfica de Ciudad VS Cuándo se reserva
 
 ```{r}
 mosaicplot(table(D2$Ciudad, D2$Day), main = "Cuándo se reserva - Ciudad", xlab = "Ciudades", ylab = "Cuándo se Reserva", las = 0.7, )
@@ -772,7 +748,6 @@ La ciudad más concurrida es Roma, debido al número de reserva que se hace dent
 ### Desarrollo :
 
 -   Conocer el total de las ciudades que pertenecen a la base de datos
->>>>>>> a67516a38b27bfd4db9680ae8d0c174fa7e6a239
 
 ```{r}
 unique(D2$Ciudad)
