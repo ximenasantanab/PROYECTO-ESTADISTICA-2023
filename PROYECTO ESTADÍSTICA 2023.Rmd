@@ -23,7 +23,7 @@ La relevancia de nuestro proyecto radica que en la actualidad los servicios de A
 
 ## Objetivos
 
--   Analizar las ciudades con mejor ranking (ELABORAMOS NUESTRO PROPIO RANKING)de experiencia de Airbnb en Europa del 2023.
+-   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
 -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
@@ -54,7 +54,7 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 ## Variables
 
 | N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
-|:---:|:---------------------------:|:--------------------:|-------------------------------------------------------------------------------------------------------------------|
+|:---------:|:---------:|:---------:|---------------------------------------|
 |  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
 |  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
 |  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
