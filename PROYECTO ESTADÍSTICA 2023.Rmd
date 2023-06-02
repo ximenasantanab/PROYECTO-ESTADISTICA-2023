@@ -15,24 +15,29 @@ output:
     toc: yes
 ---
 
-# Introducción 
+# Introducción
+
 ## Relevancia
+
 La relevancia de nuestro proyecto radica que en la actualidad los servicios de Airbnb, representan una considerable oferta de alojamientos alrededor del mundo. Esta plataforma digital representa una gran acogida por muchos usuarios que desean alquilar un espacio a viajeros que buscan alojamiento, esto por la flexibilidad de precios en comparación con los hoteles.Es por ello que es importante realizar un análisis de en determinadas ciudades para conocer cómo funcionan los servicios de alojamiento en la actualidad.
+
 ## Objetivos
+
 -   Analizar las ciudades con mejor ranking (ELABORAMOS NUESTRO PROPIO RANKING)de experiencia de Airbnb en Europa del 2023.
 
 -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
 -   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
-## Planificación 
+## Planificación
 
 En esta sección el equipo se presenta la planificación de todas la entregas hasta la semana 16 ![C:-ESTADISTICA-2023](GANT.jpg)
+
 # Datos
-## Proceso de recolecci+on de datos
+
+## Proceso de recolección de datos
 
 Para el proceso de recolección se realiza una búsqueda de base de datos de la siguiente página web <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>. La elegida, es una fuente secundaria que tiene un total de 41714 observaciones y un total de 19 variables.
-
 
 -   Población
 
@@ -46,11 +51,10 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 
     El tamaño de la muestra son 41714 alojamientos.
 
-
 ## Variables
 
 | N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
-|:---------:|:---------:|:---------:|---------------------------------------|
+|:---:|:---------------------------:|:--------------------:|-------------------------------------------------------------------------------------------------------------------|
 |  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
 |  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
 |  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
@@ -67,8 +71,7 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 | 14  |      City Center (km)       | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
 | 15  |     Metro Distance (km)     | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
 | 16  | Normalised attraction Index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
-| 17  | Normalised restaurant index | (Numérica continua)  | Debe ser un número decimal no negativo.
-
+| 17  | Normalised restaurant index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
 
 ## Limpieza de datos
 
@@ -84,14 +87,10 @@ coef_var <- function(x, na.rm = FALSE) {sd(x, na.rm=na.rm) / mean(x, na.rm=na.rm
 
 roundF <- function(x){return(round(x,digits = 2))}
 
-
-#moda <- function(x) {return(as.character(names(which.max(table(DF$Barco)))))} 
-
 ```
 
-Número de Observaciones y Variables
-
 ```{r}
+# Número de Observaciones y Variables
 nrow(D)
 ncol(D)
 ```
@@ -122,7 +121,7 @@ View(D2)
 names(D2)
 ```
 
--   Búsqueda de NA's y comprobación de casos completos
+-   Búsqueda de NA y comprobación de casos completos
 
 ```{r}
 Total_de_NAs <- sum(is.na(D))
@@ -134,13 +133,12 @@ Observaciones_incompletas <- sum(!complete.cases(D2))
 print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
 ```
 
-- Para la limpieza de datos se tiene encuenta lo siguiente: 
+-   Para la limpieza de datos se tiene encuenta lo siguiente:
 
 #### Verificar Variables booleanas
 
-El primer paso para la limpieza de datos es hacer un resumen de los datos que se tienen.
-
 ```{r}
+# El primer paso para la limpieza de datos es hacer un resumen de los datos que se tienen.
 summary(D2)
 ```
 
@@ -174,12 +172,6 @@ vec <- factor(D2$Superhost, labels = c('No','Sí'))
 D2$Superhost <- vec
 ```
 
-A continuación, se hace nuevamente un resumen para verificar los cambios realizados a las variables.
-
-```{r}
-summary(D2)
-```
-
 #### Verificar variables númericas enteras:
 
 -   **Capacidad y Habitaciones :** A continuación se verificará que la variable Capacidad contenga solamente números enteros, ya que un airbnb no puede tener capacidad para un número no entero de personas.El mismo análisis se realizará para la variable Habitaciones, ya que sucede lo mismo con esta variable.
@@ -211,9 +203,7 @@ counts <- table(D2$Habitaciones)
 barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 ```
 
-Se observa que ya no existen filas con airbnb's de 0 habitaciones.
-
-El siguiente paso es verificar las variables Limpieza y Satisfacción. Estas variables corresponden a las puntuaciones dejadas por los usuarios de los airbnb's. Normalmente estas puntuaciones son números enteros, para verificar que esto se cumpla, se analizarán estas variables.
+El siguiente paso es verificar las variables Limpieza y Satisfacción. Estas variables corresponden a las puntuaciones dejadas por los usuarios de los airbnb's.Estas puntuaciones son números enteros.
 
 ```{r}
 counts <- table(D2$Limpieza)
@@ -226,11 +216,10 @@ table(D2$Satisfaccion)
 
 Se observa que la variable Limpieza tiene solamente números enteros en el rango 2-10 y la variable Satisfacción también, pero en el rango 20-100.
 
-#### Verificando variables númericas no enteras
-
-Para verificar las variables numéricas no enteras, se realizará nuevamente un resumen de las variables dentro del DataSet.
+#### Verificar variables númericas no enteras
 
 ```{r}
+#Para verificar las variables numéricas no enteras, se realizará nuevamente un resumen de las variables dentro del DataSet.
 summary(D2)
 
 
@@ -250,7 +239,7 @@ filter(D2, Precio>10000)
 
 Después de revisar los datos actuales en Airbnb a través de su aplicación, se encontró que, actualmente, hay 405 alojamientos en Atenas, más de 1000 en París, 168 en Vienna que tienen precios por encima de los 10000 USD. Por este motivo, estos datos se continuarán considerando dentro del dataset.
 
-A continuación se analizará la variable Distance_Center, que representa la distancia al centro de del airbnb.
+A continuación se analiza la variable Distance_Center, que representa la distancia al centro de del airbnb.
 
 ```{r}
 plot(D2$Distance_Center, xlab= "Airbnb's" , ylab = "Distance to City Center (km)")
@@ -314,7 +303,9 @@ barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim 
 
 Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
 
-## 1. Análisis Univariado :
+# Análisis descriptivo
+
+### 1. Análisis Univariado :
 
 ```{r}
 
@@ -608,7 +599,7 @@ ggplot(D2) +
 
 ANÁLISIS -\> LA PREFERENCIA POR LA CANTIDAD DE HABITACIONES A RESERVAR ES MENOR A 2
 
-### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
+### 3. Objetivos
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
