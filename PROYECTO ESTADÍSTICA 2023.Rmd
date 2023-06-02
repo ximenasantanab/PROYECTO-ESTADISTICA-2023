@@ -718,7 +718,6 @@ La ciudad más concurrida es Roma, debido al número de reserva que se hace dent
 1.  Conocer el total de las ciudades que pertenecen a la base de datos
 
 2.  Conocer el precio promedio de los alojamientos en las 9 ciudades
-<<<<<<< HEAD
 
 3.  Identificar cuántas observaciones se encuentran por debajo de la mediana
 
@@ -733,7 +732,7 @@ La ciudad más concurrida es Roma, debido al número de reserva que se hace dent
 8.  Encontrar la relación entre cercanía al centro de la cuidad y costo de alojamiento.
 
 9.  Conocer el precio de cuartos múltiples y privados en relación a la cercanía al centro.
-=======
+
 3.  Conocer la mediana del precio de los alojamientos
 4.  Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"
 5.  Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
@@ -760,10 +759,10 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 *La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
 
-<<<<<<< HEAD
+
 -   **El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.**
 
-=======
+
 -   El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.
 ```{r}
 ggplot(D2) +
@@ -772,7 +771,7 @@ ggplot(D2) +
   theme_minimal()
 ```
 ANÁLISIS -> Se puede observar que el precio de rentabilidad en base a todas la ciudades no supera los 2500 dólares en mayor proporción
->>>>>>> 205e803004075a17462e0cfc4481b8434a9495a6
+
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
     s
@@ -1361,6 +1360,12 @@ barplot(table(D4$Tipo))
 hist(D4$Precio)
 
 ```
+
+
+
+
+
+
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
