@@ -15,29 +15,62 @@ output:
     toc: yes
 ---
 
-#   Introducción
+# Introducción
 
-##   Relevancia
+## Relevancia
 
-##   Planificación
+La relevancia de nuestro proyecto radica que en la actualidad los servicios de Airbnb, representan una considerable oferta de alojamientos alrededor del mundo. Esta plataforma digital representa una gran acogida por muchos usuarios que desean alquilar un espacio a viajeros que buscan alojamiento, esto por la flexibilidad de precios en comparación con los hoteles.Es por ello que es importante realizar un análisis de en determinadas ciudades para conocer cómo funcionan los servicios de alojamiento en la actualidad.
 
-##   Contexto
+## Planificación
 
-#   Datos
+En esta sección el equipo se presenta la planificación de todas la entregas hasta la semana 16 ![C:-ESTADISTICA-2023](GANT.jpg)
 
-##   Proceso de recolección de datos
+## Contexto
 
-##   Población
+Airbnb es una plataforma digital en la que puedes ofrecer tu propiedad a quiénes buscan alojamiento por corto plazo. Cómo usuario, podrás encontrar distintos tipos de Airbnb's con diferentes características. Encontrarás casas enteras, departamentos, estudios o cuartos pequeños. Asimismo, la persona que brinda este servicio es clasificado de acuerdo a los comentarios y puntos respecto a la amabilidad del anfitrión, limpieza, etc.
 
-##   Unidad muestra
+# Datos
 
-##   Muestreo
+## Proceso de recolección de datos
 
-##   Tamaño de la muestra
+Para el proceso de recolección se realiza una búsqueda de base de datos de la siguiente página web <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>. La elegida, tiene un total de 41714 observaciones y un total de 19 variables.
 
-##   Variables
+## Población
 
-##   Limpieza de datos
+La población del estudio son todos airbnb's de nueve ciudades principales en Europa en el 2023.
 
-#   Análisis Descriptivo
+## Unidad muestra
 
+La unidad muestra es cada airbnb (alojamiento) que se encuentra en funcionamiento en esas nueve ciudades en Europa. \## Muestreo El método de muestreo utilizado fue muestreo aleatorio simple.
+
+## Tamaño de la muestra
+
+El tamaño de la muestra son 41714 alojamientos.
+
+## Variables
+
+| N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
+|:---:|:---------------------------:|:--------------------:|-------------------------------------------------------------------------------------------------------------------|
+|  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
+|  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
+|  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
+|  4  |         Shared Room         | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  5  |        Private Room         | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  6  |          Superhost          | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  7  |       Multiple Rooms        | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+|  8  |     Cleanliness Rating      | (Categórica ordinal) | Debe ser un número entero no negativo entre 0 y 10.                                                               |
+|  9  |     Guest Satisfaction      | (Categórica ordinal) | Debe ser un número entero no negativo entre 0 y 100.                                                              |
+| 10  |     Business (ofertas)      | (Categórica nominal) | Debe ser "Sí" o "No"                                                                                              |
+| 11  |       Person Capacity       | (Numérica discreta)  | Debe ser un número entero no negativo.                                                                            |
+| 12  |            Price            | (Numérica continua)  | Debe ser un número decimal no negativo en dólares.                                                                |
+| 13  |          Bedrooms           | (Numérica discreta)  | Debe ser un número entero no negativo.                                                                            |
+| 14  |      City Center (km)       | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
+| 15  |     Metro Distance (km)     | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
+| 16  | Normalised attraction Index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
+| 17  | Normalised restaurant index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
+
+## Limpieza de datos
+
+Para garantizar que la base de datos se encuentre limpia se siguieron los siguientes criterios:
+
+# Análisis Descriptivo
