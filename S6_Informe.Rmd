@@ -21,36 +21,40 @@ output:
 
 La relevancia de nuestro proyecto radica que en la actualidad los servicios de Airbnb, representan una considerable oferta de alojamientos alrededor del mundo. Esta plataforma digital representa una gran acogida por muchos usuarios que desean alquilar un espacio a viajeros que buscan alojamiento, esto por la flexibilidad de precios en comparación con los hoteles.Es por ello que es importante realizar un análisis de en determinadas ciudades para conocer cómo funcionan los servicios de alojamiento en la actualidad.
 
+## Objetivos
+
+-   Analizar las ciudades con mejor ranking (ELABORAMOS NUESTRO PROPIO RANKING)de experiencia de Airbnb en Europa del 2023.
+
+-   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
+
+-   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
+
 ## Planificación
 
 En esta sección el equipo se presenta la planificación de todas la entregas hasta la semana 16 ![C:-ESTADISTICA-2023](GANT.jpg)
-
-## Contexto
-
-Airbnb es una plataforma digital en la que puedes ofrecer tu propiedad a quiénes buscan alojamiento por corto plazo. Cómo usuario, podrás encontrar distintos tipos de Airbnb's con diferentes características. Encontrarás casas enteras, departamentos, estudios o cuartos pequeños. Asimismo, la persona que brinda este servicio es clasificado de acuerdo a los comentarios y puntos respecto a la amabilidad del anfitrión, limpieza, etc.
 
 # Datos
 
 ## Proceso de recolección de datos
 
-Para el proceso de recolección se realiza una búsqueda de base de datos de la siguiente página web <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>. La elegida, tiene un total de 41714 observaciones y un total de 19 variables.
+Para el proceso de recolección se realiza una búsqueda de base de datos de la siguiente página web <https://www.kaggle.com/datasets/dipeshkhemani/airbnb-cleaned-europe-dataset?group=bookmarked>. La elegida, es una fuente secundaria que tiene un total de 41714 observaciones y un total de 19 variables.
 
-## Población
+-   Población
 
-La población del estudio son todos airbnb's de nueve ciudades principales en Europa en el 2023.
+    La población del estudio son todos airbnb's de nueve ciudades principales en Europa en el 2023.
 
-## Unidad muestra
+-   Unidad muestra
 
-La unidad muestra es cada airbnb (alojamiento) que se encuentra en funcionamiento en esas nueve ciudades en Europa. \## Muestreo El método de muestreo utilizado fue muestreo aleatorio simple.
+    La unidad muestra es cada airbnb (alojamiento) que se encuentra en funcionamiento en esas nueve ciudades en Europa. \## Muestreo El método de muestreo utilizado fue muestreo aleatorio simple.
 
-## Tamaño de la muestra
+-   Tamaño de la muestra
 
-El tamaño de la muestra son 41714 alojamientos.
+    El tamaño de la muestra son 41714 alojamientos.
 
 ## Variables
 
 | N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
-|:---:|:---------------------------:|:--------------------:|-------------------------------------------------------------------------------------------------------------------|
+|:---------:|:---------:|:---------:|---------------------------------------|
 |  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
 |  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
 |  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
@@ -71,6 +75,15 @@ El tamaño de la muestra son 41714 alojamientos.
 
 ## Limpieza de datos
 
-Para garantizar que la base de datos se encuentre limpia se siguieron los siguientes criterios:
+#### Verificar Variables booleanas
+
+-   **Multiple Rooms, Shared Room, Private Room y Oferta :** En primer lugar, se observa que Multiple rooms tiene como valor mínimo 0 y como valor máximo 1; esto mismo ocurre en el caso de la variable Oferta. Procedemos a analizar qué valores se encuentran dentro de estas dos variables.
+
+    ```{r}
+    par(mfrow=c(1,2))
+
+    counts <- table(D2$`Multiple Rooms`)
+    barplot(counts, main = "Multiple Rooms", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,35000))
+    ```
 
 # Análisis Descriptivo
