@@ -711,7 +711,7 @@ Del gráfico se puede observar que la correlación entre ambas variables es baja
 mosaicplot(table(D2$Ciudad, D2$Day), main = "Cuándo se reserva - Ciudad", xlab = "Ciudades", ylab = "Cuándo se Reserva", las = 0.7, )
 ```
 La ciudad más concurrida es Roma, debido al número de reserva que se hace dentro de semanas y fienes de semanas. Además que presentan equilibrio de reservas ROMA
-\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
 
 ### Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
@@ -1355,13 +1355,11 @@ text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2
 ```
 
 ```{r}
-<<<<<<< HEAD
 
-=======
-#barplot(table(D4$Tipo))
+barplot(table(D4$Tipo))
 
-#hist(D4$Precio)
->>>>>>> 205e803004075a17462e0cfc4481b8434a9495a6
+hist(D4$Precio)
+
 ```
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
