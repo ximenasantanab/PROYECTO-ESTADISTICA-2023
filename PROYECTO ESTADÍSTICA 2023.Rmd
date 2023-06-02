@@ -13,6 +13,8 @@ output:
 |  Ximena Santana   | 202010024 |     100%      |
 |  Gonzalo Rivera   | 201920092 |     100%      |
 |  Eduardo Carpio   | 202120134 |     100%      |
+|  Edwin Huamaní    | 201710592 |     100%      |
+|  Kevin Bedón      | 202110506 |     100%      |
 
 1.  **Tema**
 
@@ -30,7 +32,8 @@ output:
 
 -   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
-3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15. (FALTA)**
+3.  **Planificación : realizar un diagrama de Gantt hasta la semana 15**
+
 
 4.  **Instrumento de recolección**
 
@@ -311,52 +314,26 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 ##
 ## SATISFACCIÓN
 ##
-par(mfrow=c(1,2)) #QUE HACE mfrow ?
-boxplot(D2$Satisfaccion, main = "Satisfaccion", xlab = "Puntaje de Satisfaccion", ylab = "Frecuencia")
-# Add mean as a red point
-points(mean(D2$Satisfaccion), col = "red", pch = 16)
-# Add median as a blue point
-points(median(D2$Satisfaccion), col = "blue", pch = 16)
-hist(D2$Satisfaccion, main = "Satisfaccion", xlab = "Puntaje de Satisfaccion", ylab = "Frecuencia")
-mean_satisfaction <- mean(D2$Satisfaccion)
-median_satisfaction <- median(D2$Satisfaccion)
-# Add mean as a red dashed line
-abline(v = mean_satisfaction, col = "red", lwd = 2)
-# Add median as a blue dashed line
-abline(v = median_satisfaction, col = "blue", lwd = 2)
+table(D2$Satisfaccion)
 ```
-
 ```{r}
-mean_satisfaction
-median_satisfaction
-IQR(D2$Satisfaccion)
-
-quantile(D2$Satisfaccion) 
+which.max(table(D2$Satisfaccion))
+which.min(table(D2$Satisfaccion))
 ```
-
-En el caso de la variable Satisfacción, en las gráficas se observa que la media y la mediana son valores entre 90 y 100. En el caso del boxplot de la variable satisfacción, se observa de manera gráfica los rangos entre los cuáles se encuentra la variable Satisfacción y cuál es la distribución de estos. La media de esta variable es 93.10, mientras que la mediana es 95; además, el 75% de los valores de satisfacción son mayores a 90. Por estos motivos, se puede afirmar que la satisfacción de los consumidores de airbnb en estas 9 ciudades es bastante alta, en promedio.
+Se observa que, para en el caso de la variable satisfacción, la mayor parte de personas indicó que la limpieza podía tomar el máximo valor (100), mientras que el puntaje menos marcado fue de 54. En la tabla también se observa que, desde el valor de 88 hasta 100, más de 1000 personas marcaron cada uno de esos puntajes.
 
 ```{r}
 ##
 ## LIMPIEZA
 ##
-mean_limpieza <- mean(D2$Limpieza)
-median_limpieza <- median(D2$Limpieza)
-boxplot(D2$Limpieza, main = "Limpieza", xlab = "Puntaje de Limpieza", ylab = "Frecuencia")
-# Add mean as a red point
-points(mean_limpieza, col = "red", pch = 16)
-# Add median as a blue point
-points(median_limpieza, col = "blue", pch = 16)
+table(D2$Limpieza)
 ```
-
 ```{r}
-mean_limpieza
-median_limpieza
-IQR(D2$Limpieza)
-quantile(D2$Limpieza) 
+which.max(table(D2$Limpieza))
+which.min(table(D2$Limpieza))
 ```
+En el caso de la variable limpieza, se observa que los 3 valores más seleccionados son 8, 9 y 10; en ese orden. El valor menos seleccionado por los usuarios es el de 3.
 
-Como se mencionó, anteriormente, la variable Limpieza solo toma valores enteros entre 1 a 10. En el gráfico se observa que la mayoría de valores se concentra en entre 9 y 10; también que la media y la mediana se encuentran en esta zona. Además, de los datos anteriores se aprecia que más del 75% de los valores se encuentran entre 9 y 10; por esto tiene bastante sentido que la media y mediana sean valores cercanos a 9 y 10. La media de esta variable es 9.44 y la mediana es 10; por ello se puede afirmar que los puntajes de limpieza de los airbnbs son bastante altos, en promedio.
 
 ```{r}
 ##
@@ -390,6 +367,8 @@ El índice de atracción se encuentra normalizado, por lo que los valores que pu
 ##CIUDADES
 ggplot(D2, aes(x=Ciudad))+geom_bar()+labs(title="Ciudades con Airbnb", x="Ciudades", y="Frecuencia") +theme_minimal()
 ```
+En esta gráfica de barras podemos observar que la ciudad en la cual hay más personas que
+reservan habitaciones es Roma.
 
 ```{r}
 ##Precio
@@ -407,6 +386,13 @@ abline(v = mean_precio, col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median_precio, col = "blue", lwd = 2)
 ```
+```{r}
+mean_precio
+median_precio
+IQR(D2$Precio)
+quantile(D2$Precio) 
+```
+La gráfica se puede observar de la siguiente manera porque la variable precio puede tomar valores entre 34.78 y 18454.45. Donde vemos que la mayoría de loa valores del precio está por debajo de 230.8. También, la media y mediana  son 260 y 203.
 
 ```{r}
 ##Día
@@ -421,6 +407,8 @@ ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gr�
 
 
 ```
+
+Los día de semana y los fines de semana tienen una similar cantidad de pedido.
 
 ```{r}
 #CAPACIDAD
@@ -438,6 +426,12 @@ hist(D2$Capacidad, main = "Capacidad", xlab = "Capacidad", ylab = "Frecuencia")
 abline(v = mean_capacidad, col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median_capacidad, col = "blue", lwd = 2)
+```
+```{r}
+mean_capacidad
+median_capacidad
+IQR(D2$Capacidad)
+quantile(D2$Capacidad) 
 ```
 
 ```{r}
@@ -475,6 +469,13 @@ abline(v = median_habitaciones, col = "blue", lwd = 2)
 ```
 
 ```{r}
+mean_habitaciones
+median_habitaciones
+IQR(D2$Habitaciones, na.rm=TRUE)
+quantile(D2$Habitaciones,na.rm=TRUE) 
+```
+Se observa que la mayor parte de airbnb's cuenta con una sola habitación.
+```{r}
 ##DISTANCE CENTER
 mean_distC <- mean(D2$Distance_Center)
 median_distC <- median(D2$Distance_Center)
@@ -489,6 +490,12 @@ hist(D2$Distance_Center, main = "Distance Center", xlab = "Distance Center", yla
 abline(v = mean_distC, col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median_distC, col = "blue", lwd = 2)
+```
+```{r}
+mean_distC
+median_distC
+IQR(D2$Distance_Center)
+quantile(D2$Distance_Center) 
 ```
 
 ```{r}
@@ -508,6 +515,12 @@ abline(v = mean_distM, col = "red", lwd = 2)
 # Add median as a blue dashed line
 abline(v = median_distM, col = "blue", lwd = 2)
 ```
+```{r}
+mean_distM
+median_distM
+IQR(D2$Distance_Metro)
+quantile(D2$Distance_Metro) 
+```
 
 ```{r}
 ##Índice de restaurantes
@@ -526,13 +539,60 @@ abline(v = mean_Ind.Restaurant, col = "red", lwd = 2)
 abline(v = median_Ind.Restaurant, col = "blue", lwd = 2)
 ```
 
+```{r}
+mean_Ind.Restaurant
+median_Ind.Restaurant
+IQR(D2$Ind.Restaurantes)
+quantile(D2$Ind.Restaurantes) 
+```
 ### 2. Análisis Bivariado :
+
+```{r}
+##Ciudad VS Tipo
+
+D3 <- D2
+
+D3$Ciudad[D3$Ciudad== "Amsterdam"] <- "AMS"
+D3$Ciudad[D3$Ciudad== "Athens"] <- "ATH"
+D3$Ciudad[D3$Ciudad== "Barcelona"] <- "BAR"
+D3$Ciudad[D3$Ciudad== "Berlin"] <- "BER"
+D3$Ciudad[D3$Ciudad== "Budapest"] <- "BUD"
+D3$Ciudad[D3$Ciudad== "Lisbon"] <- "LISB"
+D3$Ciudad[D3$Ciudad== "Paris"] <- "PAR"
+D3$Ciudad[D3$Ciudad== "Rome"] <- "ROM"
+D3$Ciudad[D3$Ciudad== "Vienna"] <- "VIEN"
+
+tipo_habitacionCiudad <- (table(D3$Tipo,D3$Ciudad))
+
+mosaicplot(tipo_habitacionCiudad)
+```
+ANÁLISIS -> DEMANDA MAYOR POR LAS CASAS COMPLETAS/APART EN LAS CIUDADESS ROMA, PARIS Y ATHENAS
+
+```{r}
+#CAPACIDAD VS SHARE ROOM
+
+tipo_CapacidadSHAREROOM <- (table(D2$Capacidad,D2$Share_Room))
+
+mosaicplot(tipo_CapacidadSHAREROOM)
+```
+ANÁLISIS -> PREFERENCIA POR NO COMPARTIR HABITACIÓN 
+
+```{r}
+# Ciudad VS Habitaciones 
+ggplot(D2) +
+  aes(x = Ciudad, y = Habitaciones) +
+  geom_boxplot(fill = "#ACC527") +
+  theme_minimal()
+
+```
+ANÁLISIS -> LA PREFERENCIA POR LA CANTIDAD DE HABITACIONES A RESERVAR ES MENOR A 2
 
 ### 3. Análisis Descriptivo : "NUESTRA BASE DE DATOS FINAL ES D2"
 
+
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
-1.  Promedio de satisfacción, promedio de precio, número de superhost, número de airbnbs, promedio de puntaje de limpieza, promedio de índice de atracción por ciudad.
+1.  Promedio de satisfacción, promedio de precio, número de superhost, número de airbnbs, promedio de índice de atracción por ciudad.
 
 ```{r}
 D2 %>% 
@@ -541,11 +601,14 @@ D2 %>%
             `Número de Airbnb's` = n(),
             `Satisfaccion Promedio` = mean(Satisfaccion), 
             `Superhosts %` = prop.table(table(Superhost))["Sí"],
-            `Puntaje de Limpieza Promedio` = mean(Limpieza),
             `Índice de Atracción Promedio` = mean(Ind.Atraccion)) -> D_Ciudades
 arrange(D_Ciudades)
 
 ```
+# HACER COMENTARIOS DE LA TABLA AQUI
+
+
+
 
 ```{r}
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
@@ -560,8 +623,10 @@ D2 %>% filter(Ciudad =='Vienna') -> DVIE
 
 #par(mfrow=c(3,3), fin=c(5,4))
 
+```
+```{r}
 
-hist(DAMS$Precio, main = "Precios en Amsterdam", xlab = "Precio", ylab = "Frecuencia")
+hist(DAMS$Precio, xlab = 'Precio', ylab = 'Frecuencia', main = 'Precios en Amsterdam')
 # Add mean as a red dashed line
 abline(v = mean(DAMS$Precio), col = "red", lwd = 2)
 # Add median as a blue dashed line
@@ -628,19 +693,7 @@ cor(D2$Satisfaccion, D2$Precio)
 
 Del gráfico se puede observar que la correlación entre ambas variables es muy baja. Después de hallar el valor de la correlación, se comprueba esta observación, ya que su valor es de 0.016.
 
-3.  Gráfica de Limpieza VS Precio
-
-```{r}
-plot(x = D2$Limpieza, y = D2$Precio, xlab = "Puntaje de Limpieza" , ylab = "Precio", ylim = c(0,5000))
-```
-
-```{r}
-cor(D2$Limpieza, D2$Precio)
-```
-
-En este otro caso, también se puede observar que la correlación entre ambas variables es baja. Después de hallar el valor de la correlación, se comprueba esta observación, ya que su valor es de 0.004.
-
-4.  Gráfica de Atracción normalizada VS Precio
+3.  Gráfica de Atracción normalizada VS Precio
 
 ```{r}
 plot(x = D2$Ind.Atraccion, y = D2$Precio, xlab = "Índice de Atracción" , ylab = "Precio", ylim= c(0,2500))
@@ -652,30 +705,35 @@ cor(D2$Ind.Atraccion, D2$Precio)
 
 Del gráfico se puede observar que la correlación entre ambas variables es baja. Después de hallar el valor de la correlación, se comprueba esta observación, ya que su valor es de 0.271.
 
-5.  Gráfica de Limpieza vs Satisfacción
-
-```{r}
-plot(x = D2$Limpieza, y = D2$Satisfaccion, xlab = "Satisfacción" , ylab = "Puntaje de Limpieza", ylim= c(0,100))
-```
-
-```{r}
-cor(D2$Satisfaccion, D2$Limpieza)
-```
-
-De la gráfica se obnserva que puede existir cierta correlación entre ambas variables y, al calcular esta correlación, se encuentra que el valor es de 0.69, por lo que se puede afirmar que existe una correlación media entre ambas variables.
-
-6.  Gráfica de Ciudad VS Cuándo se reserva
+4.  Gráfica de Ciudad VS Cuándo se reserva
 
 ```{r}
 mosaicplot(table(D2$Ciudad, D2$Day), main = "Cuándo se reserva - Ciudad", xlab = "Ciudades", ylab = "Cuándo se Reserva", las = 0.7, )
 ```
-
+La ciudad más concurrida es Roma, debido al número de reserva que se hace dentro de semanas y fienes de semanas. Además que presentan equilibrio de reservas ROMA
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 ### Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
 1.  Conocer el total de las ciudades que pertenecen a la base de datos
+
 2.  Conocer el precio promedio de los alojamientos en las 9 ciudades
+<<<<<<< HEAD
+
+3.  Identificar cuántas observaciones se encuentran por debajo de la mediana
+
+4.  De la mitad mayor a la mediana, identificar la moda de Superhost y Room Type
+
+5.  Conocer el precio más económico y sus características
+
+6.  Conocer el precio más caro e identificar sus características
+
+7.  Analizar por país las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atracción.
+
+8.  Encontrar la relación entre cercanía al centro de la cuidad y costo de alojamiento.
+
+9.  Conocer el precio de cuartos múltiples y privados en relación a la cercanía al centro.
+=======
 3.  Conocer la mediana del precio de los alojamientos
 4.  Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"
 5.  Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"
@@ -702,8 +760,19 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 *La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
 
+<<<<<<< HEAD
 -   **El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.**
 
+=======
+-   El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.
+```{r}
+ggplot(D2) +
+  aes(x = Precio, y = Ciudad) +
+  geom_boxplot(fill = "#FF8C00") +
+  theme_minimal()
+```
+ANÁLISIS -> Se puede observar que el precio de rentabilidad en base a todas la ciudades no supera los 2500 dólares en mayor proporción
+>>>>>>> 205e803004075a17462e0cfc4481b8434a9495a6
     ```{r}
     s <-round(mean(D2$Precio),digits = 2)
     s
@@ -1152,20 +1221,20 @@ text(paste("Correlación:", round(cor(DROMA$Ind.Restaurantes, DROMA$Precio), 2))
 ```{r}
 #Relación precio vs metro(km)
 
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Metro, DBUDAPEST$Precio), 2)), x = 3, y = 2000)
+plot(DBUD$Precio ~ DBUD$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(DBUD$Precio ~ DBUD$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUD$Distance_Metro, DBUD$Precio), 2)), x = 3, y = 2000)
 
 #Relación precio vs centro(km)
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Center, DBUDAPEST$Precio), 2)), x = 8, y = 2000)
+plot(DBUD$Precio ~ DBUD$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+abline(lm(DBUD$Precio ~ DBUD$Distance_Center), col = "green", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUD$Distance_Center, DBUD$Precio), 2)), x = 8, y = 2000)
 
 
 #Relación precio vs indice de restaurantes
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Precio), 2)), x = 80, y = 2000)
+plot(DBUD$Precio ~ DBUD$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+abline(lm(DBUD$Precio ~ DBUD$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(DBUD$Ind.Restaurantes, DBUD$Precio), 2)), x = 80, y = 2000)
 ```
 
 ### Lisbon :
@@ -1173,19 +1242,20 @@ text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Prec
 ```{r}
 #Filtramos
 D2 %>% filter(Ciudad =='Lisbon') -> DLISBON
-DBUDAPEST
+D2 %>% filter(Ciudad =='Budapest') -> DBUDAPEST
+DBUD
 DLISBON
 
 #El más caro
-r1 <- which.max(DBUDAPEST$Precio)
-DBUDAPEST[r1,1:17]
+r1 <- which.max(DBUD$Precio)
+DBUD[r1,1:17]
 r1 <- which.max(DLISBON$Precio)
 DLISBON[r1,1:17]
 
 
 #El más económico
-r2 <- which.min(DBUDAPEST$Precio)
-DBUDAPEST[r2,1:17]
+r2 <- which.min(DBUD$Precio)
+DBUD[r2,1:17]
 r2 <- which.min(DLISBON$Precio)
 DLISBON[r2,1:17]
 
@@ -1285,12 +1355,27 @@ text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2
 ```
 
 ```{r}
+<<<<<<< HEAD
 
+=======
+#barplot(table(D4$Tipo))
+
+#hist(D4$Precio)
+>>>>>>> 205e803004075a17462e0cfc4481b8434a9495a6
 ```
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
 -   Analizar las ciudades con mayor indice de atracción (gráficas)
+
+#HISTOGRAMA DE PRECIO
+```{r}
+ggplot(D2) +
+  aes(x = Precio) +
+  geom_histogram(bins = 30L, fill = "#FF8C00") +
+  theme_minimal()
+```
+SI LIMITAN EL PRECIO QUE PUEDE LOGRAR COSTAR UN HOTEL SE VISUALIZA MEJOR.
 
 ```{r}
 "Hallamos el máximo y mínimo valor de indice de atracción"
