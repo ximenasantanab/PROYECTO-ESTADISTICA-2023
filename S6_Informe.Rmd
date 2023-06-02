@@ -1,0 +1,43 @@
+---
+title: "Análisis del servicio de alojamiento de Airbnb en nueve ciudades de Europa del 2023"
+output:
+  html_document:
+    toc: yes
+    df_print: paged
+  html_notebook:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: no
+    number_sections: no
+    theme: journal
+  pdf_document:
+    toc: yes
+---
+
+#   Introducción
+
+##   Relevancia
+
+##   Planificación
+
+##   Contexto
+
+#   Datos
+
+##   Proceso de recolección de datos
+
+##   Población
+
+##   Unidad muestra
+
+##   Muestreo
+
+##   Tamaño de la muestra
+
+##   Variables
+
+##   Limpieza de datos
+
+#   Análisis Descriptivo
+
