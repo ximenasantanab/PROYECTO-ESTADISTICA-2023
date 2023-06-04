@@ -978,7 +978,7 @@ ANÁLISIS : *Se contempla que la mayoría de dueños de airbnb´s de estos preci
 
 -   Dónde se encuentra el Airbnb más caro y más económico de todos, y qué características tienen :
 
-    El Alojamiento más caro se encuentra en Athenas con un precio de 18,545.45 mil dólares, lo que implica una "Casa entera", así mismo este tiene altas calificaciones tanto en limpeza y satisfacción. Además la cercanía a las ciudades es buena (es cercano a ellas)
+    El Alojamiento más caro se encuentra en Athenas con un precio de 18,545.45 mil dólares, lo que implica una "Casa entera", así mismo este tiene las máximas calificaciones tanto en limpeza (10) y satisfacción (100). Además la cercanía a las ciudades es buena (es cercano a ellas)
 
     ```{r}
     max(D2$Precio)
@@ -996,7 +996,7 @@ ANÁLISIS : *Se contempla que la mayoría de dueños de airbnb´s de estos preci
 
     ```
 
-## Relación entre variables por ciudades :
+# Relación entre variables por ciudades :
 
 Aquí se analiza por ciudades por separado y se ve la relación precio vs (ubicación, restaurantes)
 
@@ -1024,21 +1024,30 @@ DAMSTERDAM[r2,1:17]
 
 #Relación precio vs metro(km)
 
-plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Metro, main = 'Variación del precio vs la distancia al metro', ylab = "Precio ($)", xlab = "Distancia al metro (km)")
 abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Metro), col = "red", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DAMSTERDAM$Distance_Metro, DAMSTERDAM$Precio), 2)), x = 4, y = 7000)
 
 #Relación precio vs centro(km)
-plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Center, main = 'Variación del precio vs la distancia al centro')
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Center, main = 'Variación del precio vs la distancia al centro', ylab = "Precio ($)", xlab = "Distancia al centro (km)" )
 abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Center), col = "green", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DAMSTERDAM$Distance_Center, DAMSTERDAM$Precio), 2)), x = 10, y = 7000)
 
 
 #Relación precio vs indice de restaurantes
-plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
+plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes', xlab = "Índice de restaurantes", ylab = "Precio($)" )
 abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DAMSTERDAM$Ind.Restaurantes, DAMSTERDAM$Precio), 2)), x = 80, y = 7000)
 ```
+
+ANALISIS : La primera gráfica presenta un valor de correlación de -0.14, lo que indica que mientras más lejano se encuentre al metro el Airbnb tiene a disminuir su precio. Para la segunda gráfica, se evidencia que sí existe una relación entre precio y distancia al centro , buena pero no fuerte. Esta es  una correlación negativa con un valor -0.26, lo que indica que a mayor distancia (km) del centro se encuentre el alojamiento tiende a disminuir el precio. 
+
+
+
+
+
+
+
 
 En esta sección analizamos primero a cada país así cómo a todos en conjunto.
 
