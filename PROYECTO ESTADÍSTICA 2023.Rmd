@@ -83,7 +83,7 @@ library(dplyr)
 library(ggplot2)
 D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
 coef_var <- function(x, na.rm = FALSE) {sd(x, na.rm=na.rm) / mean(x, na.rm=na.rm)}
-#coef_var()
+
 
 roundF <- function(x){return(round(x,digits = 2))}
 
@@ -807,7 +807,7 @@ CAROS100
 #Qué ciudad aparece más aquí en alojamientos caros : 
 ciudades_100 <- table(CAROS100$Ciudad)
 ciudades_100 
-barplot(ciudades_100, main = "Ciudades con más alojamientos con precios elevados", col= c("skyblue"),, las=2, cex.names = 0.9)
+barplot(ciudades_100, main = "Ubicación de las 100 ciudades con precios más caros", col= c("skyblue"),, las=2, cex.names = 0.9)
 
 superhost100 <- table(CAROS100$Superhost)
 barplot(superhost100, main = 'Superhost', col =c( "#CCFF99","#9999FF" ))
@@ -870,15 +870,31 @@ legend("bottomleft",legend=c("Weekday = 49","Weekend = 51"))
 
 *ANÁLISIS : Se concluye este tipo de airbnb top 100, los suelen reservar tanto en días de semana cómo en fines.La diferencia es mínima y la cantidad promedio en número de habitaciones en este tipo de alojamientos es 3*
 
+
+
+
+
 -   **Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"**
 
-*Es el total de Airbnb con precios menores a los 203.8193 (mediana) son 20,856*
+
 
 ```{r}
 D2 %>% filter(Precio < mediana_precio) %>% arrange(Precio)-> ECO
 ECO
-nrow(ECO) #Es el total de Airbnb con precios menores a los 203.8193 (mediana) son ...20,856
+nrow(ECO) 
+barplot(table(ECO$Ciudad),main = "Los  Airbnb más económicos", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("skyblue"))
 ```
+ANÁLISIS : *Es el total de Airbnb con precios menores a los 203.8193 (mediana) son 20,856 y el más económico tiene un costo de 34.77 dólares en Budapest, que consiste en una habitación privada para 2 personas. Este costo se podría asociar a que se encuentra a largas distancias del centro y del metro, además de un bajo índice de atracción.La relación entre estas variables se analiza en los siguientes puntos*
+
+*Asimismo, se observa que Roma tiene una amplia oferta de precios, ya que puedes encontrar alojamientos de los más económicos, cómo también en los alojamientos caros. Sus precios están alrededor de los 205.39 dólares.  *
+```{r}
+D2 %>%filter(D2$Ciudad == 'Rome') -> ROMA
+A <- mean(ROMA$Precio)
+A
+```
+
+
+
 
 *Los TOP 100 Económicos son los siguientes :*
 
@@ -893,7 +909,7 @@ ciudadeseco_100 <- table(ECO100$Ciudad)
 barplot(ciudadeseco_100, col = "skyblue")
 
 Esuperhost100 <- table(ECO100$Superhost)
-barplot(Esuperhost100, main = "Superhost 100", col = "skyblue")
+barplot(Esuperhost100, main = "Superhost 100 más económicos", col = "skyblue")
 
 #Los valores de Limpieza y Satisfacción son muy altos
 "La calificación que le asignan a este tipo de alojaminetos es 8.9  en promedio en LIMPIEZA DEL 0-10"
@@ -906,11 +922,9 @@ min(ECO100$Satisfaccion)
 
 ```
 
-*En la primera gráfica, se concluye que Atenas es la más aparece más aquí en los top 100 economicos seguidos por Budapest y Roma, la cual cuentan con una mayoría de NO superhost (no son anfitriones top) .*
+ANÁLISIS : *En la primera gráfica, se concluye que Athenas es una de las ciudades con precios más económicos en el estudio, ya que tiene la mayor proporción dentro de los 100 alojamientos más económicos de todos. A estos le siguen Budapest y Roma, la cual cuentan con una mayoría de NO superhost (no son anfitriones top) .*
 
-*Aqui se comprueba que Athenas es una de las ciudades con precios más económicos en el estudio. Asimismo, tambien podemos encontrar a Roma con esta característca de precios económicos. Sin embargo tambien tenía considerables observaciones en dentro de los más caros, por lo tanto esta ciudad ofrece una amplia oferta con respecto a los precios.*
-
-*ADEMÁS :*
+*ADEMÁS : según la siguiente tabla : *
 
 ```         
 "La calificación que le asignan a este tipo de alojaminetos es 8.9  en promedio en LIMPIEZA DEL 0-10"
@@ -921,33 +935,37 @@ min(ECO100$Satisfaccion)
 [1]  20 
 ```
 
-*Esto se relaciona con su puntaje de limpieza 2 (mala) y atracción de 2.9 (baja)*
+*Estos precios concuerdan con su puntaje de limpieza 2 (mala) y atracción de 2.9 (baja)*
+*Analizando el porqué de esta atracción tan baja, vemos que el airbnb es sólo una habitación está en Roma que no tiene un superhost  y una limpieza muy mala de 2 puntos. *
 
 ```{r}
 which.min(ECO100$Satisfaccion)
 ECO100[20,1:17]
 ```
 
-*Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado : La mayoría es una Habitación privada para 2.*
 
 ```{r}
-## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Habitación privada con baño.
+
 tipo_capacidadECO <- table(ECO100$Tipo,ECO100$Capacidad)
 
 mosaicplot(tipo_capacidadECO, col = "skyblue")
 ```
 
-*"La cantidad promedio de habitaciones en este tipo de alojamientos es: 1 ,el espacio es reducido"*
+ANÁLISIS : *Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado : La mayoría es una Habitación privada, que son más económicos y con una capacidad para sólo 2 personas. Estos se suelen tomar tanto en día de semana cómo para fines.*
+
+ANÁLISIS : *La cantidad promedio de habitaciones en este tipo de alojamientos es: 1 ,el espacio es reducido, lo que tiene sentido por los bajos costos*
 
 ```{r}
-"La cantidad promedio de habitaciones en este tipo de alojamientos es:1 ,el espacio es reducido"
+
 roundF(mean(ECO100$Habitaciones, na.rm = T))
 
-dayeco <- table(ECO100$Day) # Y se suelen tomar tanto en día de semana cómo para fines.
+dayeco <- table(ECO100$Day) # 
 mosaicplot(dayeco)
 ```
 
 -   *De los 100 económicos, identificar Superhost y Room Type*
+
+ANÁLISIS : *Se contempla que la mayoría de dueños de airbnb´s de estos precios no tienen la clasificación de superhost*
 
     ```{r}
     S <- table(ECO100$Superhost)
@@ -958,7 +976,7 @@ mosaicplot(dayeco)
 
     ```
 
--   Dónde se encuentra el Airbnb más caro y más económico, y qué características tienen :
+-   Dónde se encuentra el Airbnb más caro y más económico de todos, y qué características tienen :
 
     El Alojamiento más caro se encuentra en Athenas con un precio de 18,545.45 mil dólares, lo que implica una "Casa entera", así mismo este tiene altas calificaciones tanto en limpeza y satisfacción. Además la cercanía a las ciudades es buena (es cercano a ellas)
 
