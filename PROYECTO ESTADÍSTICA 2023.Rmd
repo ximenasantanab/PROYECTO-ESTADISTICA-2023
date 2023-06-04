@@ -54,7 +54,7 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 ## Variables
 
 | N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
-|:-----------:|:-----------:|:-----------:|---------------------------------|
+|:-------------:|:-------------:|:-------------:|-----------------------------|
 |  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
 |  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
 |  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
@@ -95,7 +95,7 @@ nrow(D)
 ncol(D)
 ```
 
--   Eliminamos la columna 18 y 16, ya que de esas variables usamos sólo sus valores normalizados.
+-   Eliminamos la columna 18 y 16 (usamos sólo sus valores normalizados)
 
 ```{r}
 View(D) 
@@ -217,8 +217,7 @@ Se observa que la variable Limpieza tiene solamente números enteros en el rango
 
 #### Verificar variables númericas no enteras
 
-```{r}summary(D2)}
-
+``` {r}summary(d2)}
 
 ```
 
@@ -288,7 +287,7 @@ counts <- table(D2$Ciudad)
 barplot(counts, main = "Ciudad", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9)
 ```
 
-Una vez comprobado que solamente existen 9 ciudades en el Dataframe, se procede a revisar el Día y Tipo de airbnb.
+Día y Tipo
 
 ```{r}
 par(mfrow=c(1,2)) #QUE HACE mfrow ?
@@ -298,7 +297,7 @@ counts <- table(D2$Tipo)
 barplot(counts, main = "Tipo", ylab = "Número de Observaciones", las = 2, ylim = c(0,30000), cex.axis = 0.8, cex.names = 0.6, cex.lab = 0.7)
 ```
 
-Se observa que tampoco existen anomalías en estas variables, por lo que podemos concluir que nuestra data se encuentra en condiciones de ser utilizada para los análisis posteriores.
+No hay anomalías, y concluímos que nuestra data se encuentra en condiciones adecuadas para análisis posteriores.
 
 # Análisis descriptivo
 
@@ -306,9 +305,8 @@ Se observa que tampoco existen anomalías en estas variables, por lo que podemos
 
 ```{r}
 
-##
 ## SATISFACCIÓN
-##
+
 table(D2$Satisfaccion)
 ```
 
@@ -317,12 +315,11 @@ which.max(table(D2$Satisfaccion))
 which.min(table(D2$Satisfaccion))
 ```
 
-Se observa que, para en el caso de la variable satisfacción, la mayor parte de personas indicó que la limpieza podía tomar el máximo valor (100), mientras que el puntaje menos marcado fue de 54. En la tabla también se observa que, desde el valor de 88 hasta 100, más de 1000 personas marcaron cada uno de esos puntajes.
+El mayor puntaje en satisfacción es de 100. El mínimo puntaje entre estas 9 ciudades es 54. En la tabla también se observa que, desde el valor de 88 hasta 100, más de 1000 personas marcaron cada uno de esos puntajes.
 
 ```{r}
-##
+
 ## LIMPIEZA
-##
 table(D2$Limpieza)
 ```
 
@@ -334,9 +331,8 @@ which.min(table(D2$Limpieza))
 En el caso de la variable limpieza, se observa que los 3 valores más seleccionados son 8, 9 y 10; en ese orden. El valor menos seleccionado por los usuarios es el de 3.
 
 ```{r}
-##
 ## ATRACCIÓN
-##
+
 mean_atraccion <- mean(D2$Ind.Atraccion)
 median_atraccion <- median(D2$Ind.Atraccion)
 par(mfrow=c(1,2)) #QUE HACE mfrow ?
@@ -359,14 +355,9 @@ IQR(D2$Ind.Atraccion)
 quantile(D2$Ind.Atraccion) 
 ```
 
-El índice de atracción se encuentra normalizado, por lo que los valores que puede tomar son del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.
+ANÁLISIS : El índice de atracción toma valores del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.Asimismo, la media es mayor a la mediana por lo que está sesgado a la derecha e indica que hay menos alojamientos con un índice de satisfacción alta entre 60 a 100. 
 
-```{r}
-##CIUDADES
-ggplot(D2, aes(x=Ciudad))+geom_bar()+labs(title="Ciudades con Airbnb", x="Ciudades", y="Frecuencia") +theme_minimal()
-```
 
-En esta gráfica de barras podemos observar que la ciudad en la cual hay más personas que reservan habitaciones es Roma.
 
 ```{r}
 ##Precio
@@ -392,13 +383,8 @@ IQR(D2$Precio)
 quantile(D2$Precio) 
 ```
 
-La gráfica se puede observar de la siguiente manera porque la variable precio puede tomar valores entre 34.78 y 18454.45. Donde vemos que la mayoría de loa valores del precio está por debajo de 230.8. También, la media y mediana son 260 y 203.
+ANÁLISIS : La gráfica se puede observar de la siguiente manera porque la variable precio puede tomar valores entre 34.78 y 18454.45. Donde vemos que la mayoría de loa valores del precio está por debajo de 230.8. También, la media y mediana son 260 y 203.
 
-```{r}
-##Día
-ggplot(D2, aes(x=Day))+geom_bar()+labs(title="Días de Reservación", x="Días", y="Frecuencia") +theme_minimal()
-
-```
 
 ```{r}
 ##Tipo
@@ -408,7 +394,7 @@ ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gr�
 
 ```
 
-Los día de semana y los fines de semana tienen una similar cantidad de pedido.
+ANÁLISIS : El tipo de habitación que ofertan los airbnb son casas o apartamentos enteros, seguidos por las habitaciones privadas y en un menor porcentaje se ofertan habitaciones compartidas entre varios usuarios. 
 
 ```{r}
 #CAPACIDAD
@@ -434,15 +420,13 @@ median_capacidad
 IQR(D2$Capacidad)
 quantile(D2$Capacidad) 
 ```
+ANÁLISIS : FALTAAAA
+
+
+
 
 ```{r}
-##SUPERHOST
-plot(x = D2$Superhost, main = "Gráfica de Superhost",
-     xlab = "Superhost", ylab = "Frecuencia")
-```
-
-```{r}
-##MULTIPLE ROOM
+#MULTIPLE ROOM
 
 ggplot(data= D2, mapping=aes(x=`Multiple Rooms`))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones múltiples",x="Tipo",y="Frecuencias")
 ```
@@ -476,7 +460,7 @@ IQR(D2$Habitaciones, na.rm=TRUE)
 quantile(D2$Habitaciones,na.rm=TRUE) 
 ```
 
-Se observa que la mayor parte de airbnb's cuenta con una sola habitación.
+ANÁLISIS : Se observa que la mayor parte de airbnb's cuenta con una sola habitación.
 
 ```{r}
 ##DISTANCE CENTER
@@ -759,18 +743,10 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 ```
 
-*Análisis : La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
+*Análisis : La mayoría de los alojamientos se encuentra en Roma (porcentaje),seguido de París (porcentaje) y Lisboa  (porcentaje).*
 
--   **El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.**
 
-```{r}
-ggplot(D2) +
-  aes(x = Precio, y = Ciudad) +
-  geom_boxplot(fill = "#FF8C00") +
-  theme_minimal()
-```
-
-*Se puede observar que el precio de rentabilidad en base a todas la ciudades no supera los 2500 dólares en mayor proporción*
+-   **El precio promedio en todas las ciudades de Europa: **
 
 ```{r}
 s <-round(mean(D2$Precio),digits = 2)
@@ -786,23 +762,23 @@ s
     mediana_precio
     ```
 
-*Se concluye que la mitad de los alojamientos de todas las ciudades son mayores a este valor, por lo tanto se les considera cómo la mitad con precios más caros. La parte inferior se consideran cómo económicos.*
+*Se concluye que a la mitad de los alojamientos que superen este valor, se les considera cómo la mitad con precios más caros. La parte inferior se consideran cómo airbnb's económicos.*
 
 *Al analizar estos 2 descriptores para la variable precio, se observa que la media es mayor a la mediana (sesgado a la derecha, quiere decir que el lado derecho tiene pocas observaciones , osea que los alojamiento con precios muy altos son pocos con respecto al total)*
 
 -   **Identificar cuáles son las observaciones que se encuentran por arriba de la mediana : "CARO"**
 
-*Filtramos la mitad superior a la mediana y tenemos un total de 20,855 airbnbs.*
+*Tenemos un total de 20,855 airbnb's con precios mayores a los 203.8193 (mediana)*
 
 ```{r}
 D2 %>% filter(Precio > mediana_precio) %>% arrange(desc(Precio)) -> CAROS
 CAROS
-nrow(CAROS) #Es el total de Airbnb con precios mayores a los 203.8193 (mediana)
+nrow(CAROS) 
 
 
 ```
 
-*Del grupos de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795). El de más apariciones es París (5,724). Se concluye que París es la ciudad con mayor cantidad de alojamiento con precios elevados.*
+
 
 ```{r}
 c1 <- table(CAROS$Ciudad) #Del grupos de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795). El de más apariciones es París (5,724)
@@ -813,6 +789,12 @@ which.min(c1)
 barplot(c1, main = "Ciudades con más alojamientos caros", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("green"))
 
 ```
+*ANÁLISIS : Del grupo de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795 airbnb´s). El de más apariciones es París (5,724), seguido por Roma y Lisboa. Se concluye que París es la ciudad con mayor cantidad de alojamiento con precios elevados.*
+
+
+
+
+
 
 *Analizamos los 100 alojamientos más caros :*
 
@@ -844,20 +826,19 @@ min(CAROS100$Satisfaccion)
 
 ```
 
-Qué ciudad aparece más aquí en alojamientos caros :
+*ANÁLISIS : *
 
-*En la primera gráfica se muestran las ciudades dónde están los TOP 100 Airbnb más caros. Se concluye que, AMSTERDAM está presente con 37 airbnbs, seguido por PARÍS con 33 airbnb.*
+*En la primera gráfica se muestran las ciudades dónde están los TOP 100 Airbnb más caros. Se concluye que aquí el preio máximo lo hallarás en Amsterdam con un valor de 18545.450 dólares por toda una casa entera y en general esta ciudad tiene la mayoría de alojamientos más costosos con un total de 37 lugares. A esta ciudad le sigue París con 33 airbnb y el máximo de 16445.615 por una casa entera.*
 
-*En la segunda, se muestra que no necesariamente en airbnb costoso, tendrá un Superhost, ya que la mayoría es NO.*
+*En la segunda gráfica, se concluye que no necesariamente en airbnb costoso tendrá cómo anfitrión a un Superhost, ya que la mayoría es NO.*
 
-ADEMÁS :
-
+*Además, según la tabla de abajo, la limpieza y la satisfacción son muy buenas ya que ambas presentan altos valores  *
 ```         
 
 
 Amsterdam    Athens Barcelona    Berlin  Budapest     Paris      Rome    Vienna 
        37         1        10         6         4        33         6         3 
-[1] "La calificación que le asignan a este tipo de alojaminetos es 9.5 en promedio en LIMPIEZA"
+[1] "La calificación que le asignan a este tipo de alojamientos es 9.5 en promedio en LIMPIEZA, lo cual es muy alto"
 [1] 9.5
 [1] "La Satisfacción del servicio es una notación alta, ya que tiene un 95.19 en promedio"
 [1] 95.19
@@ -867,13 +848,12 @@ Amsterdam    Athens Barcelona    Berlin  Budapest     Paris      Rome    Vienna
 
 ```{r}
 
-## Analizamos el tipo de cuarto y cuando lo suelen tomar por alquilado  : La mayoría es una Casa Entera
 tipo_capacidad <- table(CAROS100$Tipo,CAROS100$Capacidad)
 
 mosaicplot(tipo_capacidad, main = "Tipo de habitación TOP 100 y su Capacidad de personas", color = "green")
 ```
 
-*Analizamos el tipo de cuarto y su capacidad de personas : La mayoría es una Casa Entera para 6, y tiene sentido por un costo elevado.*
+*ANÁLISIS  : Analizamos el tipo de cuarto y su capacidad de personas : La mayoría es una Casa Entera para 6, y tiene sentido por un costo elevado.*
 
 ```{r}
 "La cantidad promedio de habitaciones en este tipo de alojamientos es:"
@@ -888,7 +868,7 @@ legend("bottomleft",legend=c("Weekday = 49","Weekend = 51"))
 
 ```
 
-*Se concluye este tipo de airbnb top 100, los suelen reservar tanto en días de semana cómo en fines.La diferencia es mínima.*
+*ANÁLISIS : Se concluye este tipo de airbnb top 100, los suelen reservar tanto en días de semana cómo en fines.La diferencia es mínima y la cantidad promedio en número de habitaciones en este tipo de alojamientos es 3*
 
 -   **Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"**
 
