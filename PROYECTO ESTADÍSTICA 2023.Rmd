@@ -54,7 +54,7 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 ## Variables
 
 | N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
-|:---------:|:---------:|:---------:|---------------------------------------|
+|:-----------:|:-----------:|:-----------:|---------------------------------|
 |  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
 |  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
 |  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
@@ -155,9 +155,8 @@ barplot(counts, main = "Multiple Rooms", ylab = "Número de Observaciones", xlab
 ```{r}
 counts <- table(D2$Oferta)
 barplot(counts, main = "Oferta", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000), xlim = c(0,2) )
+#Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas. Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
 ```
-
-Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas. Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
 
 ```{r}
 vec <- factor(D2$Oferta, labels = c('No','Sí'))
@@ -174,7 +173,7 @@ D2$Superhost <- vec
 
 #### Verificar variables númericas enteras:
 
--   **Capacidad y Habitaciones :** A continuación se verificará que la variable Capacidad contenga solamente números enteros, ya que un airbnb no puede tener capacidad para un número no entero de personas.El mismo análisis se realizará para la variable Habitaciones, ya que sucede lo mismo con esta variable.
+-   **Capacidad y Habitaciones :** Se verifica que Capacidad contenga solamente números enteros.El mismo análisis se realizará para la variable Habitaciones.
 
 ```{r}
 par(mfrow=c(1,2))
@@ -184,7 +183,7 @@ counts <- table(D2$Habitaciones)
 barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 ```
 
-Se observa que ambas variables cumplen con los criterios previamente mencionados. Sin embargo, se observa que la variable habitaciones tiene algunos casos con valor 0. A continuación se analizarán estos casos; para ello, se filtrarán las filas que tienen 0 habitaciones.
+Se observa que la variable habitaciones tiene casos con valor 0. A continuación se analizarán estos casos; para ello, se filtrarán las filas que tienen 0 habitaciones.
 
 ```{r}
 filter(D2, Habitaciones==0)
@@ -203,7 +202,7 @@ counts <- table(D2$Habitaciones)
 barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 ```
 
-El siguiente paso es verificar las variables Limpieza y Satisfacción. Estas variables corresponden a las puntuaciones dejadas por los usuarios de los airbnb's.Estas puntuaciones son números enteros.
+Limpieza y Satisfacción : son puntuaciones dejadas por los usuarios de los airbnb's, son números enteros.
 
 ```{r}
 counts <- table(D2$Limpieza)
@@ -214,18 +213,16 @@ barplot(counts, main = "Limpieza", ylab = "Número de Observaciones", xlab = "Va
 table(D2$Satisfaccion)
 ```
 
-Se observa que la variable Limpieza tiene solamente números enteros en el rango 2-10 y la variable Satisfacción también, pero en el rango 20-100.
+Se observa que la variable Limpieza tiene solamente números enteros en el rango 2-10 y la variable Satisfacción también, entre 20-100.
 
 #### Verificar variables númericas no enteras
 
-```{r}
-#Para verificar las variables numéricas no enteras, se realizará nuevamente un resumen de las variables dentro del DataSet.
-summary(D2)
+```{r}summary(D2)}
 
 
 ```
 
--   **Precio, City Center, Metro distance , Attraction y Restaurants Normalized :** De este resumen, se puede observar que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro del rango establecido (0-100). Por otro lado, también se tienen a las variables Precio, City Center y Metro Distance. Se observa que los valores máximos se alejan considerablemente de la media. Por este motivo, se procederá a analizar cada una de estas variables.
+-   **Precio, City Center, Metro distance , Attraction y Restaurants Normalized :** se observa que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro (0-100). También se tienen a las variables Precio, City Center y Metro Distance. Se observa que los valores máximos se alejan considerablemente de la media. Por este motivo, se procederá a analizar cada una de estas variables.
 
 ```{r}
 plot(D2$Precio, xlab= "Airbnb's" , ylab = "Precio")
@@ -754,7 +751,7 @@ La ciudad más concurrida es Roma, debido al número de reserva que se hace dent
 -   **Conocer el total de las ciudades que pertenecen a la base de datos**
 
 ```{r}
-unique(D2$Ciudad)
+
 c <- table(D2$Ciudad)
 sum(c)
 barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("orange"))
@@ -762,7 +759,7 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 ```
 
-*La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
+*Análisis : La mayor cantidad de alojamientos de todo el estudio se encuentran en Roma.*
 
 -   **El precio promedio en todas las ciudades de Europa: Se realiza un boxplot para cada ciudad.**
 
