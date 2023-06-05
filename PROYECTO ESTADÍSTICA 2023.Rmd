@@ -146,7 +146,7 @@ summary(D2)
 
 -   **Multiple Rooms, Shared Room, Private Room y Oferta :** En primer lugar, se observa que Multiple rooms tiene como valor mínimo 0 y como valor máximo 1; esto mismo ocurre en el caso de la variable Oferta. Procedemos a analizar qué valores se encuentran dentro de estas dos variables.
 
-```{r}
+```{r, echo=FALSE}
 par(mfrow=c(1,2))
 
 counts <- table(D2$`Multiple Rooms`)
@@ -157,8 +157,8 @@ barplot(counts, main = "Multiple Rooms", ylab = "Número de Observaciones", xlab
 ```{r}
 counts <- table(D2$Oferta)
 barplot(counts, main = "Oferta", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000), xlim = c(0,2) )
-#Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas. Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
 ```
+Como se observa, ambas variables cuentan solamente con "0" y "1" como valores, por lo que se trata de variables booleanas. Se observa que, además de estas dos variables, se tiene que Share_Room, Private_Room y Superhost también son variables de tipo bool. Para facilitar las operaciones futuras, se procederá a cambiar los "0" y "False" a la cadena "No", y los "1" y "True" a la cadena "Sí".
 
 ```{r}
 vec <- factor(D2$Oferta, labels = c('No','Sí'))
@@ -177,7 +177,7 @@ D2$Superhost <- vec
 
 -   **Capacidad y Habitaciones :** Se verifica que Capacidad contenga solamente números enteros.El mismo análisis se realizará para la variable Habitaciones.
 
-```{r}
+```{r, echo=FALSE}
 par(mfrow=c(1,2))
 counts <- table(D2$Capacidad)
 barplot(counts, main = "Capacidad", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,20000))
@@ -199,14 +199,14 @@ D2$Habitaciones <- replace(D2$Habitaciones, D2$Habitaciones==0, NA)
 
 A continuación, se verificará que los valores de Habitaciones se hayan reemplazado correctamente.
 
-```{r}
+```{r, echo=FALSE}
 counts <- table(D2$Habitaciones)
 barplot(counts, main = "Habitaciones", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,30000))
 ```
 
 Limpieza y Satisfacción : son puntuaciones dejadas por los usuarios de los airbnb's, son números enteros.
 
-```{r}
+```{r, echo=FALSE}
 counts <- table(D2$Limpieza)
 barplot(counts, main = "Limpieza", ylab = "Número de Observaciones", xlab = "Valores" , ylim = c(0,20000))
 ```
@@ -219,12 +219,13 @@ Se observa que la variable Limpieza tiene solamente números enteros en el rango
 
 #### Verificar variables númericas no enteras
 
-``` {r}summary(d2)}
+``` {r}
+summary(D2)
 ```
 
 -   **Precio, City Center, Metro distance , Attraction y Restaurants Normalized :** se observa que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro (0-100). También se tienen a las variables Precio, City Center y Metro Distance. Se observa que los valores máximos se alejan considerablemente de la media. Por este motivo, se procederá a analizar cada una de estas variables.
 
-```{r}
+```{r, echo=FALSE}
 plot(D2$Precio, xlab= "Airbnb's" , ylab = "Precio")
 ```
 
@@ -238,7 +239,7 @@ Después de revisar los datos actuales en Airbnb a través de su aplicación, se
 
 A continuación se analiza la variable Distance_Center, que representa la distancia al centro de del airbnb.
 
-```{r}
+```{r, echo=FALSE}
 plot(D2$Distance_Center, xlab= "Airbnb's" , ylab = "Distance to City Center (km)")
 ```
 
@@ -258,7 +259,7 @@ Se observa que estos airbnb's se ubican en Berlin o Budapest. El área de estas 
 
 A continuación se analizará la variable Distance_Metro, que representa la distancia a la estación de metro más cercana al airbnb.
 
-```{r}
+```{r, echo=FALSE}
 plot(D2$Distance_Metro, xlab= "Airbnb's" , ylab = "Distance to Metro Station (km)")
 ```
 
@@ -284,13 +285,16 @@ Por último se procederá a analizar las variables Ciudad, Día y Tipo; estas so
 unique(D2$Ciudad)
 unique(D2$Tipo)
 unique(D2$Day)
+```
+
+```{r, echo=FALSE}
 counts <- table(D2$Ciudad)
 barplot(counts, main = "Ciudad", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9)
 ```
 
 Día y Tipo
 
-```{r}
+```{r, echo=FALSE}
 par(mfrow=c(1,2)) #QUE HACE mfrow ?
 counts <- table(D2$Day)
 barplot(counts, main = "Día", ylab = "Número de Observaciones", las = 2, ylim = c(0,25000), cex.axis = 0.8, cex.lab = 0.7, cex.names = 0.6)
@@ -331,7 +335,7 @@ which.min(table(D2$Limpieza))
 
 En el caso de la variable limpieza, se observa que los 3 valores más seleccionados son 8, 9 y 10; en ese orden. El valor menos seleccionado por los usuarios es el de 3.
 
-```{r}
+```{r, echo=FALSE}
 ## ATRACCIÓN
 
 mean_atraccion <- mean(D2$Ind.Atraccion)
@@ -358,7 +362,7 @@ quantile(D2$Ind.Atraccion)
 
 ANÁLISIS : El índice de atracción toma valores del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.Asimismo, la media es mayor a la mediana por lo que está sesgado a la derecha e indica que hay menos alojamientos con un índice de satisfacción alta entre 60 a 100.
 
-```{r}
+```{r, echo=FALSE}
 ##Precio
 mean_precio<- mean(D2$Precio)
 median_precio <- median(D2$Precio)
@@ -384,7 +388,7 @@ quantile(D2$Precio)
 
 ANÁLISIS : La gráfica se puede observar de la siguiente manera porque la variable precio puede tomar valores entre 34.78 y 18454.45. Donde vemos que la mayoría de loa valores del precio está por debajo de 230.8. También, la media y mediana son 260 y 203.
 
-```{r}
+```{r, echo=FALSE}
 ##Tipo
 
 ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de tipos de habitaciones",x="Tipo",y="Frecuencias")
@@ -394,7 +398,7 @@ ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gr�
 
 ANÁLISIS : El tipo de habitación que ofertan los airbnb son casas o apartamentos enteros, seguidos por las habitaciones privadas y en un menor porcentaje se ofertan habitaciones compartidas entre varios usuarios.
 
-```{r}
+```{r, echo=FALSE}
 #CAPACIDAD
 
 mean_capacidad <- mean(D2$Capacidad)
@@ -421,20 +425,20 @@ quantile(D2$Capacidad)
 
 ANÁLISIS : Con respecto a la capacidad de las habitaciones reservadas, observamos que la capacidad más predominante en las habitaciones de Airbnb es de 2 personas y el que le sigue es una capacidad de 4 personas. Tanto del boxplot y del histograma podemos concluir que los datos no son muy dispersos.
 
-```{r}
+```{r, echo=FALSE}
 #MULTIPLE ROOM
 
 ggplot(data= D2, mapping=aes(x=`Multiple Rooms`))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de habitaciones múltiples",x="Tipo",y="Frecuencias")
 ```
 ANÁLISIS: La gráfica nos informa que la mayoría personas que reservan una habitación en Airbnb prefieres no reservar habitaciones múltiples.
 
-```{r}
+```{r, echo=FALSE}
 ##OFERTA
 ggplot(data= D2, mapping=aes(x=Oferta))+ geom_bar()+ theme_grey()+ labs(title="Gráfica de Oferta",x="Ofertas",y="Frecuencias")
 ```
 ANÁLISIS: Observamos del gráficos que la mayoría de personas que reservan habitación en Airbnb no lo hacen con oferta.
 
-```{r}
+```{r, echo=FALSE}
 ##Habitaciones 
 mean_habitaciones <- mean(D2$Habitaciones,na.rm = TRUE)
 median_habitaciones <- median(D2$Habitaciones,na.rm=TRUE)
@@ -460,7 +464,7 @@ quantile(D2$Habitaciones,na.rm=TRUE)
 
 ANÁLISIS : Tanto como en el histograma y en el boxplot se puede observar que hay muchos datos que están dispersos. En el histograma observamos que el número de habitaciones reservadas que es más frecuentado es solo 1, siendo este mayor o igual que el 75% de todos los datos, según los quartiles, y el que le sigue son 2 habitaciones. 
 
-```{r}
+```{r, echo=FALSE}
 ##DISTANCE CENTER
 mean_distC <- mean(D2$Distance_Center)
 median_distC <- median(D2$Distance_Center)
@@ -485,7 +489,7 @@ quantile(D2$Distance_Center)
 ```
 Para el caso de distancia al centro, el mayor valor es 25.28km. Se observa que este valor se aleja bastante de la media, ya que el 75% de los valores es menor a 3.59 km. Como se puede observas en el histograma y en el boxplot, los valores altos de la tabla se encuentran dispersos. En el caso del histograma, las cantidades son casi imperceptibles después de los 15 km.
 
-```{r}
+```{r, echo=FALSE}
 ##DISTANCE METRO
 
 mean_distM <- mean(D2$Distance_Metro)
@@ -512,7 +516,7 @@ quantile(D2$Distance_Metro)
 Para el caso de distancia al metro, el mayor valor es 14.27km. Se observa que este valor se aleja bastante de la media, ya que el 75% de los valores es menor a 0.7 km. Como se puede observas en el histograma y en el boxplot, los valores altos de la tabla se encuentran dispersos y son pocos.
 
 
-```{r}
+```{r, echo=FALSE}
 ##Índice de restaurantes
 mean_Ind.Restaurant <- mean(D2$Ind.Restaurantes)
 median_Ind.Restaurant <- median(D2$Ind.Restaurantes)
@@ -574,11 +578,9 @@ D2 %>% filter(Ciudad =='Paris') -> DPAR
 D2 %>% filter(Ciudad =='Rome') -> DROM
 D2 %>% filter(Ciudad =='Vienna') -> DVIE
 
-#par(mfrow=c(3,3), fin=c(5,4))
-
 ```
 
-```{r}
+```{r, echo=FALSE}
 
 hist(DAMS$Precio, xlab = 'Precio', ylab = 'Frecuencia', main = 'Precios en Amsterdam')
 # Add mean as a red dashed line
@@ -637,7 +639,7 @@ abline(v = median(DVIE$Precio), col = "blue", lwd = 2)
 
 2.  Índice de satisfacción VS Precio
 
-```{r}
+```{r, echo=FALSE}
 plot(x = D2$Satisfaccion, y = D2$Precio, xlab = "Satisfacción" , ylab = "Precio", ylim= c(0,2500))
 ```
 
@@ -649,7 +651,7 @@ Del gráfico se puede observar que la correlación entre ambas variables es muy 
 
 3.  Gráfica de Atracción normalizada VS Precio
 
-```{r}
+```{r, echo=FALSE}
 plot(x = D2$Ind.Atraccion, y = D2$Precio, xlab = "Índice de Atracción" , ylab = "Precio", ylim= c(0,2500))
 ```
 
@@ -661,7 +663,7 @@ Del gráfico se puede observar que la correlación entre ambas variables es baja
 
 4.  Gráfica de Ciudad VS Cuándo se reserva
 
-```{r}
+```{r, echo=FALSE}
 mosaicplot(table(D2$Ciudad, D2$Day), main = "Cuándo se reserva - Ciudad", xlab = "Ciudades", ylab = "Cuándo se Reserva", las = 0.7, )
 ```
 
@@ -971,7 +973,10 @@ DAMSTERDAM[r1,1:17]
 #El más económico
 r2 <- which.min(DAMSTERDAM$Precio)
 DAMSTERDAM[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DAMSTERDAM$Precio ~ DAMSTERDAM$Distance_Metro, main = 'Variación del precio vs la distancia al metro', ylab = "Precio ($)", xlab = "Distancia al metro (km)")
@@ -998,7 +1003,7 @@ A continuación se procede a analizar la relación precio vs (distancia al metro
 
 Realizamos este análisis para el conjunto total de ciudades en el estudio así cómo para cada ciudad :
 
-```{r}
+```{r, echo=FALSE}
 
 
 #Relación precio vs metro(km)
@@ -1036,7 +1041,10 @@ r2 <- which.min(DATHENAS$Precio)
 DATHENAS[r2,1:17]
 
 #Relación precio vs metro(km)
+```
 
+
+```{r, echo=FALSE}
 plot(DATHENAS$Precio ~ DATHENAS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
 abline(lm(DATHENAS$Precio ~ DATHENAS$Distance_Metro), col = "red", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DATHENAS$Distance_Metro, DATHENAS$Precio), 2)), x = 1.5, y = 15000)
@@ -1070,7 +1078,10 @@ DATHENAS[r1,1:17]
 #El más económico
 r2 <- which.min(DATHENAS$Precio)
 DATHENAS[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DATHENAS$Precio ~ DATHENAS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
@@ -1106,7 +1117,10 @@ DBERLIN[r1,1:17]
 #El más económico
 r2 <- which.min(DBERLIN$Precio)
 DBERLIN[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DBERLIN$Precio ~ DBERLIN$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
@@ -1140,7 +1154,10 @@ DROMA[r1,1:17]
 #El más económico
 r2 <- which.min(DROMA$Precio)
 DROMA[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DROMA$Precio ~DROMA$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
@@ -1162,7 +1179,7 @@ text(paste("Correlación:", round(cor(DROMA$Ind.Restaurantes, DROMA$Precio), 2))
 
 #### Budapest
 
-```{r}
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DBUD$Precio ~ DBUD$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
@@ -1199,7 +1216,10 @@ DLISBON[r1,1:17]
 
 r2 <- which.min(DLISBON$Precio)
 DLISBON[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 
@@ -1236,7 +1256,10 @@ DPARIS[r1,1:17]
 #El más económico
 r2 <- which.min(DPARIS$Precio)
 DPARIS[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DPARIS$Precio ~ DPARIS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
@@ -1270,7 +1293,10 @@ DVIENNA[r1,1:17]
 #El más económico
 r2 <- which.min(DVIENNA$Precio)
 DVIENNA[r2,1:17]
+```
 
+
+```{r, echo=FALSE}
 #Relación precio vs metro(km)
 
 plot(DPARIS$Precio ~ DPARIS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
@@ -1297,7 +1323,7 @@ Análisis : Luego de haber realizado el análisis para cada ciudad, se conluye q
 
 HISTOGRAMA DE PRECIO
 
-```{r}
+```{r, echo=FALSE}
 D2 %>%
  filter(Precio >= 0L & Precio <= 2600L) %>%
  filter(Day %in% "Weekday") %>%
@@ -1348,7 +1374,7 @@ promedio_de_satisfaccion
 
 ```
 
-```{r}
+```{r, echo=FALSE}
 
 #ATRACCION MAYOR AL PROMEDIO
 D2 %>% filter(D2$Ind.Atraccion > promedio_de_satisfaccion )%>% arrange(desc(Ind.Atraccion)) -> D_ATRACCION
@@ -1372,9 +1398,10 @@ barplot(t, col=c("pink"),main="Top 100 ciudades con mejor Indice de satisfacció
 ```{r}
 #ATRACCION MENOR AL PROMEDIO
 D2 %>% filter(D2$Ind.Atraccion < promedio_de_satisfaccion )%>% arrange(Ind.Atraccion) -> M_ATRACCION
+```
 
 
-
+```{r, echo=FALSE}
 # SELECIONAMOS A LOS 100 ALOJAMIENTOS CON PEORES CALIFICACIONES DE SATISFACCIÓN : 
 M_ATRACCION[1:100,1:17]  -> MATRACCION_100
 MATRACCION_100
@@ -1451,7 +1478,7 @@ plot(x = DAMS$Distance_Center, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracc
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
-```{r}
+```{r, echo=FALSE}
 plot(x = D2$Distance_Center, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al centro", ylim= c(0,100))
 cor(D2$Ind.Atraccion, D2$Distance_Center)
 
@@ -1503,7 +1530,10 @@ ANÁLISIS : A comparación de la correlación entre índice de atracción y y di
 
 ```{r}
 cor(D2$Ind.Atraccion,D2$Ind.Restaurantes)
+```
 
+
+```{r, echo=FALSE}
 #Relación  Ind.Atracción vs Ind.Restaurantes : 
 
 plot(D2$Ind.Atraccion ~ D2$Ind.Restaurantes, main = 'Variación del I.Atraccion vs la I.Restaurantes', xlab = "índice de restaurantes" ,ylab = "índice de atracción" )
@@ -1555,7 +1585,7 @@ cor(DVIE$Ind.Atraccion, DVIE$Ind.Restaurantes)
 
 Se observa que la correlación mas fuerte lo tienen los alojamientos encontrados en Vienna, casi perfecta. Lo que nos indica que para esta ciudad un factor que influye mucho en el Indice de atracción efectivamente es la cercanía y cantidad de restaurantes.A continuación se mostrará la gráfica de Índice de Atracción - Índice de Restaurantes para Vienna.
 
-```{r}
+```{r, echo=FALSE}
 plot(x = DVIE$Distance_Center, y = DVIE$Ind.Atraccion, ylab = "Índice de Atracción en Vienna" , xlab = "Índice de Restaurantes en Vienna", ylim= c(0,100))
 ```
 
