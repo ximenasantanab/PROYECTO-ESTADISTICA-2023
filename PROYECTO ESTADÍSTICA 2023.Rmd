@@ -589,14 +589,20 @@ D2 %>%
   group_by(Ciudad) %>% 
   summarise(`Precio Promedio` = mean(Precio),
             `Número de Airbnb's` = n(),
-            `Satisfaccion Promedio` = mean(Satisfaccion), 
             `Superhosts %` = prop.table(table(Superhost))["Sí"],
             `Índice de Atracción Promedio` = mean(Ind.Atraccion)) -> D_Ciudades
 arrange(D_Ciudades)
 
 ```
 
-# HACER COMENTARIOS DE LA TABLA AQUI
+En la tabla se puede observar que Amsterdam es el que tiene mayor precio promedio de todas las ciudades. El número de airbnb's en esta ciudad es el más bajo también, esto podría indicar algún tipo de correlación entre estas variables, por lo que se procederá a hacer el análisis respectivo. Sin embargo, el resultado no es muy significativo, ya que para el estudio solo se están analizando 9 ciudades, por lo que se tienen solamente 9 observaciones para comparar la correlación.
+
+```{r}
+cor(D_Ciudades$`Precio Promedio`, D_Ciudades$`Número de Airbnb's`)
+```
+So observa que la correlación no es alta. En la tabla anterior, también se aprecia que la cantidad de superhost por ciudad es menor al 0.5% en todos los casos; el porcentaje de superhost más alto se encuentra en Atenas, con un 0.43%. En el caso del índice de atracción normalizado (0-100), los valores promedio de las ciudades son menores a 20 en todos los casos. El más alto corresponde a Paris (18.20), mientras el más bajo corresponde a Atenas (5.74).
+
+A continuación se mostrarán los precios por ciudad agrupados por rangos, esto brinda una idea de en qué rango se concentran los precios de los airbnb's en cada una de las ciudades. La línea roja representa la media en cada una de las ciudades, mientras que la azul representa la mediana. 
 
 ```{r}
 D2 %>% filter(Ciudad =='Amsterdam') -> DAMS
@@ -700,7 +706,7 @@ Del gráfico se puede observar que la correlación entre ambas variables es baja
 mosaicplot(table(D2$Ciudad, D2$Day), main = "Cuándo se reserva - Ciudad", xlab = "Ciudades", ylab = "Cuándo se Reserva", las = 0.7, )
 ```
 
-La ciudad más concurrida es Roma, debido al número de reserva que se hace dentro de semanas y fienes de semanas. Además que presentan equilibrio de reservas ROMA
+La ciudad más concurrida es Roma, debido al número de reserva que se hace dentro de semanas y fines de semanas. Además que presentan equilibrio de reservas ROMA
 
 ### Objetivo 2 : Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
