@@ -1366,9 +1366,10 @@ D2 %>%
   theme_minimal()
 ```
 
-*SE TOMO UNA MUESTRA DE 2600 OBSERACIONES*
+Histograma 1 (2600 datos de precio dentro de la semana): Precio vs frecuencia
+Histograma 2 (2600 datos de precio en fin de semana):Precio vs frecuencia
 
-*COMPARANDO DICHAS GRÁFICAS DE PRECIOS DE UN AIRBNB DENTRO DE SEMANA Y FINES DE SEMANA* Análisis :
+Después de analizar los dos histogramas, se observa que ambos son similares solo con una mínima diferencia. Se puede concluir que la variable frecuencia no varía en relación al precio tanto si es en día de semana o fines de semana como sí ocurre con otras variables.
 
 -   Analizar las ciudades con mayor indice de atracción (gráficas)
 
