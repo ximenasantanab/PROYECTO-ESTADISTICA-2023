@@ -29,6 +29,10 @@ La relevancia de nuestro proyecto radica que en la actualidad los servicios de A
 
 -   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
 
+## Contexto
+
+Nuestro proyecto se centra realizar un análisis estadístico el servicio de un Airbnb, el cual se basa en que un propietario realiza un arrendamiento de corto plazo a cualquiera que busque alojamiento. Esta servicio puede ser contratado desde cualquier parte del mundo mediante una plataforma digital, en la cual los usuaarios podrán calificar, comentar en base a su experiencia sus niveles de satisfacción limpieza y etc.
+
 ## Planificación
 
 En esta sección el equipo se presenta la planificación de todas la entregas hasta la semana 16 ![C:-ESTADISTICA-2023](GANT.jpg)
@@ -45,7 +49,7 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 
 -   Unidad muestra
 
-    La unidad muestra es cada airbnb (alojamiento) que se encuentra en funcionamiento en esas nueve ciudades en Europa. \## Muestreo El método de muestreo utilizado fue muestreo aleatorio simple.
+    La unidad muestra es cada airbnb (alojamiento) que se encuentra en funcionamiento en esas nueve ciudades en Europa. Muestreo El método de muestreo utilizado fue muestreo aleatorio simple.
 
 -   Tamaño de la muestra
 
@@ -54,7 +58,7 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 ## Variables
 
 | N°  |          Variable           |         Tipo         | Restricciones                                                                                                     |
-|:-------------:|:-------------:|:-------------:|-----------------------------|
+|:-------------:|:-------------:|:-------------:|--------------------------|
 |  1  |            City             | (Categórica nominal) | Debe ser una de las nueve ciudades (Amsterdam, Roma, Lisboa , Viena, Atenas, París, Barcelona, Berlín y Budapest) |
 |  2  |     Cuándo lo reservan      | (Categórica nominal) | Debe ser weekday o weekend.                                                                                       |
 |  3  |          Room Type          | (Categórica nominal) | Debe ser una de los dos tipos de alojamiento "Entire home/apartamento" o "Cuarto privado"                         |
@@ -70,8 +74,8 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 | 13  |          Bedrooms           | (Numérica discreta)  | Debe ser un número entero no negativo.                                                                            |
 | 14  |      City Center (km)       | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
 | 15  |     Metro Distance (km)     | (Numérica continua)  | Debe ser un número decimal no negativo en kilómetros.                                                             |
-| 16  | Normalised attraction Index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
-| 17  | Normalised restaurant index | (Numérica continua)  | Debe ser un número decimal no negativo.                                                                           |
+| 16  | Normalised attraction Index | (Numérica continua)  | Debe ser un número decimal no negativo entre 0-100..                                                              |
+| 17  | Normalised restaurant index | (Numérica continua)  | Debe ser un número decimal no negativo entre 0-100.                                                               |
 
 ## Limpieza de datos
 
@@ -218,7 +222,6 @@ Se observa que la variable Limpieza tiene solamente números enteros en el rango
 #### Verificar variables númericas no enteras
 
 ``` {r}summary(d2)}
-
 ```
 
 -   **Precio, City Center, Metro distance , Attraction y Restaurants Normalized :** se observa que el Indice de Atracción normalizado y el Índice de Restaurantes normalizado se encuentran dentro (0-100). También se tienen a las variables Precio, City Center y Metro Distance. Se observa que los valores máximos se alejan considerablemente de la media. Por este motivo, se procederá a analizar cada una de estas variables.
@@ -305,7 +308,7 @@ No hay anomalías, y concluímos que nuestra data se encuentra en condiciones ad
 
 ```{r}
 
-## SATISFACCIÓN
+#SATISFACCIÓN
 
 table(D2$Satisfaccion)
 ```
@@ -355,9 +358,7 @@ IQR(D2$Ind.Atraccion)
 quantile(D2$Ind.Atraccion) 
 ```
 
-ANÁLISIS : El índice de atracción toma valores del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.Asimismo, la media es mayor a la mediana por lo que está sesgado a la derecha e indica que hay menos alojamientos con un índice de satisfacción alta entre 60 a 100. 
-
-
+ANÁLISIS : El índice de atracción toma valores del 1 al 100. En las gráficas se puede observar que la mayoría de valores se encuentran por debajo de 20, y que la media y la mediana son valores cercanos a 10. En los valores obtenidos se aprecia que más del 50% de los datos es menor a 10 y el 75% de los datos son menores a 15.47. Con esta información, se puede afirmar que la mayoría de valores son bajos para el índice de atracción.Asimismo, la media es mayor a la mediana por lo que está sesgado a la derecha e indica que hay menos alojamientos con un índice de satisfacción alta entre 60 a 100.
 
 ```{r}
 ##Precio
@@ -385,7 +386,6 @@ quantile(D2$Precio)
 
 ANÁLISIS : La gráfica se puede observar de la siguiente manera porque la variable precio puede tomar valores entre 34.78 y 18454.45. Donde vemos que la mayoría de loa valores del precio está por debajo de 230.8. También, la media y mediana son 260 y 203.
 
-
 ```{r}
 ##Tipo
 
@@ -394,7 +394,7 @@ ggplot(data= D2, mapping=aes(x=Tipo))+ geom_bar()+ theme_grey()+ labs(title="Gr�
 
 ```
 
-ANÁLISIS : El tipo de habitación que ofertan los airbnb son casas o apartamentos enteros, seguidos por las habitaciones privadas y en un menor porcentaje se ofertan habitaciones compartidas entre varios usuarios. 
+ANÁLISIS : El tipo de habitación que ofertan los airbnb son casas o apartamentos enteros, seguidos por las habitaciones privadas y en un menor porcentaje se ofertan habitaciones compartidas entre varios usuarios.
 
 ```{r}
 #CAPACIDAD
@@ -420,10 +420,8 @@ median_capacidad
 IQR(D2$Capacidad)
 quantile(D2$Capacidad) 
 ```
-ANÁLISIS : FALTAAAA
 
-
-
+ANÁLISIS :
 
 ```{r}
 #MULTIPLE ROOM
@@ -743,10 +741,9 @@ barplot(c, main = "Ciudades en el Estudio", ylab = "Número de Observaciones" , 
 
 ```
 
-*Análisis : La mayoría de los alojamientos se encuentra en Roma (porcentaje),seguido de París (porcentaje) y Lisboa  (porcentaje).*
+*Análisis : La mayoría de los alojamientos se encuentra en Roma (porcentaje),seguido de París (porcentaje) y Lisboa (porcentaje).*
 
-
--   **El precio promedio en todas las ciudades de Europa: **
+-   **El precio promedio en todas las ciudades de Europa:**
 
 ```{r}
 s <-round(mean(D2$Precio),digits = 2)
@@ -778,8 +775,6 @@ nrow(CAROS)
 
 ```
 
-
-
 ```{r}
 c1 <- table(CAROS$Ciudad) #Del grupos de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795). El de más apariciones es París (5,724)
 c1
@@ -789,12 +784,8 @@ which.min(c1)
 barplot(c1, main = "Ciudades con más alojamientos caros", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("green"))
 
 ```
+
 *ANÁLISIS : Del grupo de los Caros, Atenas es el que menos alojamientos tiene en el estudio (795 airbnb´s). El de más apariciones es París (5,724), seguido por Roma y Lisboa. Se concluye que París es la ciudad con mayor cantidad de alojamiento con precios elevados.*
-
-
-
-
-
 
 *Analizamos los 100 alojamientos más caros :*
 
@@ -826,13 +817,14 @@ min(CAROS100$Satisfaccion)
 
 ```
 
-*ANÁLISIS : *
+*ANÁLISIS :*
 
 *En la primera gráfica se muestran las ciudades dónde están los TOP 100 Airbnb más caros. Se concluye que aquí el preio máximo lo hallarás en Amsterdam con un valor de 18545.450 dólares por toda una casa entera y en general esta ciudad tiene la mayoría de alojamientos más costosos con un total de 37 lugares. A esta ciudad le sigue París con 33 airbnb y el máximo de 16445.615 por una casa entera.*
 
 *En la segunda gráfica, se concluye que no necesariamente en airbnb costoso tendrá cómo anfitrión a un Superhost, ya que la mayoría es NO.*
 
-*Además, según la tabla de abajo, la limpieza y la satisfacción son muy buenas ya que ambas presentan altos valores  *
+*Además, según la tabla de abajo, la limpieza y la satisfacción son muy buenas ya que ambas presentan altos valores*
+
 ```         
 
 
@@ -853,7 +845,7 @@ tipo_capacidad <- table(CAROS100$Tipo,CAROS100$Capacidad)
 mosaicplot(tipo_capacidad, main = "Tipo de habitación TOP 100 y su Capacidad de personas", color = "green")
 ```
 
-*ANÁLISIS  : Analizamos el tipo de cuarto y su capacidad de personas : La mayoría es una Casa Entera para 6, y tiene sentido por un costo elevado.*
+*ANÁLISIS : Analizamos el tipo de cuarto y su capacidad de personas : La mayoría es una Casa Entera para 6, y tiene sentido por un costo elevado.*
 
 ```{r}
 "La cantidad promedio de habitaciones en este tipo de alojamientos es:"
@@ -870,13 +862,7 @@ legend("bottomleft",legend=c("Weekday = 49","Weekend = 51"))
 
 *ANÁLISIS : Se concluye este tipo de airbnb top 100, los suelen reservar tanto en días de semana cómo en fines.La diferencia es mínima y la cantidad promedio en número de habitaciones en este tipo de alojamientos es 3*
 
-
-
-
-
 -   **Identificar cuáles son las observaciones que se encuentran por debajo de la mediana : "ECO"**
-
-
 
 ```{r}
 D2 %>% filter(Precio < mediana_precio) %>% arrange(Precio)-> ECO
@@ -884,17 +870,16 @@ ECO
 nrow(ECO) 
 barplot(table(ECO$Ciudad),main = "Los  Airbnb más económicos", ylab = "Número de Observaciones" , las=2, ylim = c(0,10000), cex.names = 0.9, col=c("skyblue"))
 ```
+
 ANÁLISIS : *Es el total de Airbnb con precios menores a los 203.8193 (mediana) son 20,856 y el más económico tiene un costo de 34.77 dólares en Budapest, que consiste en una habitación privada para 2 personas. Este costo se podría asociar a que se encuentra a largas distancias del centro y del metro, además de un bajo índice de atracción.La relación entre estas variables se analiza en los siguientes puntos*
 
-*Asimismo, se observa que Roma tiene una amplia oferta de precios, ya que puedes encontrar alojamientos de los más económicos, cómo también en los alojamientos caros. Sus precios están alrededor de los 205.39 dólares.  *
+*Asimismo, se observa que Roma tiene una amplia oferta de precios, ya que puedes encontrar alojamientos de los más económicos, cómo también en los alojamientos caros. Sus precios están alrededor de los 205.39 dólares.*
+
 ```{r}
 D2 %>%filter(D2$Ciudad == 'Rome') -> ROMA
 A <- mean(ROMA$Precio)
 A
 ```
-
-
-
 
 *Los TOP 100 Económicos son los siguientes :*
 
@@ -924,7 +909,7 @@ min(ECO100$Satisfaccion)
 
 ANÁLISIS : *En la primera gráfica, se concluye que Athenas es una de las ciudades con precios más económicos en el estudio, ya que tiene la mayor proporción dentro de los 100 alojamientos más económicos de todos. A estos le siguen Budapest y Roma, la cual cuentan con una mayoría de NO superhost (no son anfitriones top) .*
 
-*ADEMÁS : según la siguiente tabla : *
+*ADEMÁS : según la siguiente tabla :*
 
 ```         
 "La calificación que le asignan a este tipo de alojaminetos es 8.9  en promedio en LIMPIEZA DEL 0-10"
@@ -935,14 +920,12 @@ ANÁLISIS : *En la primera gráfica, se concluye que Athenas es una de las ciuda
 [1]  20 
 ```
 
-*Estos precios concuerdan con su puntaje de limpieza 2 (mala) y atracción de 2.9 (baja)*
-*Analizando el porqué de esta atracción tan baja, vemos que el airbnb es sólo una habitación está en Roma que no tiene un superhost  y una limpieza muy mala de 2 puntos. *
+*Estos precios concuerdan con su puntaje de limpieza 2 (mala) y atracción de 2.9 (baja)* *Analizando el porqué de esta atracción tan baja, vemos que el airbnb es sólo una habitación está en Roma que no tiene un superhost y una limpieza muy mala de 2 puntos.*
 
 ```{r}
 which.min(ECO100$Satisfaccion)
 ECO100[20,1:17]
 ```
-
 
 ```{r}
 
@@ -967,14 +950,16 @@ mosaicplot(dayeco)
 
 ANÁLISIS : *Se contempla que la mayoría de dueños de airbnb´s de estos precios no tienen la clasificación de superhost*
 
-    ```{r}
-    S <- table(ECO100$Superhost)
-    S
-    barplot(S,col=c("orange","blue"),
-            legend.text=c("Sí","No"),main="SUPERHOST")
+````         
+```{r}
+S <- table(ECO100$Superhost)
+S
+barplot(S,col=c("orange","blue"),
+        legend.text=c("Sí","No"),main="SUPERHOST")
 
 
-    ```
+```
+````
 
 -   Dónde se encuentra el Airbnb más caro y más económico de todos, y qué características tienen :
 
@@ -998,7 +983,7 @@ ANÁLISIS : *Se contempla que la mayoría de dueños de airbnb´s de estos preci
 
 # Relación entre variables por ciudades :
 
-Aquí se analiza por ciudades por separado y se ve la relación precio vs (ubicación, restaurantes)
+Aquí se analiza por ciudades por separado y se ve la relación precio vs (ubicación al metro y centro, restaurantes)
 
 ```{r}
 unique(D2$Ciudad)
@@ -1040,24 +1025,13 @@ abline(lm(DAMSTERDAM$Precio ~ DAMSTERDAM$Ind.Restaurantes), col = "pink", lwd = 
 text(paste("Correlación:", round(cor(DAMSTERDAM$Ind.Restaurantes, DAMSTERDAM$Precio), 2)), x = 80, y = 7000)
 ```
 
-ANALISIS : La primera gráfica presenta un valor de correlación de -0.14, lo que indica que mientras más lejano se encuentre al metro el Airbnb tiene a disminuir su precio. Para la segunda gráfica, se evidencia que sí existe una relación entre precio y distancia al centro , buena pero no fuerte. Esta es  una correlación negativa con un valor -0.26, lo que indica que a mayor distancia (km) del centro se encuentre el alojamiento tiende a disminuir el precio. 
+ANALISIS : La primera gráfica presenta un valor de correlación de -0.14, lo que indica que mientras más lejano se encuentre al metro el Airbnb tiene a disminuir su precio. Para la segunda gráfica, se evidencia que sí existe una relación entre precio y distancia al centro , buena pero no fuerte. Esta es una correlación negativa con un valor -0.26, lo que indica que a mayor distancia (km) del centro se encuentre el alojamiento tiende a disminuir el precio.
 
+-   Relación precio distancia el centro , distancia al metro e índice de restaurantes
 
+A continuación se procede a analizar la relación precio vs (distancia al metro y centro, ind.restaurantes) para cada país : La correlación está entre -1.....0.... 1 . Mientras más cerca al cero es que la correlación es baja.
 
-
-
-
-
-
-En esta sección analizamos primero a cada país así cómo a todos en conjunto.
-
--   Relación precio distancia el centro , distancia al metro e índice de
-
-PARA VER SI ESTOS DOS TIENEN RELACIÓN SE CALCULA COR Y SU COVARIANZA Cálculo de correlación :
-
-Hallamos la correlación entre precio y distancia al metro. la correlación está entre -1.....0.... 1 . Mientras más cerca al cero es que la correlación es baja.
-
-## Realizamos este análisis para el conjunto total de ciudades en el estudio :
+## Realizamos este análisis para el conjunto total de ciudades en el estudio así cómo para cada ciudad :
 
 ```{r}
 
@@ -1079,7 +1053,7 @@ text(paste("Correlación:", round(cor(D2$Ind.Restaurantes, D2$Precio), 2)), x = 
 
 ```
 
-### Atenas
+ANÁLISIS : Según el total de datos la variable precio sí presenta una correlación con distancia al metro, distancia al centro e índice de restaurantes. Las primeras dos se consideran una correlación no muy fuerte y negativa, lo que nos indica que mientras más alejado del centro y del metro se encuentre el airbnb, el precio tiende a disminuir. Caso contrario cuando se compara con el índice de restaurantes, aquí la correlación es buena y positiva e indica que a mayor cantidad de locales de comida el precio tiende a subir de manera ligera. \### Atenas
 
 ```{r}
 #Filtramos
@@ -1247,48 +1221,39 @@ text(paste("Correlación:", round(cor(DBUD$Ind.Restaurantes, DBUD$Precio), 2)), 
 ```{r}
 #Filtramos
 D2 %>% filter(Ciudad =='Lisbon') -> DLISBON
-D2 %>% filter(Ciudad =='Budapest') -> DBUDAPEST
-DBUD
+
 DLISBON
 
 #El más caro
-r1 <- which.max(DBUD$Precio)
-DBUD[r1,1:17]
+
 r1 <- which.max(DLISBON$Precio)
 DLISBON[r1,1:17]
 
 
 #El más económico
-r2 <- which.min(DBUD$Precio)
-DBUD[r2,1:17]
+
 r2 <- which.min(DLISBON$Precio)
 DLISBON[r2,1:17]
 
 #Relación precio vs metro(km)
 
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Metro, DBUDAPEST$Precio), 2)), x = 3, y = 2000)
+
 plot(DLISBON$Precio ~ DLISBON$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
 abline(lm(DLISBON$Precio ~ DLISBON$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DLISBON$Distance_Metro, DLISBON$Precio), 2)), x = 3, y = 2000)
+text(paste("Correlación:", round(cor(DLISBON$Distance_Metro, DLISBON$Precio), 2)), x = 3, y = 1500)
 
 #Relación precio vs centro(km)
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center, main = 'Variación del precio vs la distancia al centro')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Distance_Center, DBUDAPEST$Precio), 2)), x = 8, y = 2000)
+
 plot(DLISBON$Precio ~ DLISBON$Distance_Center, main = 'Variación del precio vs la distancia al centro')
 abline(lm(DLISBON$Precio ~ DLISBON$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DLISBON$Distance_Center, DLISBON$Precio), 2)), x = 8, y = 2000)
+text(paste("Correlación:", round(cor(DLISBON$Distance_Center, DLISBON$Precio), 2)), x = 8, y = 1500)
 
 
 #Relación precio vs indice de restaurantes
-plot(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
-abline(lm(DBUDAPEST$Precio ~ DBUDAPEST$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DBUDAPEST$Ind.Restaurantes, DBUDAPEST$Precio), 2)), x = 80, y = 2000)
+
 plot(DLISBON$Precio ~ DLISBON$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
 abline(lm(DLISBON$Precio ~ DLISBON$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DLISBON$Ind.Restaurantes, DLISBON$Precio), 2)), x = 80, y = 2000)
+text(paste("Correlación:", round(cor(DLISBON$Ind.Restaurantes, DLISBON$Precio), 2)), x = 80, y = 1500)
 ```
 
 ### París
@@ -1311,18 +1276,18 @@ DPARIS[r2,1:17]
 
 plot(DPARIS$Precio ~ DPARIS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
 abline(lm(DPARIS$Precio ~ DPARIS$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Metro, DPARIS$Precio), 2)), x = 3, y = 2000)
+text(paste("Correlación:", round(cor(DPARIS$Distance_Metro, DPARIS$Precio), 2)), x = 0.8, y = 15000)
 
 #Relación precio vs centro(km)
 plot(DPARIS$Precio ~ DPARIS$Distance_Center, main = 'Variación del precio vs la distancia al centro')
 abline(lm(DPARIS$Precio ~ DPARIS$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Center, DPARIS$Precio), 2)), x = 8, y = 2000)
+text(paste("Correlación:", round(cor(DPARIS$Distance_Center, DPARIS$Precio), 2)), x = 6, y = 15000)
 
 
 #Relación precio vs indice de restaurantes
 plot(DPARIS$Precio ~ DPARIS$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
 abline(lm(DPARIS$Precio ~ DPARIS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 2000)
+text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 15000)
 ```
 
 ### Vienna
@@ -1345,34 +1310,27 @@ DVIENNA[r2,1:17]
 
 plot(DPARIS$Precio ~ DPARIS$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
 abline(lm(DPARIS$Precio ~ DPARIS$Distance_Metro), col = "red", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Metro, DPARIS$Precio), 2)), x = 3, y = 2000)
+text(paste("Correlación:", round(cor(DPARIS$Distance_Metro, DPARIS$Precio), 2)), x = 0.8, y = 15000)
 
 #Relación precio vs centro(km)
 plot(DPARIS$Precio ~ DPARIS$Distance_Center, main = 'Variación del precio vs la distancia al centro')
 abline(lm(DPARIS$Precio ~ DPARIS$Distance_Center), col = "green", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Distance_Center, DPARIS$Precio), 2)), x = 8, y = 2000)
+text(paste("Correlación:", round(cor(DPARIS$Distance_Center, DPARIS$Precio), 2)), x = 6, y = 15000)
 
 
 #Relación precio vs indice de restaurantes
 plot(DPARIS$Precio ~ DPARIS$Ind.Restaurantes, main = 'Variación del precio vs Índice de restaurantes')
 abline(lm(DPARIS$Precio ~ DPARIS$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
-text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 2000)
+text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 15000)
 ```
 
-```{r}
-
-barplot(table(D4$Tipo))
-
-hist(D4$Precio)
-
-```
+Análisis : Luego de haber realizado el análisis para cada ciudad, se conluye que la correlación entre Precio e
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
--   Analizar las ciudades con mayor indice de atracción 
+-   Analizar las ciudades con mayor indice de atracción
 
 #HISTOGRAMA DE PRECIO
-
 
 ```{r}
 D2 %>%
@@ -1404,10 +1362,7 @@ D2 %>%
 
 *SE TOMO UNA MUESTRA DE 2600 OBSERACIONES*
 
-*COMPARANDO DICHAS GRÁFICAS DE PRECIOS DE UN AIRBNB DENTRO DE SEMANA Y FINES DE SEMANA*
- Análisis : 
-
-
+*COMPARANDO DICHAS GRÁFICAS DE PRECIOS DE UN AIRBNB DENTRO DE SEMANA Y FINES DE SEMANA* Análisis :
 
 -   Analizar las ciudades con mayor indice de atracción (gráficas)
 
@@ -1427,7 +1382,6 @@ promedio_de_satisfaccion
 
 ```
 
-
 ```{r}
 
 #ATRACCION MAYOR AL PROMEDIO
@@ -1444,7 +1398,8 @@ ATRACCION_100
 t <- table(ATRACCION_100$Ciudad)
 barplot(t, col=c("pink"),main="Top 100 ciudades con mejor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
 ```
-*SE PUEDE VISUALIZAR QUE BERLIN POSEE EL MAYOR INDICIDE DE CALIFICACIÓN* 
+
+*SE PUEDE VISUALIZAR QUE BERLIN POSEE EL MAYOR INDICIDE DE CALIFICACIÓN*
 
 -   Analizar las ciudades con menor indice de atracción (gráficas)
 
@@ -1463,13 +1418,10 @@ MATRACCION_100
 tM <- table(MATRACCION_100$Ciudad)
 barplot(tM, col=c("pink"),main="Top 100 ciudades con menor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
 ```
-*Athenas es la ciudad con mayor cantidad de alojamientos que tienen un menor índice de atracción* 
 
+*Athenas es la ciudad con mayor cantidad de alojamientos que tienen un menor índice de atracción*
 
-
-
--   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad 
-
+-   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad
 
 ```{r}
 cor(D2$Ind.Atraccion, D2$Distance_Metro)
@@ -1478,14 +1430,12 @@ abline(lm(D2$Distance_Metro ~  D2$Ind.Atraccion), col = "orange", lwd = 3, lty =
 text(paste("Correlación:", round(cor( D2$Distance_Metro, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
 ```
 
-
 ANÁLISIS :Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen buena correlación entre ellas, pero no fuerte. Al ser negativa nos indica que a mayor distancia del metro, alguno de los precios tienden a disminuir. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
 
 ```{r}
 #AMSTERDAM
 cor(DAMS$Ind.Atraccion, DAMS$Distance_Metro)
 ```
-
 
 ```{r}
 #ATHENAS
@@ -1533,7 +1483,6 @@ ANÁLISIS : Se observa que la correlación mas alta entre todas se encuentra en 
 plot(x = DAMS$Distance_Center, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al Centro", ylim= c(0,100))
 ```
 
-
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
 ```{r}
@@ -1544,8 +1493,7 @@ abline(lm(D2$Distance_Center ~  D2$Ind.Atraccion), col = "orange", lwd = 3, lty 
 text(paste("Correlación:", round(cor( D2$Distance_Center, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
 ```
 
-
-ANÁLISIS : Se observa que la correlación entre ambas variables es de -0.32, lo que significa que estas dos variables tienen buena  correlación entre ellas, pero no muy fuerte. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades. 
+ANÁLISIS : Se observa que la correlación entre ambas variables es de -0.32, lo que significa que estas dos variables tienen buena correlación entre ellas, pero no muy fuerte. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
 
 ```{r}
 cor(DAMS$Ind.Atraccion, DAMS$Distance_Center)
@@ -1583,9 +1531,7 @@ cor(DROM$Ind.Atraccion, DROM$Distance_Center)
 cor(DVIE$Ind.Atraccion, DVIE$Distance_Center)
 ```
 
-
-ANÁLISIS : A comparación de la correlación entre índice de atracción y y distancia al metro analizado anteriormente, podemos ver que aquí la correlación con distancia al centro de la ciudad toma mayor relevancia, ya que los valores aumentan y el valor mínimo de correlación aquí es  de -0.46 aproximadamente y el de mayor valor es de -0.69 en la ciudad de Amsterdam. Esto nos indica que estos factores de ubicación toman mayor importancia en la calificación de índice de atracción. 
-
+ANÁLISIS : A comparación de la correlación entre índice de atracción y y distancia al metro analizado anteriormente, podemos ver que aquí la correlación con distancia al centro de la ciudad toma mayor relevancia, ya que los valores aumentan y el valor mínimo de correlación aquí es de -0.46 aproximadamente y el de mayor valor es de -0.69 en la ciudad de Amsterdam. Esto nos indica que estos factores de ubicación toman mayor importancia en la calificación de índice de atracción.
 
 -   Analizar la correlación entre índice de atracción e indice de restaurantes por ciudad
 
@@ -1641,8 +1587,6 @@ cor(DROM$Ind.Atraccion, DROM$Ind.Restaurantes)
 cor(DVIE$Ind.Atraccion, DVIE$Ind.Restaurantes)
 ```
 
-
-
 Se observa que la correlación mas fuerte lo tienen los alojamientos encontrados en Vienna, casi perfecta. Lo que nos indica que para esta ciudad un factor que influye mucho en el Indice de atracción efectivamente es la cercanía y cantidad de restaurantes.A continuación se mostrará la gráfica de Índice de Atracción - Índice de Restaurantes para Vienna.
 
 ```{r}
@@ -1650,28 +1594,3 @@ plot(x = DVIE$Distance_Center, y = DVIE$Ind.Atraccion, ylab = "Índice de Atracc
 ```
 
 A través de este análisis se concluye efectivamente el índice de atracción de los alojamientos está relacionado con el índice de restaurantes. Asimismo, se observa cómo es que esta correlación varía dependiendo de la ciudad en la que se encuentre el alojamiento, ya que algunas eran mayores que otras. Además, se identifican que estan presentes una correlación negativa en todas las ciudades al analizar el Indice de atracción y distancia al metro y al centro. Caso contrario con la relación directa que tiene la atracción con el índice de restaurantes.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
