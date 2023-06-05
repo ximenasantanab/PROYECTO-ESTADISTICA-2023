@@ -1369,27 +1369,56 @@ hist(D4$Precio)
 
 ### Objetivo 3 : Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023
 
--   Analizar las ciudades con mayor indice de atracción (gráficas)
+-   Analizar las ciudades con mayor indice de atracción 
 
 #HISTOGRAMA DE PRECIO
 
+
 ```{r}
-ggplot(D2) +
+D2 %>%
+ filter(Precio >= 0L & Precio <= 2600L) %>%
+ filter(Day %in% "Weekday") %>%
+ ggplot() +
   aes(x = Precio) +
-  geom_histogram(bins = 30L, fill = "#FF8C00") +
+  geom_histogram(bins = 30L, fill = "#1F7A1F") +
+  labs(
+    x = "Frecuencia",
+    y = "Precio",
+    title = "Precio de un Airbnb dentro de semana"
+  ) +
+  theme_minimal()
+
+D2 %>%
+ filter(Precio >= 0L & Precio <= 2600L) %>%
+ filter(Day %in% "Weekend") %>%
+ ggplot() +
+  aes(x = Precio) +
+  geom_histogram(bins = 30L, fill = "#033D6D") +
+  labs(
+    x = "Frecuencia",
+    y = "Precio en dólares",
+    title = "Precio de un Airbnb en los fines de semana"
+  ) +
   theme_minimal()
 ```
 
-SI LIMITAN EL PRECIO QUE PUEDE LOGRAR COSTAR UN HOTEL SE VISUALIZA MEJOR.
+*SE TOMO UNA MUESTRA DE 2600 OBSERACIONES*
+
+*COMPARANDO DICHAS GRÁFICAS DE PRECIOS DE UN AIRBNB DENTRO DE SEMANA Y FINES DE SEMANA*
+ Análisis : 
+
+
+
+-   Analizar las ciudades con mayor indice de atracción (gráficas)
 
 ```{r}
 "Hallamos el máximo y mínimo valor de indice de atracción"
 
-max(D2$Ind.Atraccion)
-roundF(min(D2$Ind.Atraccion))
-"Características de esa observación"
-which.max(D2$Ind.Atraccion)
-D2[55,]
+max(D2$Ind.Atraccion) -> MAYOR
+MAYOR 
+
+roundF(min(D2$Ind.Atraccion)) -> MENOR 
+MENOR
 
 
 "Hallamos el valor promedio  :"
@@ -1397,6 +1426,7 @@ promedio_de_satisfaccion <- roundF(mean(D2$Ind.Atraccion))
 promedio_de_satisfaccion 
 
 ```
+
 
 ```{r}
 
@@ -1414,6 +1444,7 @@ ATRACCION_100
 t <- table(ATRACCION_100$Ciudad)
 barplot(t, col=c("pink"),main="Top 100 ciudades con mejor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
 ```
+*SE PUEDE VISUALIZAR QUE BERLIN POSEE EL MAYOR INDICIDE DE CALIFICACIÓN* 
 
 -   Analizar las ciudades con menor indice de atracción (gráficas)
 
@@ -1432,84 +1463,89 @@ MATRACCION_100
 tM <- table(MATRACCION_100$Ciudad)
 barplot(tM, col=c("pink"),main="Top 100 ciudades con menor Indice de satisfacción en todo el estudio", ylab = "Número de Observaciones", las = 2, cex.axis = 0.8, cex.names = 0.9, cex.lab = 0.7)
 ```
+*Athenas es la ciudad con mayor cantidad de alojamientos que tienen un menor índice de atracción* 
 
--   Analizar si el indice de atracción se relaciona a un alto indice de restaurantes cercano al alojamiento o no.
 
-```{r}
-cor(D2$Ind.Atraccion,D2$Ind.Restaurantes)
 
-#Relación  Ind.Atracción vs Ind.Restaurantes : 
 
-plot(D2$Ind.Atraccion ~ D2$Ind.Restaurantes, main = 'Variación del I.Atraccion vs la I.Restaurantes')
-abline(lm(D2$Ind.Atraccion ~  D2$Ind.Restaurantes), col = "orange", lwd = 3, lty = 5)
-text(paste("Correlación:", round(cor( D2$Ind.Restaurantes, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
-```
+-   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad 
 
--   Identificar los alojamientos de mayor cercanía al metro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
-
-```{r}
-plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al metro", ylim= c(0,100))
-```
 
 ```{r}
 cor(D2$Ind.Atraccion, D2$Distance_Metro)
+plot(x = D2$Distance_Metro, y = D2$Ind.Atraccion,main = 'Variación del I.Atraccion vs la Distancia al metro' , ylab = "Índice de Atracción" , xlab = "Distancia al metro", ylim= c(0,100))
+abline(lm(D2$Distance_Metro ~  D2$Ind.Atraccion), col = "orange", lwd = 3, lty = 5)
+text(paste("Correlación:", round(cor( D2$Distance_Metro, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
 ```
 
-Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen poca correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+
+ANÁLISIS :Se observa que la correlación entre ambas variables es de -0.24, lo que significa que estas dos variables tienen buena correlación entre ellas, pero no fuerte. Al ser negativa nos indica que a mayor distancia del metro, alguno de los precios tienden a disminuir. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
 
 ```{r}
+#AMSTERDAM
 cor(DAMS$Ind.Atraccion, DAMS$Distance_Metro)
 ```
 
+
 ```{r}
+#ATHENAS
 cor(DATH$Ind.Atraccion, DATH$Distance_Metro)
 ```
 
 ```{r}
+#BARCELONA
 cor(DBAR$Ind.Atraccion, DBAR$Distance_Metro)
 ```
 
 ```{r}
+#BERLÍN
 cor(DBER$Ind.Atraccion, DBER$Distance_Metro)
 ```
 
 ```{r}
+#BUDAPEST
 cor(DBUD$Ind.Atraccion, DBUD$Distance_Metro)
 ```
 
 ```{r}
+#LISBOA
 cor(DLIS$Ind.Atraccion, DLIS$Distance_Metro)
 ```
 
 ```{r}
+#PARÍS
 cor(DPAR$Ind.Atraccion, DPAR$Distance_Metro)
 ```
 
 ```{r}
+#ROMA
 cor(DROM$Ind.Atraccion, DROM$Distance_Metro)
 ```
 
 ```{r}
+#VIENA
 cor(DVIE$Ind.Atraccion, DVIE$Distance_Metro)
 ```
 
-Se observa que la correlación mas alta se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
+ANÁLISIS : Se observa que la correlación mas alta entre todas se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
 
 ```{r}
-plot(x = DAMS$Distance_Metro, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al metro", ylim= c(0,100))
+plot(x = DAMS$Distance_Center, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al Centro", ylim= c(0,100))
 ```
+
 
 -   Identificar los alojamientos de mayor cercanía al centro y su comportamiento con el índice de atracción para cada ciudad (ver si en una de ella hay correlación)
 
 ```{r}
 plot(x = D2$Distance_Center, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Distancia al centro", ylim= c(0,100))
-```
-
-```{r}
 cor(D2$Ind.Atraccion, D2$Distance_Center)
+
+abline(lm(D2$Distance_Center ~  D2$Ind.Atraccion), col = "orange", lwd = 3, lty = 5)
+text(paste("Correlación:", round(cor( D2$Distance_Center, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
 ```
 
-Se observa que la correlación entre ambas variables es de -0.32, lo que significa que estas dos variables tienen poca correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+
+ANÁLISIS : Se observa que la correlación entre ambas variables es de -0.32, lo que significa que estas dos variables tienen buena  correlación entre ellas, pero no muy fuerte. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades. 
 
 ```{r}
 cor(DAMS$Ind.Atraccion, DAMS$Distance_Center)
@@ -1547,25 +1583,27 @@ cor(DROM$Ind.Atraccion, DROM$Distance_Center)
 cor(DVIE$Ind.Atraccion, DVIE$Distance_Center)
 ```
 
-Se observa que la correlación mas alta se encuentra en Amsterdam; a continuación se mostrará la gráfica de Índice de Atracción - Distancia al metro para Amsterdam.
 
-```{r}
-plot(x = DAMS$Distance_Center, y = DAMS$Ind.Atraccion, ylab = "Índice de Atracción en Amsterdam" , xlab = "Distancia al Centro", ylim= c(0,100))
-```
+ANÁLISIS : A comparación de la correlación entre índice de atracción y y distancia al metro analizado anteriormente, podemos ver que aquí la correlación con distancia al centro de la ciudad toma mayor relevancia, ya que los valores aumentan y el valor mínimo de correlación aquí es  de -0.46 aproximadamente y el de mayor valor es de -0.69 en la ciudad de Amsterdam. Esto nos indica que estos factores de ubicación toman mayor importancia en la calificación de índice de atracción. 
 
-Se observa que sí existe cierta correlación para estas variables, ya que el valor de la correlación es de -0.69.
 
 -   Analizar la correlación entre índice de atracción e indice de restaurantes por ciudad
 
 ```{r}
-plot(x = D2$Ind.Restaurantes, y = D2$Ind.Atraccion, ylab = "Índice de Atracción" , xlab = "Índice de Restaurantes", ylim= c(0,100))
+cor(D2$Ind.Atraccion,D2$Ind.Restaurantes)
+
+#Relación  Ind.Atracción vs Ind.Restaurantes : 
+
+plot(D2$Ind.Atraccion ~ D2$Ind.Restaurantes, main = 'Variación del I.Atraccion vs la I.Restaurantes', xlab = "índice de restaurantes" ,ylab = "índice de atracción" )
+abline(lm(D2$Ind.Atraccion ~  D2$Ind.Restaurantes), col = "orange", lwd = 3, lty = 5)
+text(paste("Correlación:", round(cor( D2$Ind.Restaurantes, D2$Ind.Atraccion), 3)), x = 85, y = 80,col="orange")
 ```
 
 ```{r}
 cor(D2$Ind.Atraccion, D2$Ind.Restaurantes)
 ```
 
-Se observa que la correlación entre ambas variables es de 0.70, lo que significa que estas dos variables tienen alta correlación entre ellas. A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
+Se observa que la correlación entre ambas variables es de 0.70, lo que significa que estas dos variables tienen alta (es fuerte) correlación entre ellas. Lo que nos indica que un Airbnb se vuelve mucho más atractivo cuando tiene un mayor índice de restaurantes.A continuación se analizará si la correlación entre estas dos variables varía de acuerdo a las ciudades.
 
 ```{r}
 cor(DAMS$Ind.Atraccion, DAMS$Ind.Restaurantes)
@@ -1603,10 +1641,37 @@ cor(DROM$Ind.Atraccion, DROM$Ind.Restaurantes)
 cor(DVIE$Ind.Atraccion, DVIE$Ind.Restaurantes)
 ```
 
-Se observa que la correlación mas alta se encuentra en Vienna; a continuación se mostrará la gráfica de Índice de Atracción - Índice de Restaurantes para Vienna.
+
+
+Se observa que la correlación mas fuerte lo tienen los alojamientos encontrados en Vienna, casi perfecta. Lo que nos indica que para esta ciudad un factor que influye mucho en el Indice de atracción efectivamente es la cercanía y cantidad de restaurantes.A continuación se mostrará la gráfica de Índice de Atracción - Índice de Restaurantes para Vienna.
 
 ```{r}
 plot(x = DVIE$Distance_Center, y = DVIE$Ind.Atraccion, ylab = "Índice de Atracción en Vienna" , xlab = "Índice de Restaurantes en Vienna", ylim= c(0,100))
 ```
 
-A través de este análisis es posible concluir que el índice de atracción está relacionado con el índice de restaurantes. No es posible determinar cuál de las dos variables es la que influye en la otra; sin embargo, este hallazgo se puede utilizar como punto de partida para una investigación futura.
+A través de este análisis se concluye efectivamente el índice de atracción de los alojamientos está relacionado con el índice de restaurantes. Asimismo, se observa cómo es que esta correlación varía dependiendo de la ciudad en la que se encuentre el alojamiento, ya que algunas eran mayores que otras. Además, se identifican que estan presentes una correlación negativa en todas las ciudades al analizar el Indice de atracción y distancia al metro y al centro. Caso contrario con la relación directa que tiene la atracción con el índice de restaurantes.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
