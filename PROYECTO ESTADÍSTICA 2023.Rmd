@@ -483,6 +483,7 @@ median_distC
 IQR(D2$Distance_Center)
 quantile(D2$Distance_Center) 
 ```
+Para el caso de distancia al centro, el mayor valor es 25.28km. Se observa que este valor se aleja bastante de la media, ya que el 75% de los valores es menor a 3.59 km. Como se puede observas en el histograma y en el barplot, los valores altos de la tabla se encuentran dispersos. En el caso del histograma, las cantidades son casi imperceptibles después de los 15 km.
 
 ```{r}
 ##DISTANCE METRO
@@ -508,6 +509,8 @@ median_distM
 IQR(D2$Distance_Metro)
 quantile(D2$Distance_Metro) 
 ```
+Para el caso de distancia al metro, el mayor valor es 14.27km. Se observa que este valor se aleja bastante de la media, ya que el 75% de los valores es menor a 0.7 km. Como se puede observas en el histograma y en el barplot, los valores altos de la tabla se encuentran dispersos y son pocos.
+
 
 ```{r}
 ##Índice de restaurantes
@@ -532,7 +535,7 @@ median_Ind.Restaurant
 IQR(D2$Ind.Restaurantes)
 quantile(D2$Ind.Restaurantes) 
 ```
-
+Se observa que en el caso de la variable índice de restaurantes, el 50% de los valores se concentra entre 11.13 y 36.821. Como se observa en el histograma, la variable tiene una tendencia decreciente con después de la media (mientras más alto es el índice, menos son los airbnb con un índice de restaurantes en ese rango).
 ### 2. Análisis Bivariado :
 
 ```{r}
