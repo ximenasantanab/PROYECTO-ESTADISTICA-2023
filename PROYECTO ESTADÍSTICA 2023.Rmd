@@ -79,8 +79,6 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 
 ## Limpieza de datos
 
-### Lectura de base de datos
-
 ```{r}
 library(readr)
 library(dplyr)
@@ -137,7 +135,7 @@ Observaciones_incompletas <- sum(!complete.cases(D2))
 print(paste("Observaciones incompletas es : ", Observaciones_incompletas))
 ```
 
--   Para la limpieza de datos se tiene encuenta lo siguiente:
+-   Para la limpieza de datos se tiene encuentra lo siguiente:
 
 #### Verificar Variables booleanas
 
@@ -304,7 +302,7 @@ No hay anomalías, y concluímos que nuestra data se encuentra en condiciones ad
 
 # Análisis descriptivo
 
-### 1. Análisis Univariado :
+## Análisis Univariado
 
 ```{r}
 
@@ -538,52 +536,8 @@ IQR(D2$Ind.Restaurantes)
 quantile(D2$Ind.Restaurantes) 
 ```
 Se observa que en el caso de la variable índice de restaurantes, el 50% de los valores se concentra entre 11.13 y 36.821. Como se observa en el histograma, la variable tiene una tendencia decreciente con después de la media (mientras más alto es el índice, menos son los airbnb con un índice de restaurantes en ese rango).
-### 2. Análisis Bivariado :
 
-```{r}
-##Ciudad VS Tipo
-
-D3 <- D2
-
-D3$Ciudad[D3$Ciudad== "Amsterdam"] <- "AMS"
-D3$Ciudad[D3$Ciudad== "Athens"] <- "ATH"
-D3$Ciudad[D3$Ciudad== "Barcelona"] <- "BAR"
-D3$Ciudad[D3$Ciudad== "Berlin"] <- "BER"
-D3$Ciudad[D3$Ciudad== "Budapest"] <- "BUD"
-D3$Ciudad[D3$Ciudad== "Lisbon"] <- "LISB"
-D3$Ciudad[D3$Ciudad== "Paris"] <- "PAR"
-D3$Ciudad[D3$Ciudad== "Rome"] <- "ROM"
-D3$Ciudad[D3$Ciudad== "Vienna"] <- "VIEN"
-
-tipo_habitacionCiudad <- (table(D3$Tipo,D3$Ciudad))
-
-mosaicplot(tipo_habitacionCiudad)
-```
-
-ANÁLISIS -\> DEMANDA MAYOR POR LAS CASAS COMPLETAS/APART EN LAS CIUDADESS ROMA, PARIS Y ATHENAS
-
-```{r}
-#CAPACIDAD VS SHARE ROOM
-
-tipo_CapacidadSHAREROOM <- (table(D2$Capacidad,D2$Share_Room))
-
-mosaicplot(tipo_CapacidadSHAREROOM)
-```
-
-ANÁLISIS -\> PREFERENCIA POR NO COMPARTIR HABITACIÓN
-
-```{r}
-# Ciudad VS Habitaciones 
-ggplot(D2) +
-  aes(x = Ciudad, y = Habitaciones) +
-  geom_boxplot(fill = "#ACC527") +
-  theme_minimal()
-
-```
-
-ANÁLISIS -\> LA PREFERENCIA POR LA CANTIDAD DE HABITACIONES A RESERVAR ES MENOR A 2
-
-### 3. Objetivos
+## Objetivos
 
 ### Objetivo 1 :Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
@@ -739,7 +693,7 @@ La ciudad más concurrida es Roma, debido al número de reserva que se hace dent
 
 12. Analizar por ciudades las características del alojamiento más caro y económico, analizar la relación precio y ubicación, analizar la relación precio e indice de restaurantes y atracción.
 
-### Desarrollo :
+#### Desarrollo :
 
 -   **Conocer el total de las ciudades que pertenecen a la base de datos**
 
@@ -992,7 +946,7 @@ barplot(S,col=c("orange","blue"),
 
     ```
 
-# Relación entre variables por ciudades :
+#### Relación entre variables por ciudades :
 
 Aquí se analiza por ciudades por separado y se ve la relación precio vs (ubicación al metro y centro, restaurantes)
 
@@ -1000,7 +954,7 @@ Aquí se analiza por ciudades por separado y se ve la relación precio vs (ubica
 unique(D2$Ciudad)
 ```
 
-### Amsterdam
+#### Amsterdam
 
 Aquí filtramos a todos los alojamientos ubicados en Amsterdam y analizamos si existe una relación de precio con respecto a su ubicación al metro, al centro de la ciudad y su índice de restaurantes:
 
@@ -1042,7 +996,7 @@ ANALISIS : La primera gráfica presenta un valor de correlación de -0.14, lo qu
 
 A continuación se procede a analizar la relación precio vs (distancia al metro y centro, ind.restaurantes) para cada país : La correlación está entre -1.....0.... 1 . Mientras más cerca al cero es que la correlación es baja.
 
-## Realizamos este análisis para el conjunto total de ciudades en el estudio así cómo para cada ciudad :
+Realizamos este análisis para el conjunto total de ciudades en el estudio así cómo para cada ciudad :
 
 ```{r}
 
@@ -1100,7 +1054,7 @@ text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio
 
 ```
 
-### Barcelona
+#### Barcelona
 
 ```{r}
 #Filtramos
@@ -1135,7 +1089,7 @@ text(paste("Correlación:", round(cor(DATHENAS$Ind.Restaurantes, DATHENAS$Precio
 
 ```
 
-### Berlín :
+#### Berlín :
 
 ```{r}
 ### Berlín
@@ -1171,7 +1125,7 @@ abline(lm(DBERLIN$Precio ~ DBERLIN$Ind.Restaurantes), col = "pink", lwd = 3, lty
 text(paste("Correlación:", round(cor(DBERLIN$Ind.Restaurantes, DBERLIN$Precio), 2)), x = 80, y = 4000)
 ```
 
-### Roma
+#### Roma
 
 ```{r}
 #Filtramos
@@ -1206,7 +1160,7 @@ text(paste("Correlación:", round(cor(DROMA$Ind.Restaurantes, DROMA$Precio), 2))
 
 ```
 
-### Budapest
+#### Budapest
 
 ```{r}
 #Relación precio vs metro(km)
@@ -1227,7 +1181,7 @@ abline(lm(DBUD$Precio ~ DBUD$Ind.Restaurantes), col = "pink", lwd = 3, lty = 2)
 text(paste("Correlación:", round(cor(DBUD$Ind.Restaurantes, DBUD$Precio), 2)), x = 80, y = 2000)
 ```
 
-### Lisbon :
+#### Lisbon :
 
 ```{r}
 #Filtramos
@@ -1267,7 +1221,7 @@ abline(lm(DLISBON$Precio ~ DLISBON$Ind.Restaurantes), col = "pink", lwd = 3, lty
 text(paste("Correlación:", round(cor(DLISBON$Ind.Restaurantes, DLISBON$Precio), 2)), x = 80, y = 1500)
 ```
 
-### París
+#### París
 
 ```{r}
 #Filtramos
@@ -1301,7 +1255,7 @@ abline(lm(DPARIS$Precio ~ DPARIS$Ind.Restaurantes), col = "pink", lwd = 3, lty =
 text(paste("Correlación:", round(cor(DPARIS$Ind.Restaurantes, DPARIS$Precio), 2)), x = 80, y = 15000)
 ```
 
-### Vienna
+#### Vienna
 
 ```{r}
 #Filtramos
@@ -1341,7 +1295,7 @@ Análisis : Luego de haber realizado el análisis para cada ciudad, se conluye q
 
 -   Analizar las ciudades con mayor indice de atracción
 
-#HISTOGRAMA DE PRECIO
+HISTOGRAMA DE PRECIO
 
 ```{r}
 D2 %>%
