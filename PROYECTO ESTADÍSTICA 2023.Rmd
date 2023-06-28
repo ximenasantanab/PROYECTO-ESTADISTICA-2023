@@ -1590,3 +1590,37 @@ plot(x = DVIE$Distance_Center, y = DVIE$Ind.Atraccion, ylab = "Índice de Atracc
 ```
 
 A través de este análisis se concluye efectivamente el índice de atracción de los alojamientos está relacionado con el índice de restaurantes. Asimismo, se observa cómo es que esta correlación varía dependiendo de la ciudad en la que se encuentre el alojamiento, ya que algunas eran mayores que otras. Además, se identifican que estan presentes una correlación negativa en todas las ciudades al analizar el Indice de atracción y distancia al metro y al centro. Caso contrario con la relación directa que tiene la atracción con el índice de restaurantes.
+
+# Análisis de Probabilidades
+
+## Probabilidad Empírica
+
+Las variables que se analizarán en este caso son la ciudad el precio. En el caso de la ciudad, se calculará la probabilidad empírica de que un airbnb se encuentre en una de las ciudades en específico. En el caso del precio, se dividirá el precio en 3 rangos y se calculará la probabilidad empírica de que el precio de un airbnb se encuentre dentro de uno de estos rangos.
+
+### Probabilidad Empírica de las ciudades
+
+El caso de estudio que se está analizando está limitado a 9 ciudades; esto significa que la variable ciudad puede tomar 9 valores distintos. Estos 9 valores corresponden al espacio de resultados teórico.
+
+```{r}
+unique(D2$Ciudad)
+```
+Una vez definido el espacio de resultados teórico, se calculará la probabilidad empírica de cada uno de los eventos para la variable Ciudad.
+
+```{r}
+city_freq <- table(D2$Ciudad)
+city_prob <- city_freq / sum(city_freq)
+print(city_prob)
+```
+Se puede observar que la probabilidad de seleccionar un airbnb ubicado en Roma es la mayor, mientras que la probabilidad de seleccionar uno que se encuentre en Amsterdam es la menor.
+
+### Probabilidad Empírica de los rangos de precio
+
+En primer lugar, los rangos se definieron en base a la página Champion Traveler que se encarga de recopilar información de personas que viajan alrededor del mundo. Según estos datos, un viajero  en promedio gasta menos de 76 USD en promedio y hasta 152 USD en un viaje familiar. Por este motivo, los rangos que se elegirán son 0-76, 76-152 y 152<. El espacio de resultados teórico, en este caso, son esos tres valores para el rango.
+
+```{r}
+D2$Price_Range <- cut(D2$Precio, breaks = c(0, 76, 152, Inf), labels = c("0-76", "76-152", "152<"), right = FALSE)
+price_range_freq <- table(D2$Price_Range)
+price_range_prob <- price_range_freq / sum(price_range_freq)
+print(price_range_prob)
+```
+
