@@ -1624,3 +1624,118 @@ price_range_prob <- price_range_freq / sum(price_range_freq)
 print(price_range_prob)
 ```
 
+##Eventos independientes
+Teniendo en cuenta:
+
+P(B∩A)=P(B)*P(A)
+
+Si se cumple esta relación, indicando que la probabilidad de que ocurra el evento A es igual a la probabilidad de que ocurra dicho evento sabiendo de que ocurre el evento B, indicaría que dichos eventos son independientes; sin embargo, si salen diferentes, esto indica que son dependientes.
+Como todo trabajo experimental, hay una cierta variación de error. En este caso, asumimos que la resta P(B∩A)-P(B)*P(A)
+debe ser menor o igual a 0.05 para considerar de que los eventos son independientes y en casos mayores, dependientes.
+tiene que ser
+
+
+###Primer par de eventos
+Definamos los dos eventos:
+A: La probabilidad de que una persona alquile en Amsterdam
+B: El alquiler sea mayor que el promedio de precios
+calculamos el promedio del precio de todos los alquileres de Airbnb:
+```{r}
+PromedioPrecio<-mean(D2$Precio)
+PromedioPrecio
+```
+
+```{r}
+ProbB <- nrow(filter(D2, Precio>PromedioPrecio))/nrow(D2)
+ProbB
+```
+
+```{r}
+ProbA <- sum(D2$Ciudad == "Amsterdam") / nrow(D2)
+ProbA
+```
+```{r}
+ProbAandB <- sum(D2$Ciudad == "Amsterdam" & D2$Precio>PromedioPrecio) / nrow(D2)
+ProbAandB
+```
+```{r}
+ProbAandB-ProbA*ProbB
+```
+Observamos que la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es menor a 0.05, podemos asumir que ambos eventos son independientes.
+
+
+###Segundo par
+Definamos los dos eventos:
+A:Una persona alquile una habitación mayor al promedio
+B:Dicho alquiler tenga una satisfacción mayor de 80
+
+
+```{r}
+ProbB <- nrow(filter(D2, Precio>PromedioPrecio))/nrow(D2)
+ProbB
+```
+
+```{r}
+ProbA <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
+ProbA
+```
+```{r}
+ProbAandB <- sum(D2$Precio>PromedioPrecio & D2$Satisfaccion>90) / nrow(D2)
+ProbAandB
+```
+```{r}
+ProbAandB-ProbA*ProbB
+```
+Observamos que el valor absoluto de la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es menor a 0.05, podemos asumir que ambos eventos son independientes.
+
+
+
+
+### Tercer par de eventos
+A: La probabilidad de que el puntaje de satisfacción sea mayor a 90
+B: La probabilidad de que la limpieza sea mayor a 9
+
+
+```{r}
+ProbB <- nrow(filter(D2, Limpieza>9))/nrow(D2)
+ProbB
+```
+
+```{r}
+ProbA <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
+ProbA
+```
+```{r}
+ProbAandB <- sum(D2$Limpieza>9 & D2$Satisfaccion>90) / nrow(D2)
+ProbAandB
+```
+
+```{r}
+ProbAandB-ProbA*ProbB
+```
+Caso contrario a los anteriores eventos, la resta resultó ser mayor a 0.05; por lo tanto, lo consideramos como eventos dependientes.
+
+###Cuarto par de eventos
+A:La probabilidad de que Superhost = Sí
+B:La probabilidad de que la satisfacción sea mayor a 95
+
+```{r}
+ProbB <- sum(D2$Superhost=="Sí")/nrow(D2)
+ProbB
+```
+
+```{r}
+ProbA <- nrow(filter(D2,Satisfaccion>95)) / nrow(D2)
+ProbA
+```
+```{r}
+ProbAandB <- sum(D2$Superhost=="Sí" & D2$Satisfaccion>95) / nrow(D2)
+ProbAandB
+```
+
+```{r}
+ProbAandB-ProbA*ProbB
+```
+
+
+Al igual que el anterior, la diferencia de probabilidad es 0.08, mayor a 0.05; por lo tanto, lo consideramos dependientes.
