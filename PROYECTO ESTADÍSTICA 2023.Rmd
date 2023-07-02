@@ -83,6 +83,9 @@ Para el proceso de recolección se realiza una búsqueda de base de datos de la 
 library(readr)
 library(dplyr)
 library(ggplot2)
+library(modeest)
+library(foreign)
+library(fitdistrplus)
 D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
 coef_var <- function(x, na.rm = FALSE) {sd(x, na.rm=na.rm) / mean(x, na.rm=na.rm)}
 
@@ -1595,7 +1598,10 @@ A través de este análisis se concluye efectivamente el índice de atracción d
 
 ## Probabilidad Empírica
 
-Las variables que se analizarán en este caso son la ciudad el precio. En el caso de la ciudad, se calculará la probabilidad empírica de que un airbnb se encuentre en una de las ciudades en específico. En el caso del precio, se dividirá el precio en 3 rangos y se calculará la probabilidad empírica de que el precio de un airbnb se encuentre dentro de uno de estos rangos.
+Las variables que se analizarán en este caso son la ciudad y el precio. En el caso de la ciudad, se calculará la probabilidad empírica de que un airbnb se encuentre en una de las ciudades en específico. En el caso del precio, se dividirá el precio en 3 rangos y se calculará la probabilidad empírica de que el precio de un airbnb se encuentre dentro de uno de estos rangos.
+
+Para ambos casos, el experimento es el mismo: seleccionar un airbnb al azar del dataset. En el primer caso, el resultado del experimento es la ciudad en la que el airbnb se encuentra; en el segundo caso, el resultado del experimento es el rango de precio del airbnb. Cada uno de los airbnb's en el dataset representa un evento átomico, este sería definido como el conjunto de eventos atómicos de nuestro dataset.A continuación analizaremos la probabilidad empírica para los dos casos mencionados.
+
 
 ### Probabilidad Empírica de las ciudades
 
@@ -1627,7 +1633,7 @@ print(price_range_prob)
 ##Eventos independientes
 Teniendo en cuenta:
 
-P(B∩A)=P(B)*P(A)
+$P(B∩A)=P(B)*P(A)$
 
 Si se cumple esta relación, indicando que la probabilidad de que ocurra el evento A es igual a la probabilidad de que ocurra dicho evento sabiendo de que ocurre el evento B, indicaría que dichos eventos son independientes; sin embargo, si salen diferentes, esto indica que son dependientes.
 Como todo trabajo experimental, hay una cierta variación de error. En este caso, asumimos que la resta P(B∩A)-P(B)*P(A)
@@ -1637,8 +1643,9 @@ tiene que ser
 
 ###Primer par de eventos
 Definamos los dos eventos:
-A: La probabilidad de que una persona alquile en Amsterdam
-B: El alquiler sea mayor que el promedio de precios
+
+A: De todas las ciudades en las que Airbnb tiene su set, este sea de Amsterdam
+B: Después de separar un Airbnb, el precio a pagar sea mayor que el promedio de esa ciudad.
 calculamos el promedio del precio de todos los alquileres de Airbnb:
 ```{r}
 PromedioPrecio<-mean(D2$Precio)
@@ -1666,8 +1673,8 @@ Observamos que la resta de las probabilidades que ocurran ambos eventos al mismo
 
 ###Segundo par
 Definamos los dos eventos:
-A:Una persona alquile una habitación mayor al promedio
-B:Dicho alquiler tenga una satisfacción mayor de 80
+A:Una persona alquile una habitación mayor al precio promedio 
+B:La habitación alquilada reciba un puntaje de satisfacción igual a 80
 
 
 ```{r}
@@ -1692,8 +1699,8 @@ Observamos que el valor absoluto de la resta de las probabilidades que ocurran a
 
 
 ### Tercer par de eventos
-A: La probabilidad de que el puntaje de satisfacción sea mayor a 90
-B: La probabilidad de que la limpieza sea mayor a 9
+A: La habitación reservada adquiera un puntaje de satisfacción mayor a 90
+B: La haitación reservada adquiera un puntaje de limpiza mayor a 9
 
 
 ```{r}
@@ -1716,8 +1723,8 @@ ProbAandB-ProbA*ProbB
 Caso contrario a los anteriores eventos, la resta resultó ser mayor a 0.05; por lo tanto, lo consideramos como eventos dependientes.
 
 ###Cuarto par de eventos
-A:La probabilidad de que Superhost = Sí
-B:La probabilidad de que la satisfacción sea mayor a 95
+A:La habitación reservada por el inquilino sea con superhost
+B:La habitación reservada por el inquilino sea mayor a 95
 
 ```{r}
 ProbB <- sum(D2$Superhost=="Sí")/nrow(D2)
@@ -1739,3 +1746,270 @@ ProbAandB-ProbA*ProbB
 
 
 Al igual que el anterior, la diferencia de probabilidad es 0.08, mayor a 0.05; por lo tanto, lo consideramos dependientes.
+
+
+##Variables Aleatorias Discretas y Continuas
+
+###Variable Aleatoria Discreta 1
+
+
+La variable de nuestra base de datos que usaremos para la primera evaluación es "Satisfacción" que es numérica discreta. Usaremos el método binomial.
+
+####Construimos la variable aleatoria
+Siendo 'n' el número de observaciones y que el "éxito" de nuestro experimento es el número de personas que califican como muy bueno (90) en la evaluación de satisfacción en la ciudad de Amsterdam. Calculamos la probabilidad de "éxito".
+
+```{r}
+ProbE<-sum(D2$Satisfaccion==90 & D2$Ciudad=="Amsterdam")/sum(D2$Ciudad=="Amsterdam")
+ProbE
+```
+Entonces:
+X: La variable que cuenta el número de personas de Amsterdam que califican con "90" en el estudio de Airbnb
+
+#### Identificamos los parámetros
+
+$X~Bin(p,n)$
+
+Donde: p es la probilidad del éxito E
+       n es tamaño de la muestra
+    
+```{r}
+n<-sum(D2$Ciudad=="Amsterdam")
+```
+
+
+  
+##### Graficamos
+
+
+```{r}
+dbinom(90,n, ProbE)
+x<-0:n
+pmf<-dbinom(x,n, ProbE)
+
+```
+```{r}
+barplot(pmf, names.arg = x, xlab = "Número de éxitos", ylab = "Probabilidad", main = "PMF - Distribución Binomial")
+plot(x, pmf, type = "b", pch = 19, xlab = "Número de éxitos", ylab = "Probabilidad", main = "PMF - Distribución Binomial")
+```
+
+
+####Validamos las propiedades de la variable aleatoria discreta:
+
+Calculamos la esperanza de la variable aleatoria discreta X: 
+
+
+```{r}
+EX<-n*ProbE
+EX
+a<-0:n
+sum(a*dbinom(a ,n,ProbE)) #Otra manera, usando la definición de la Esperanza de una variable aleatoria discreta
+```
+En promedio, hay en promedio 87 personas que califican con 90 a los Airbnb's en Amsterdam.
+
+####Construimos un ejemplo
+Ejemplo: Los agentes de Airbnb necesitan saber la probabilidad de que  los huéspedes de Amsterdam califique con un puntaje mayor a 90 para decidir si continuar o no con sus servicios con la misma calidad.
+
+Nos piden P(X>90) = 1 - P(X≤90)
+
+
+Calculamos la probabilidad pedida:
+
+```{r}
+1-pbinom(90, n, ProbE, lower.tail=T)
+```
+
+
+
+###Variable Aleatoria Discreta 2
+
+
+
+Para nuestro segundo análisis usaremos la variable "Day" de nuestra base de datos. Para esto usaremos el modelo de Bernoulli con parámetro p.
+
+####Construimos nuestra variable aleatoria discreta
+Nuestro caso de "Éxisto" es que los huéspedes hayan alquilado un Airbnb en un día de fin de semana.
+
+Calculamos la probabilidad de "Éxito" (p):
+```{r}
+p<-sum(D2$Day != "Weekday" & D2$Ciudad=="Amsterdam")/sum(D2$Ciudad=="Amsterdam")
+p
+```
+X: Variable que indica si una persona alquiló en un día de fin de semana o n día laborable.
+####Identificamos los parámetros
+
+$X~Bur(p)$
+
+####Hallamos la esperanza
+
+En este modelo, la esperanza es igual a la probabilidad de éxito; por lo tanto:
+```{r}
+EX2=p
+```
+
+
+
+
+
+###Variable Aleatoria Continua 1
+
+La variable de nuestra base de datos que usaremos para este análisis es la de "Distance_Center" que es numérica continua.
+
+#### Construimos nuestra variable aleatoria
+
+X: variable aleatoria que cuenta la cantidad de Airbnb que está a una distancia mayor o igual a 5km de su centro en Amsterdam.
+
+```{r}
+NuevoObjetivo<-filter(D2, Ciudad=="Amsterdam")
+nrow(NuevoObjetivo)
+
+```
+
+
+#### Gráfica
+Identificamos gráficamente la densidad de esta variable numérica continua con el siguiente código:
+
+```{r}
+hist(NuevoObjetivo$Distance_Center,breaks=10, freq=FALSE, main="Histograma de precio", xlab="Precio ($)", col="green")
+lines(density(NuevoObjetivo$Distance_Center, na.rm=TRUE),col="red",lwd=3)
+curve(dnorm(x, mean(NuevoObjetivo$Distance_Center,na.rm=TRUE), sd(NuevoObjetivo$Distance_Center,na.rm=TRUE)), lwd = 2, col = "blue", add = T)
+legend("topleft", c("curva observada", "curva (normal) teórca"),
+       lty = 1, lwd = 2, col = c("red", "blue"), bty = "n",
+       cex = 0.8)
+mu <- mean(NuevoObjetivo$Distance_Center,na.rm=TRUE)
+mu
+sigma <- sd(NuevoObjetivo$Distance_Center,na.rm=TRUE) 
+sigma
+median(NuevoObjetivo$Distance_Center,na.rm=TRUE)
+```
+#### Validamos su normalidad
+
+Comparamos la media y la mediana
+```{r}
+mean(NuevoObjetivo$Distance_Center)
+median(NuevoObjetivo$Distance_Center)
+```
+Para corroborar su supuesta normalidad identificamos que el valor de la media y la mediana son muy parecidas (una variación de casi 0.5) indicando que es, en parte, simétrica.
+
+```{r}
+# Definir la función de densidad de la variable aleatoria continua
+densidad <- function(x) {
+  # Definir aquí la función de densidad de tu variable aleatoria continua
+  # Por ejemplo, para una distribución normal con media 0 y desviación estándar 1:
+  dnorm(x, mu, sigma)
+}
+
+# Integramos
+esperanza <- integrate(function(x) {x * densidad(x)}, lower = -Inf, upper = Inf)$value
+
+# Integramos
+varianza <- integrate(function(x) {(x - esperanza)^2 * densidad(x)}, lower = -Inf, upper = Inf)$value
+
+# Calcular la desviación estándar
+desviacion_estandar <- sqrt(varianza)
+esperanza
+
+```
+
+
+
+Observamos que la media de la variable "Distance_Center" y la esperanza de nuestra variable aleatoria continua son iguales con un valor de 2.825052
+
+Con estos dos casos validamos su normalidad.
+
+####Escogemos los parámetros
+
+$X~N(mu,sigma)$
+
+####Ejemplo
+Los agentes de Airbnb International requieren hallar la probabilidad de que las personas alquilen a una distancia mayor o igual de 5km para decidir si construir o no más hoteles cerca a estos.
+
+Hallamos la probabilidad:
+```{r}
+Pxmayor5<-pnorm(5,mu,sigma, lower.tail=T)
+Pxmayor5
+```
+Vemos que la probabilidad es muy alta; por lo tanto, es necesario construir más hoteles más cercanos al centro de Amsterdam.
+
+
+
+
+###Variable Aleatoria Continua 2
+
+La variable de nuestra base de datos que usaremos para este análisis es la de "Distance_Metro" que es numérica continua.
+
+#### Construimos nuestra variable aleatoria
+
+X: variable aleatoria que cuenta la cantidad de Airbnb que está a una distancia mayor o igual a 5km de su centro en Amsterdam.
+
+#### Gráfica
+Identificamos gráficamente la densidad de esta variable numérica continua con el siguiente código:
+
+```{r}
+hist(NuevoObjetivo$Distance_Metro,breaks=10, freq=FALSE, main="Histograma de precio", xlab="Precio ($)", col="green")
+lines(density(NuevoObjetivo$Distance_Metro, na.rm=TRUE),col="red",lwd=3)
+curve(dnorm(x, mean(NuevoObjetivo$Distance_Metro,na.rm=TRUE), sd(NuevoObjetivo$Distance_Metro,na.rm=TRUE)), lwd = 2, col = "blue", add = T)
+legend("topleft", c("curva observada", "curva (normal) teórca"),
+       lty = 1, lwd = 2, col = c("red", "blue"), bty = "n",
+       cex = 0.8)
+mu1 <- mean(NuevoObjetivo$Distance_Metro,na.rm=TRUE)
+mu1
+sigma1 <- sd(NuevoObjetivo$Distance_Metro,na.rm=TRUE) 
+sigma1
+median(NuevoObjetivo$Distance_Metro,na.rm=TRUE)
+```
+#### Validamos su normalidad
+
+Comparamos la media y la mediana
+```{r}
+mean(NuevoObjetivo$Distance_Metro)
+median(NuevoObjetivo$Distance_Metro)
+```
+Para corroborar su supuesta normalidad identificamos que el valor de la media y la mediana son muy parecidas (una variación menor a 0.2) indicando que es, en parte, simétrica.
+
+```{r}
+# Definir la función de densidad de la variable aleatoria continua
+densidad <- function(x) {
+  # Definir aquí la función de densidad de tu variable aleatoria continua
+  # Por ejemplo, para una distribución normal con media 0 y desviación estándar 1:
+  dnorm(x, mu1, sigma1)
+}
+
+# Integramos
+esperanza <- integrate(function(x) {x * densidad(x)}, lower = -Inf, upper = Inf)$value
+
+# Integramos
+varianza <- integrate(function(x) {(x - esperanza)^2 * densidad(x)}, lower = -Inf, upper = Inf)$value
+
+# Calcular la desviación estándar
+desviacion_estandar <- sqrt(varianza)
+esperanza
+
+```
+
+
+
+Observamos que la media de la variable "Distance_Metro" y la esperanza de nuestra variable aleatoria continua son iguales con un valor de 1.089367
+
+Con estos dos casos validamos su normalidad.
+
+####Escogemos los parámetros
+
+$X~N(mu1,sigma1)$
+
+####Ejemplo
+Los agentes de Airbnb International, para facilitar la movilidad de sus clientes, requieren hallar la probabilidad de que las personas alquilen a una distancia mayor o igual de 2km del metro más cercano para decidir si construir o no más hoteles cerca a estos.
+
+Hallamos la probabilidad:
+```{r}
+Pxmayor2<-pnorm(2,mu1,sigma1, lower.tail=T)
+Pxmayor2
+```
+Vemos que la probabilidad es muy alta; por lo tanto, es necesario construir más hoteles más cercanos al metro de Amsterdam.
+
+
+
+
+
+
+
+
