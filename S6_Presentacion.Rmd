@@ -50,11 +50,10 @@ D2$Habitaciones <- replace(D2$Habitaciones, D2$Habitaciones==0, NA)
 
 ## Objetivos
 
--   Analizar las ciudades con mejor ranking de experiencia de Airbnb en Europa del 2023.
 
 -   Describir las características de los alojamientos más caros y más económicos en ciudades de Europa del 2023.
 
--   Analizar la atracción de un Airbnb y su relación con su ubicación en ciudades de Europa del 2023.
+-   Analizar el precio de un Airbnb y su relación con su ubicación, limpieza y satisfacción.
 
 ## Algunas Variables del Estudio
 
@@ -78,11 +77,9 @@ s <-round(mean(D2$Precio),digits = 2)
 mosaicplot(Tipo_de_Airbnb_y_MultipleRooms, col = c("skyblue", "blue", "#9999cc", "#9c9c9c"))
 ```
 
-## Número de Airbnb's por Ciudad
+## Variación del precio vs distanci al metro
 
 ```{r}
-
-
 
 #Relación precio vs metro(km)
 plot(D2$Precio ~ D2$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
