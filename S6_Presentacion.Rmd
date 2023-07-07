@@ -58,29 +58,37 @@ D2$Habitaciones <- replace(D2$Habitaciones, D2$Habitaciones==0, NA)
 
 ## Algunas Variables del Estudio
 
-* Ciudad (Categórica nominal)
-* Cuándo lo reservan (Categórica nominal)                                                              
-* Room Type (Categórica nominal)
-* Superhost (Categórica nominal)
-* Multiple Rooms (Categórica nominal)
-* Cleanliness Rating (Categórica ordinal)
-* Guest Satisfaction (Categórica ordinal)
-* Person Capacity (Numérica discreta)
-* Price (Numérica continua)
-* City Center (km) (Numérica continua)
-* Metro Distance (km) (Numérica continua)
-* Normalised attraction Index (Numérica continua)
+<p style="font-size: 12px;">Ciudad (Categórica nominal) 
+Guest Satisfaction (Categórica ordinal)</p>
+<p style="font-size: 12px;">Cuándo lo reservan (Categórica nominal)  Person Capacity (Numérica discreta)</p>                    
+
+
+<p style="font-size: 12px;">Superhost (Categórica nominal)   Price (Numérica continua)</p>
+<p style="font-size: 12px;">Multiple Rooms (Categórica nominal)   City Center (km) (Numérica continua)</p>
+<p style="font-size: 12px;">Cleanliness Rating (Categórica ordinal)   Metro Distance (km) (Numérica continua)</p>
+<p style="font-size: 12px;">Normalised attraction Index (Numérica continua)</p> 
+
+```{r}
+s <-round(mean(D2$Precio),digits = 2)
+ mediana_precio <- median(D2$Precio)
+ D2 %>% filter(Precio > mediana_precio) %>% arrange(desc(Precio)) -> CAROS
+
+ CAROS[1:100, ] -> CAROS100 
+ Tipo_de_Airbnb_y_MultipleRooms <- table(CAROS100$`Multiple Rooms`,CAROS100$Tipo)
+mosaicplot(Tipo_de_Airbnb_y_MultipleRooms, col = c("skyblue", "blue", "#9999cc", "#9c9c9c"))
+```
 
 ## Número de Airbnb's por Ciudad
 
 ```{r}
-count_data <- D2 %>% group_by(Ciudad) %>% summarise(count = n())
 
-ggplot(count_data, aes(x = Ciudad, y = count)) +
-  geom_bar(stat = "identity") +
-  labs(x = "Ciudad", y = "Cantidad de Airbnb's", fill = "Ciudad") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggtitle("Cantidad de Airbnb's por ciudad")
+
+
+#Relación precio vs metro(km)
+plot(D2$Precio ~ D2$Distance_Metro, main = 'Variación del precio vs la distancia al metro')
+abline(lm(D2$Precio ~ D2$Distance_Metro), col = "red", lwd = 3, lty = 2)
+text(paste("Correlación:", round(cor(D2$Distance_Metro, D2$Precio), 2)), x = 11, y = 15000)
+
 
 ```
 
