@@ -16,6 +16,7 @@ library(ggplot2)
 library(modeest)
 library(foreign)
 library(fitdistrplus)
+library(knitr)
 ```
 ```{r}
 D <- read_csv("Aemf1.csv") #EL ARCHIVO Aemf1 y datos.AIRBNB es lo mismo. 
@@ -96,34 +97,55 @@ print(city_prob[6:9])
 
 Se puede observar que la probabilidad de seleccionar un airbnb ubicado en Roma es la mayor, mientras que la probabilidad de seleccionar uno que se encuentre en Amsterdam es la menor.
 
-## Eventos directamente relacionados
+## Eventos dependientes e independientes
+<p style="font-size: 12px;">Para esta parte tuvimos que buscar, según nuestra base de datos, cuatro pares de eventos y fundamentar por qué dos de ellos son independientes y los otros dos, dependientes.
+Nos basamos en tres relaciones importantes:</p>
 
-Evento A: Al seleccionar un Airbnb del dataset y verificar su precio, este último sea mayor que el promedio
 
-Evento B: Al seleccionar un Airbnb del dataset y verificar su puntaje de satisfacción, este último sea mayor a 80
+<p style="font-size: 12px;">$$P(B/A)=\frac{P(A/B).P(B)}{P(A)}$$ $$P(B/A)=\frac{P(A∩B)}{P(A)}$$ $$P(B∩A)=P(A).P(B)$$</p>
 
-```{r}
-PromedioPrecio<-mean(D2$Precio)
-ProbB <- nrow(filter(D2, Precio>PromedioPrecio))/nrow(D2)
-ProbA <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
-ProbAandB <- sum(D2$Precio>PromedioPrecio & D2$Satisfaccion>90) / nrow(D2)
-prob_eventos1 <- ProbAandB-ProbA*ProbB
-```
-$P(B∩A) - P(B)*P(A) = `r prob_eventos1`$
 
-## Eventos indirectamente relacionados
+<p style="font-size: 12px;">Evento A: Una persona califica a una sede de Airbnb con un puntaje de 10 en limpieza.</p>
+<p style="font-size: 12px;">Evento B: Una persona debe pagar un precio mayor al promedio del precio de Airbnb.</p>
 
-Evento A: Al seleccionar un Airbnb del dataset y verificar su puntaje de satisfacción, este último sea mayor a 90
+<p style="font-size: 12px;">$Promedio del precio: 260.0944$      $ProbA=0.600326$    $ProbB=0.3290023$  $ProbB/A=0.3296861$ $ProbAandB=0.1979192$</p>
 
-Evento B: Al seleccionar un Airbnb del dataset y verificar su puntaje de limpieza, este último sea mayor que a 9
+<p style="font-size: 12px;"> Calculamos si son independientes o no: $ProbAandB-ProbA*ProbB = 0$ </p> 
 
-```{r}
-ProbB <- nrow(filter(D2, Limpieza>9))/nrow(D2)
-ProbA <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
-ProbAandB <- sum(D2$Limpieza>9 & D2$Satisfaccion>90) / nrow(D2)
-prob_eventos2 <- ProbAandB-ProbA*ProbB
-```
-$P(B∩A) - P(B)*P(A) = `r prob_eventos2`$
+<p style="font-size: 12px;">Usando el teorema de Bayes: $ProbBresA = 0.33 y ProbB=0.33$ $ $ $ProbAresB=0.6 y ProbA=0.6$ </p> 
+
+
+<p style="font-size: 12px;">Definamos los dos eventos:</p>
+<p style="font-size: 12px;">A:Una persona escoge un Airbnb en el cual pague un precio mayor al precio promedio de todos los Airbnb's.</p>
+<p style="font-size: 12px;">B:Una persona puntúe el Airbnb con un puntaje de satisfacción mayor a 90.</p>
+
+<p style="font-size: 14px;"> $ProbA=0.3290023  ProbB=0.741214  ProbAandB=0.242988  ProbBresA=0.7385602  ProbAresB=0.3278243$</p>
+<p style="font-size: 12px;"> Calculamos si son independientes o no: $ProbAandB-ProbA*ProbB = 0$ </p> 
+
+<p style="font-size: 12px;">Usando el teorema de Bayes: $ProbBresA = 0.74 y ProbB=0.74$ $ $ $ProbAresB=0.33 y ProbA=0.33$ </p> 
+
+## Eventos dependientes
+
+<p style="font-size: 12px;">Definamos los dos eventos:</p>
+<p style="font-size: 12px;">A: Una persona  califique con un puntaje mayor a 9 respecto a Limpieza al Airbnb en el que se hospedó.
+</p>
+<p style="font-size: 12px;">B: Una persona califica con un puntaje de satisfacción mayor a 90 al Airbnb en el que se hospedó.</p>
+
+<p style="font-size: 14px;"> $ProbA=0.600326  ProbB=0.741214  ProbAandB=0.5480894  ProbBresA=0.9129862 
+ProbAresB=0.3278243$</p>
+<p style="font-size: 12px;"> Calculamos si son independientes o no: $ProbAandB-ProbA*ProbB = 0.1$ </p> 
+
+<p style="font-size: 12px;">Usando el teorema de Bayes: $ProbBresA = 0.9129862 y ProbB=0.741214$ $ $ $ProbAresB=0.3278243 y ProbA=0.600326$ </p> 
+
+
+<p style="font-size: 12px;">Definamos los dos eventos:</p>
+<p style="font-size: 12px;">A: De todas las sedes en la que Airbnb tiene esparcido alrededor del mundo, este esté en la ciudad de Amsterdam </p>
+<p style="font-size: 12px;">B: Una persona que se hospede en un hotel de Airbnb tenga que pagar un precio mayor al precio promedio de todo Airbnb.</p>
+
+<p style="font-size: 14px;"> $ProbA=0.3290023  ProbB=0.04986336  ProbAandB=0.04456537  ProbBresA=0.89375  ProbAresB=0.1354561$</p>
+<p style="font-size: 12px;"> Calculamos si son independientes o no: $ProbAandB-ProbA*ProbB = 0.03$ </p> 
+
+<p style="font-size: 12px;">Usando el teorema de Bayes: $ProbBresA = 0.89375 y ProbB=0.3290023$ $ $ $ProbAresB=0.1354561 y ProbA=0.04986336$ </p>
 
 ## Variables aleatorias discretas
 
@@ -193,6 +215,7 @@ varianza <- integrate(function(x) {(x - esperanza)^2 * densidad(x)}, lower = -In
 desviacion_estandar <- sqrt(varianza)
 esperanza
 ```
+
 
 ## Conclusiones
 
