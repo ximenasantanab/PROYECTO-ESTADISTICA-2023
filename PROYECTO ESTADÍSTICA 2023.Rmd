@@ -1635,117 +1635,240 @@ Teniendo en cuenta:
 
 $P(B∩A)=P(B)*P(A)$
 
-Si se cumple esta relación, indicando que la probabilidad de que ocurra el evento A es igual a la probabilidad de que ocurra dicho evento sabiendo de que ocurre el evento B, indicaría que dichos eventos son independientes; sin embargo, si salen diferentes, esto indica que son dependientes.
-Como todo trabajo experimental, hay una cierta variación de error. En este caso, asumimos que la resta P(B∩A)-P(B)*P(A)
-debe ser menor o igual a 0.05 para considerar de que los eventos son independientes y en casos mayores, dependientes.
-tiene que ser
+Esta relación nos indica que la probabilidad de que ocurra el evento A y el evento B es igual al producto de las probabilidades de A y B, de manera separada. Si esto se cumple, significa que ambos eventos son independientes. Ahora, si queremos saber cómo corroborar esta igualdad, lo único que debemos de hacer es llevar al término izquierdo el producto de las probabilidades de A y B. Este al restarse con la probabilidad de la intersección de ambos eventos debe resultar cero. Sin embargo, resulta ser diferente de cero, entonces resultan ser eventos dependientes. También aplicaremos el Teorema de Bayes para cada uno de los pares de eventos que tendremos y lo explicaremos más adelante. 
 
 
 ###Primer par de eventos
-Definamos los dos eventos:
 
-A: De todas las ciudades en las que Airbnb tiene su set, este sea de Amsterdam
-B: Después de separar un Airbnb, el precio a pagar sea mayor que el promedio de esa ciudad.
-calculamos el promedio del precio de todos los alquileres de Airbnb:
+Definamos los eventos:
+A:Una persona califica a una sede de Airbnb con un puntaje de 10 en limpieza.
+B:Una persona debe pagar un precio mayor al promedio del precio de Airbnb.
+
+Calculamos el promedio del precio de los Airbnb's:
 ```{r}
 PromedioPrecio<-mean(D2$Precio)
-PromedioPrecio
 ```
 
-```{r}
-ProbB <- nrow(filter(D2, Precio>PromedioPrecio))/nrow(D2)
-ProbB
-```
+
+Calculamos la probabilidad de que un huésped califique al Airbnb con un puntaje de 10 en "Limpieza" (P(A)).
 
 ```{r}
-ProbA <- sum(D2$Ciudad == "Amsterdam") / nrow(D2)
+ProbA <- nrow(filter(D2, Limpieza==10))/nrow(D2)
 ProbA
 ```
+Calculamos la probabilidad de que una persona pague un monto mayor al precio promedio de los Airbnb's (P(B)).
 ```{r}
-ProbAandB <- sum(D2$Ciudad == "Amsterdam" & D2$Precio>PromedioPrecio) / nrow(D2)
+ProbB <- sum(D2$Precio>PromedioPrecio) / nrow(D2)
+ProbB
+```
+Usamos la fórmula de Probabilidad Condicional para poder hallar la probabilidad de haber pagado un monto mayor al promedio tras haber calificado al Airbnb con la puntuación máxima de limpieza P(B/A).
+
+Primero calculamos la probabilidad en la que ocurren ambos al mismo tiempo (P(B∩A)), que el Airbnb rentado sea para un día de fin de semana y que el precio sea mayor al precio promedio.
+    
+```{r}
+ProbAandB <- sum(D2$Precio>PromedioPrecio & D2$Limpieza>9) / nrow(D2)
 ProbAandB
 ```
+Teniendo al probabilidad de A, B y la intersección de ambos conjuntos, podemos obtener la probabilidad P(B/A) usando la definición de Probabilidad Condicional.
 ```{r}
-ProbAandB-ProbA*ProbB
+ProbBresA=ProbAandB/ProbA
+ProbBresA
 ```
-Observamos que la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es menor a 0.05, podemos asumir que ambos eventos son independientes.
+Como recalcamos al inicio, al restar los valores de las probabilidades de la intersección de los eventos A y B con el producto de las probabilidades del evento A y del evento B, debe arrojar un valor igual a cero para que sean independientes.
+```{r}
+round(ProbAandB-ProbA*ProbB,2)
+```
+Observamos que la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es igual a cero, podemos decir que ambos eventos son independientes.
+
+Para confirmar esto podemos usar el Teorema de Bayes:
+Al igual que para hallar la probabilidad de P(B/A), hallamos P(A/B):
+
+```{r}
+ProbAresB=ProbAandB/ProbB
+ProbAresB
+```
+Según el Teorema de Bayes:
+
+$P(B/A)=(P(A/B)*P(B))/P(A)$
+Si ambos eventos son totalmente independientes, el evento A no realiza ningún efecto sobre el evento B y viceversa. Por lo tanto, el evento B tampoco realiza un efecto sobre el evento A, por lo tanto P(A/B) = P(A). Como son iguales y se están dividiendo, debe resultar uno, esto nos debe arrojar P(B/A)=P(B). Confirmemos estas últimas dos sentencias.
+
+```{r}
+round(ProbBresA,2)
+round(ProbB,2)
+
+round(ProbAresB,2)
+round(ProbA,2)
+```
+Acabamos de confirmar de que los valores de P(B/A) y P(B) son iguales como el de P(A/B) y P(A)
+
 
 
 ###Segundo par
 Definamos los dos eventos:
-A:Una persona alquile una habitación mayor al precio promedio 
-B:La habitación alquilada reciba un puntaje de satisfacción igual a 80
+A:Una persona escoge un Airbnb en el cual pague un precio mayor al precio promedio de todos los Airbnb's.
+B:Una persona puntúe el Airbnb con un puntaje de satisfacción mayor a 90.
+  
+Calculamos la probabilidad de que una persona pague un precio mayor al promedio en un Airbnb.
+```{r}
+ProbA <- nrow(filter(D2, Precio>PromedioPrecio))/nrow(D2)
+ProbA
+```
+Calculamos la probabilidad en la que una persona reserve un Airbnb y este coloque un puntaje de satisfacción mayor a 90.
+```{r}
+ProbB <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
+ProbB
+```
 
+Calculamos la probabilidad en la que ocurren ambos al mismo tiempo (P(B∩A)), que el Airbnb rentado sea calificado con un puntaje de satisfacción mayor a 90 y que se haya tenido que pagar un precio mayor al promedio.
+
+```{r}
+ProbAandB <- sum(D2$Precio>PromedioPrecio & D2$Satisfaccion>90) / nrow(D2)
+ProbAandB
+```
+Usamos la fórmula de Probabilidad Condicional para poder hallar la probabilidad de haber calificado un puntaje de satisfacción mayor a  90 tras haber pagado un alquiler mayor al precio promedio P(B/A).
+```{r}
+ProbBresA=ProbAandB/ProbA
+ProbBresA
+```
+Como recalcamos al inicio, al restar los valores de las probabilidades de la intersección de los eventos A y B con el producto de las probabilidades del evento A y del evento B, debe arrojar un valor muy similar a cero para que sean independientes.
+```{r}
+round(ProbAandB-ProbA*ProbB,2)
+```
+Observamos que la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es igual a cero, podemos decir que ambos eventos son independientes.
+
+Para confirmar esto podemos usar el Teorema de Bayes:
+Al igual que para hallar la probabilidad de P(B/A), hallamos P(A/B):
+```{r}
+ProbAresB=ProbAandB/ProbB
+ProbAresB
+```
+Según el Teorema de Bayes:
+
+$P(B/A)=(P(A/B)*P(B))/P(A)$
+Si ambos eventos son totalmente independientes, el evento A no realiza ningún efecto sobre el evento B y viceversa. Por lo tanto, el evento B tampoco realiza un efecto sobre el evento A, por lo tanto P(A/B) = P(A). Como son iguales y se están dividiendo, debe resultar uno, esto nos debe arrojar P(B/A)=P(B). Confirmemos estas últimas dos sentencias.
+
+```{r}
+round(ProbBresA,2)
+round(ProbB,2)
+
+round(ProbAresB,2)
+round(ProbA,2)
+```
+Acabamos de confirmar de que los valores de P(B/A) y P(B) son iguales como el de P(A/B) y P(A)
+
+
+
+### Tercer par de eventos
+A: Una persona  califique con un puntaje mayor a 9 respecto a Limpieza al Airbnb en el que se hospedó.
+B: Una persona califica con un puntaje de satisfacción mayor a 90 al Airbnb en el que se hospedó.
+
+Calculamos la probabilidad de que la persona que alquile un  Airbnb ponga una calificación mayor a 9 con respecto a Limpieza.
+```{r}
+ProbA <- nrow(filter(D2, Limpieza>9))/nrow(D2)
+ProbA
+```
+Calculamos la probabilidad de que una persona que haya alquilado un Airbnb y que lo califique con un puntaje de satisfacción mayor a 90.
+```{r}
+ProbB <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
+ProbB
+```
+
+Calculamos la probabilidad en la que ocurren ambos al mismo tiempo (P(B∩A)), que el Airbnb rentado sea calificado con un puntaje de satisfacción mayor a 90 y que se haya tenido una calificación de limpieza mayor a 9.
+
+```{r}
+ProbAandB <- sum(D2$Limpieza>9 & D2$Satisfaccion>90) / nrow(D2)
+ProbAandB
+```
+Usamos la fórmula de Probabilidad Condicional para poder hallar la probabilidad de haber calificado un puntaje de satisfacción mayor a  90 tras haber calificado el mismo Airbnb con un puntaje mayor a 90 respecto a limpieza P(B/A).
+```{r}
+ProbBresA=ProbAandB/ProbA
+ProbBresA
+```
+Como recalcamos al inicio, al restar los valores de las probabilidades de la intersección de los eventos A y B con el producto de las probabilidades del evento A y del evento B, debe arrojar un valor muy similar a cero para que sean independientes.
+
+```{r}
+round(ProbAandB-ProbA*ProbB,2)
+```
+
+Caso contrario a los anteriores eventos, la resta resultó ser diferente a cero; por lo tanto, los consideramos como eventos dependientes.
+
+Según el Teorema de Bayes:
+$P(B/A)=(P(A/B)*P(B))/P(A)$
+
+Si ambos eventos son totalmente independientes, el evento A no realiza ningún efecto sobre el evento B y viceversa. Por lo tanto, el evento B tampoco realiza un efecto sobre el evento A, por lo tanto P(A/B) = P(A). Como son iguales y se están dividiendo, debe resultar uno, esto nos debe arrojar P(B/A)=P(B).Caso contrario, los eventos son dependientes. Confirmemos esta última sentencia.
+
+```{r}
+ProbBresA
+ProbB
+
+
+ProbAresB
+ProbA
+```
+Observamos que tanto P(B/A) y P(B) como P(A/B) y P(A) son diferentes entre sí; por lo tanto, son eventos dependientes.
+
+###Cuarto par de eventos
+
+Definamos los dos eventos:
+
+A: De todas las sedes en la que Airbnb tiene esparcido alrededor del mundo, este esté en la ciudad de Amsterdam
+B: Una persona que se hospede en un hotel de Airbnb tenga que pagar un precio mayor al precio promedio de todo Airbnb.
+
+Calculamos el promedio del precio de los Airbnb's:
+```{r}
+PromedioPrecio<-mean(D2$Precio)
+PromedioPrecio
+```
+Calculamos la probabilidad de que el precio a pagar por una persona sea mayor que el precio promedio (P(B)).
 
 ```{r}
 ProbB <- nrow(filter(D2, Precio>PromedioPrecio))/nrow(D2)
 ProbB
 ```
-
+Calculamos la probabilidad de que una persona reserve un Airbnb en la ciudad de Amsterdam (P(A)).
 ```{r}
-ProbA <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
+ProbA <- sum(D2$Ciudad == "Amsterdam") / nrow(D2)
 ProbA
 ```
+Usamos la fórmula de Probabilidad Condicional para poder hallar la probabilidad de haber pagado un monto mayor al promedio tras haber reservado en Amsterdam P(B/A)
+
+Primero calculamos la probabilidad en la que ocurren ambos al mismo tiempo (P(B∩A)), que el Airbnb rentado sea de Amsterdam y que el precio sea mayor al precio promedio.
+    
 ```{r}
-ProbAandB <- sum(D2$Precio>PromedioPrecio & D2$Satisfaccion>90) / nrow(D2)
+ProbAandB <- sum(D2$Ciudad == "Amsterdam" & D2$Precio>PromedioPrecio) / nrow(D2)
 ProbAandB
 ```
+Teniendo al probabilidad de A, B y de la intersección de ambos conjuntos, podemos obtener la probabilidad P(B/A) usando la definición de Probabilidad Condicional.
 ```{r}
-ProbAandB-ProbA*ProbB
+ProbBresA=ProbAandB/ProbA
+ProbBresA
 ```
-Observamos que el valor absoluto de la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es menor a 0.05, podemos asumir que ambos eventos son independientes.
-
-
-
-
-### Tercer par de eventos
-A: La habitación reservada adquiera un puntaje de satisfacción mayor a 90
-B: La haitación reservada adquiera un puntaje de limpiza mayor a 9
-
-
+Como recalcamos al inicio, al restar los valores de las probabilidades de la intersección de los eventos A y B con el producto de las probabilidades del evento A y del evento B, debe arrojar un valor muy similar a cero para que sean independientes.
 ```{r}
-ProbB <- nrow(filter(D2, Limpieza>9))/nrow(D2)
+round(ProbAandB-ProbA*ProbB,2)
+```
+Observamos que la resta de las probabilidades que ocurran ambos eventos al mismo tiempo con el producto de ambos eventos es diferente a cero, así que podemos asumir que ambos eventos son dependientes.
+
+Para confirmar esto, podemos usar el Teorema de Bayes:
+Al igual que para hallar la probabilidad de P(B/A), hallamos P(A/B):
+```{r}
+ProbAresB=ProbAandB/ProbB
+ProbAresB
+```
+
+Según el Teorema de Bayes:
+$P(B/A)=(P(A/B)*P(B))/P(A)$
+
+Si ambos eventos son totalmente independientes, el evento A no realiza ningún efecto sobre el evento B y viceversa. Por lo tanto, el evento B tampoco realiza un efecto sobre el evento A, por lo tanto P(A/B) = P(A). Como son iguales y se están dividiendo, debe resultar uno, esto nos debe arrojar P(B/A)=P(B).Caso contrario, los eventos son dependientes. Confirmemos esta última sentencia.
+```{r}
+ProbBresA
 ProbB
-```
 
-```{r}
-ProbA <- nrow(filter(D2,Satisfaccion>90)) / nrow(D2)
+
+ProbAresB
 ProbA
 ```
-```{r}
-ProbAandB <- sum(D2$Limpieza>9 & D2$Satisfaccion>90) / nrow(D2)
-ProbAandB
-```
-
-```{r}
-ProbAandB-ProbA*ProbB
-```
-Caso contrario a los anteriores eventos, la resta resultó ser mayor a 0.05; por lo tanto, lo consideramos como eventos dependientes.
-
-###Cuarto par de eventos
-A:La habitación reservada por el inquilino sea con superhost
-B:La habitación reservada por el inquilino sea mayor a 95
-
-```{r}
-ProbB <- sum(D2$Superhost=="Sí")/nrow(D2)
-ProbB
-```
-
-```{r}
-ProbA <- nrow(filter(D2,Satisfaccion>95)) / nrow(D2)
-ProbA
-```
-```{r}
-ProbAandB <- sum(D2$Superhost=="Sí" & D2$Satisfaccion>95) / nrow(D2)
-ProbAandB
-```
-
-```{r}
-ProbAandB-ProbA*ProbB
-```
-
-
-Al igual que el anterior, la diferencia de probabilidad es 0.08, mayor a 0.05; por lo tanto, lo consideramos dependientes.
+Observamos que tanto P(B/A) y P(B) como P(A/B) y P(A) son diferentes entre sí; por lo tanto, son eventos dependientes.
 
 
 ##Variables Aleatorias Discretas y Continuas
@@ -1777,13 +1900,13 @@ n<-sum(D2$Ciudad=="Amsterdam")
 ```
 
 
-  
 ##### Graficamos
 
 
 ```{r}
-dbinom(90,n, ProbE)
 x<-0:n
+dbinom(90,n, ProbE)
+
 pmf<-dbinom(x,n, ProbE)
 
 ```
@@ -1807,34 +1930,20 @@ sum(a*dbinom(a ,n,ProbE)) #Otra manera, usando la definición de la Esperanza de
 En promedio, hay en promedio 87 personas que califican con 90 a los Airbnb's en Amsterdam.
 
 ####Construimos un ejemplo
-Ejemplo: Los agentes de Airbnb necesitan saber la probabilidad de que  los huéspedes de Amsterdam califique con un puntaje mayor a 90 para decidir si continuar o no con sus servicios con la misma calidad.
-
-Nos piden P(X>90) = 1 - P(X≤90)
+Ejemplo: Los agentes de Airbnb necesitan saber la probabilidad de que 2500 huéspedes de Amsterdam califique con un puntaje igual a 90 para decidir si continuar o no con sus servicios con la misma calidad.
 
 
-Calculamos la probabilidad pedida:
+Calculamos la probabilidad pedida dbinom:
 
 ```{r}
-1-pbinom(90, n, ProbE, lower.tail=T)
+dbinom(90,2500,ProbE)
 ```
 
-
-
 ###Variable Aleatoria Discreta 2
-
-
-
 Para nuestro segundo análisis usaremos la variable "Day" de nuestra base de datos. Para esto usaremos el modelo de Bernoulli con parámetro p.
 
 ####Construimos nuestra variable aleatoria discreta
-Nuestro caso de "Éxisto" es que los huéspedes hayan alquilado un Airbnb en un día de fin de semana.
-
-Calculamos la probabilidad de "Éxito" (p):
-```{r}
-p<-sum(D2$Day != "Weekday" & D2$Ciudad=="Amsterdam")/sum(D2$Ciudad=="Amsterdam")
-p
-```
-X: Variable que indica si una persona alquiló en un día de fin de semana o n día laborable.
+    
 ####Identificamos los parámetros
 
 $X~Bur(p)$
@@ -1846,24 +1955,40 @@ En este modelo, la esperanza es igual a la probabilidad de éxito; por lo tanto:
 EX2=p
 ```
 
+Este método se puede complementar con el de binomial:
+```{r}
+x <- sum(D2$Day != "Weekday" & D2$Ciudad == "Amsterdam")  # Número de éxitos observados
+n <- sum(D2$Ciudad == "Amsterdam")  # Número total de ensayos
+```
 
+```{r}
+probabilidad <- dbinom(x, n, p)
 
+```
 
+Graficamos:
 
+```{r}
+pmf<-dbinom(0:n,n,p)
+```
+
+```{r}
+barplot(pmf, names.arg = x, xlab = "Número de éxitos", ylab = "Probabilidad", main = "PMF - Distribución Binomial")
+```
 ###Variable Aleatoria Continua 1
 
 La variable de nuestra base de datos que usaremos para este análisis es la de "Distance_Center" que es numérica continua.
 
 #### Construimos nuestra variable aleatoria
 
-X: variable aleatoria que cuenta la cantidad de Airbnb que está a una distancia mayor o igual a 5km de su centro en Amsterdam.
+X: variable aleatoria que cuenta la cantidad de Airbnb's que está a una distancia mayor o igual a 5km de su centro en Amsterdam.
 
 ```{r}
 NuevoObjetivo<-filter(D2, Ciudad=="Amsterdam")
 nrow(NuevoObjetivo)
 
 ```
-
+Usamos esto para crear una nueva base de datos con nombre "NuevoObjetivo" para solo enfocarno a los Airbnb's de Amsterdam.
 
 #### Gráfica
 Identificamos gráficamente la densidad de esta variable numérica continua con el siguiente código:
@@ -1909,8 +2034,6 @@ desviacion_estandar <- sqrt(varianza)
 esperanza
 
 ```
-
-
 
 Observamos que la media de la variable "Distance_Center" y la esperanza de nuestra variable aleatoria continua son iguales con un valor de 2.825052
 
